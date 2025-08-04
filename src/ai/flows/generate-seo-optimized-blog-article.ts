@@ -45,6 +45,15 @@ const prompt = ai.definePrompt({
       *   Provide examples from various French sectors (e.g., retail, tech, artisan).
       *   Reference French legal aspects where relevant (RGPD, Code du Travail).
 
+  **IMPERATIVE**: The article MUST be between 1000 and 1200 words and be COMPLETE with:
+  - Complete introduction (150 words)
+  - 7 detailed sections (120-150 words each)
+  - Complete tools section (150 words)
+  - COMPLETE case study with figures (200 words)
+  - COMPLETE conclusion with CTA transition (150 words)
+  
+  VERIFY that the article is not truncated before returning it.
+
   **JSON Output**:
   You must return a complete JSON object matching the output schema.
   - Calculate wordCount and readingTime (based on 200 words per minute).
