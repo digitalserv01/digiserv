@@ -11,5 +11,9 @@ export interface Article {
   ctaButton: string;
   keywords: string[];
   category: string;
-  createdAt: Timestamp;
+  createdAt: string; // Changed from Timestamp to string
+}
+
+export interface ArticleDocument extends Omit<Article, 'id' | 'createdAt'> {
+    createdAt: Timestamp;
 }

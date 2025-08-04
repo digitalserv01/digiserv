@@ -1,15 +1,15 @@
-import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import type { Article } from '@/types/article';
+import type { Article, ArticleDocument } from '@/types/article';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, FileText, Bot } from 'lucide-react';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Sidebar from '@/components/layout/Sidebar';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -26,16 +26,27 @@ async function getArticle(id: string): Promise<Article | null> {
   if (!docSnap.exists()) {
     return null;
   }
+  
+  const data = docSnap.data() as ArticleDocument;
 
-  return { id: docSnap.id, ...docSnap.data() } as Article;
+  return { 
+      id: docSnap.id, 
+      ...data,
+      createdAt: data.createdAt.toJSON()
+  };
 }
 
 export async function generateStaticParams() {
-  const articlesCol = collection(db, 'articles');
-  const articlesSnapshot = await getDocs(articlesCol);
-  return articlesSnapshot.docs.map(doc => ({
-    id: doc.id,
-  }));
+  try {
+    const articlesCol = collection(db, 'articles');
+    const articlesSnapshot = await getDocs(articlesCol);
+    return articlesSnapshot.docs.map(doc => ({
+      id: doc.id,
+    }));
+  } catch (error) {
+    console.error("Error fetching static params for articles:", error)
+    return [];
+  }
 }
 
 const categoryDisplayName: { [key: string]: string } = {
@@ -56,8 +67,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
   
   const getArticleDate = () => {
-    if (article.createdAt && typeof article.createdAt.toDate === 'function') {
-      return format(article.createdAt.toDate(), "d MMMM yyyy", { locale: fr });
+    if (article.createdAt) {
+      return format(parseISO(article.createdAt), "d MMMM yyyy", { locale: fr });
     }
     return "Date inconnue";
   }

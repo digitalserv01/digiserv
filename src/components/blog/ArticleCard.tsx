@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, MessageCircle, Clock, FileText } from 'lucide-react';
 import type { Article } from '@/types/article';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 interface ArticleCardProps {
@@ -32,8 +32,13 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
   const getCategoryName = (slug: string) => categoryDisplayName[slug] || slug;
 
   const getArticleDate = () => {
-    if (article.createdAt && typeof article.createdAt.toDate === 'function') {
-      return format(article.createdAt.toDate(), "d MMM yyyy", { locale: fr });
+    if (article.createdAt) {
+        try {
+            return format(parseISO(article.createdAt), "d MMM yyyy", { locale: fr });
+        } catch (error) {
+            console.error("Invalid date format:", article.createdAt, error);
+            return "Date inconnue";
+        }
     }
     return "Date inconnue";
   }

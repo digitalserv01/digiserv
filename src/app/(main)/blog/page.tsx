@@ -1,6 +1,6 @@
 import { collection, getDocs, limit, orderBy, query, startAfter, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import type { Article } from '@/types/article';
+import type { Article, ArticleDocument } from '@/types/article';
 import ArticleCard from '@/components/blog/ArticleCard';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -28,10 +28,14 @@ async function getArticles(page = 1) {
   }
 
   const articlesSnapshot = await getDocs(q);
-  const articles: Article[] = articlesSnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...(doc.data() as Omit<Article, 'id'>),
-  }));
+  const articles: Article[] = articlesSnapshot.docs.map(doc => {
+    const data = doc.data() as ArticleDocument;
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt.toJSON(),
+    };
+  });
 
   const totalArticlesQuery = query(articlesCol);
   const totalArticlesSnapshot = await getDocs(totalArticlesQuery);

@@ -5,7 +5,7 @@ import Sidebar from '@/components/layout/Sidebar';
 import { Separator } from '@/components/ui/separator';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import type { Article } from '@/types/article';
+import type { Article, ArticleDocument } from '@/types/article';
 
 export const revalidate = 3600; // Revalidate every hour
 
@@ -13,10 +13,14 @@ export default async function HomePage() {
   const articlesCol = collection(db, 'articles');
   const q = query(articlesCol, orderBy('createdAt', 'desc'), limit(6));
   const articlesSnapshot = await getDocs(q);
-  const articles: Article[] = articlesSnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...(doc.data() as Omit<Article, 'id'>),
-  }));
+  const articles: Article[] = articlesSnapshot.docs.map(doc => {
+    const data = doc.data() as ArticleDocument;
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt.toJSON(),
+    }
+  });
 
   return (
     <>
