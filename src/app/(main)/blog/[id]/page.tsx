@@ -1,0 +1,122 @@
+import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import type { Article } from '@/types/article';
+import { notFound } from 'next/navigation';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Clock, FileText, Bot } from 'lucide-react';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import Sidebar from '@/components/layout/Sidebar';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
+interface ArticlePageProps {
+  params: {
+    id: string;
+  };
+}
+
+async function getArticle(id: string): Promise<Article | null> {
+  const docRef = doc(db, 'articles', id);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    return null;
+  }
+
+  return { id: docSnap.id, ...docSnap.data() } as Article;
+}
+
+export async function generateStaticParams() {
+  const articlesCol = collection(db, 'articles');
+  const articlesSnapshot = await getDocs(articlesCol);
+  return articlesSnapshot.docs.map(doc => ({
+    id: doc.id,
+  }));
+}
+
+const categoryDisplayName: { [key: string]: string } = {
+  'cv-emploi': 'CV & Emploi',
+  'developpement-web': 'Développement Web',
+  'marketing-digital': 'Marketing Digital',
+  'ecommerce': 'E-commerce',
+  'ia-automation': 'IA & Automation',
+};
+const getCategoryName = (slug: string) => categoryDisplayName[slug] || slug;
+
+
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const article = await getArticle(params.id);
+
+  if (!article) {
+    notFound();
+  }
+  
+  const getArticleDate = () => {
+    if (article.createdAt && typeof article.createdAt.toDate === 'function') {
+      return format(article.createdAt.toDate(), "d MMMM yyyy", { locale: fr });
+    }
+    return "Date inconnue";
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+        <main className="lg:col-span-8 xl:col-span-9">
+          <Card className="overflow-hidden">
+            <CardHeader className="flex-col items-start gap-4">
+              <div>
+                <Badge variant="secondary">{getCategoryName(article.category)}</Badge>
+              </div>
+              <CardTitle className="font-headline text-3xl lg:text-4xl text-primary !leading-tight">
+                {article.title}
+              </CardTitle>
+              <CardDescription className="text-lg">
+                {article.metaDescription}
+              </CardDescription>
+
+              <div className="w-full flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground pt-4 border-t">
+                 <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>Publié le {getArticleDate()}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  <span>{article.wordCount} mots</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>{article.readingTime} de lecture</span>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="prose prose-lg dark:prose-invert max-w-none">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {article.article}
+                </ReactMarkdown>
+              </div>
+            </CardContent>
+            <CardFooter className="flex-col items-start gap-4 bg-secondary/50 p-6 rounded-b-lg">
+               <div className="flex items-center gap-2">
+                <Bot className="h-5 w-5 text-primary" />
+                <h4 className="font-semibold text-lg text-primary">Prêt à passer à l'action ?</h4>
+              </div>
+              <p className="text-muted-foreground">{article.ctaText}</p>
+              <Button size="lg">{article.ctaButton}</Button>
+            </CardFooter>
+          </Card>
+        </main>
+        
+        <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
+          <div className="sticky top-24 space-y-8">
+            <Sidebar />
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+}

@@ -3,8 +3,21 @@ import BlogSection from '@/components/sections/BlogSection';
 import CtaSection from '@/components/sections/CtaSection';
 import Sidebar from '@/components/layout/Sidebar';
 import { Separator } from '@/components/ui/separator';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import type { Article } from '@/types/article';
 
-export default function HomePage() {
+export const revalidate = 3600; // Revalidate every hour
+
+export default async function HomePage() {
+  const articlesCol = collection(db, 'articles');
+  const q = query(articlesCol, orderBy('createdAt', 'desc'), limit(6));
+  const articlesSnapshot = await getDocs(q);
+  const articles: Article[] = articlesSnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...(doc.data() as Omit<Article, 'id'>),
+  }));
+
   return (
     <>
       <HeroSection />
@@ -12,7 +25,7 @@ export default function HomePage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <main className="lg:col-span-8 xl:col-span-9">
-            <BlogSection />
+            <BlogSection articles={articles} />
           </main>
           
           <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
