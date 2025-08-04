@@ -6,7 +6,6 @@
  */
 
 import {ai} from '@/ai/genkit';
-import { z } from 'zod';
 import { generateSeoOptimizedBlogArticle, GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
 
