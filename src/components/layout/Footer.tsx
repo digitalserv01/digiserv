@@ -38,9 +38,6 @@ const footerLinks = {
 export default function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="bg-gray-800/20 py-4 text-center text-sm">
-        <p>Publicité - <a href="#" className="underline">Votre annonce ici</a></p>
-      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           

@@ -109,9 +109,6 @@ export default function BlogSection() {
         </Button>
       </div>
       
-      {/* In-article ad placeholder */}
-      <div className="my-8 h-24 bg-secondary rounded-lg flex items-center justify-center text-muted-foreground">Publicité (Responsive)</div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {blogArticles.map((article) => (
           <ArticleCard key={article.id} article={article} />

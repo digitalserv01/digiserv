@@ -68,18 +68,6 @@ export default function Sidebar() {
         </CardContent>
       </Card>
       
-      {/* AdSense Placeholder */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xs text-muted-foreground font-normal">Publicité</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-[250px] w-full bg-secondary rounded-md flex items-center justify-center text-muted-foreground text-sm">
-             Ad (300x250)
-          </div>
-        </CardContent>
-      </Card>
-
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Ils nous font confiance</CardTitle>

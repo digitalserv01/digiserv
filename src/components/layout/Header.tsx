@@ -35,10 +35,6 @@ export default function Header() {
 
   return (
     <header className={`sticky top-0 z-50 w-full bg-white/80 backdrop-blur-lg transition-all duration-300 ${isScrolled ? 'shadow-md border-b' : 'border-b border-transparent'}`}>
-      {/* AdSense Banner Placeholder */}
-      <div className="bg-secondary/50 text-center py-2 text-sm text-muted-foreground">
-        <div className="h-[90px] w-[728px] bg-secondary mx-auto flex items-center justify-center">Publicité (728x90)</div>
-      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex-shrink-0">
