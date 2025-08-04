@@ -7,12 +7,12 @@
 
 import {ai} from '@/ai/genkit';
 import { z } from 'zod';
-import { generateSeoOptimizedBlogArticle, GenerateSeoOptimizedBlogArticleOutput } from './generate-seo-optimized-blog-article';
+import { generateSeoOptimizedBlogArticle, GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
 
-const ScheduledArticleOutputSchema = GenerateSeoOptimizedBlogArticleOutput;
+const ScheduledArticleOutputSchema = GenerateSeoOptimizedBlogArticleOutputSchema;
 
-export async function generateScheduledArticle(): Promise<z.infer<typeof ScheduledArticleOutputSchema>> {
+export async function generateScheduledArticle(): Promise<GenerateSeoOptimizedBlogArticleOutput> {
     return generateScheduledArticleFlow();
 }
 

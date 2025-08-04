@@ -8,7 +8,7 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import {z} from 'zod';
 
 const GenerateSeoOptimizedBlogArticleInputSchema = z.object({
   subject: z.string().describe('The subject of the blog article.'),
@@ -17,7 +17,7 @@ const GenerateSeoOptimizedBlogArticleInputSchema = z.object({
 });
 export type GenerateSeoOptimizedBlogArticleInput = z.infer<typeof GenerateSeoOptimizedBlogArticleInputSchema>;
 
-const GenerateSeoOptimizedBlogArticleOutputSchema = z.object({
+export const GenerateSeoOptimizedBlogArticleOutputSchema = z.object({
   title: z.string().describe('The SEO-optimized H1 title of the blog article (60 characters max).'),
   metaDescription: z.string().describe('The SEO-optimized meta description (155 characters max).'),
   article: z.string().describe('The full generated blog article in Markdown format.'),
@@ -68,9 +68,9 @@ const prompt = ai.definePrompt({
 
   **JSON Output**:
   You must return a complete JSON object matching the output schema.
-  - Calculate `wordCount` and `readingTime` (based on 200 words per minute).
-  - The `article` field must be a single string containing the full article formatted with Markdown.
-  - Extract 3-5 main keywords for the `keywords` array.
+  - Calculate wordCount and readingTime (based on 200 words per minute).
+  - The article field must be a single string containing the full article formatted with Markdown.
+  - Extract 3-5 main keywords for the keywords array.
 `,
 });
 
