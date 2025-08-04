@@ -30,10 +30,12 @@ async function getArticles(page = 1) {
   const articlesSnapshot = await getDocs(q);
   const articles: Article[] = articlesSnapshot.docs.map(doc => {
     const data = doc.data() as ArticleDocument;
+    // Handle server-side timestamp conversion safely
+    const createdAt = data.createdAt?.toJSON() || new Date().toJSON();
     return {
       id: doc.id,
       ...data,
-      createdAt: data.createdAt.toJSON(),
+      createdAt,
     };
   });
 
