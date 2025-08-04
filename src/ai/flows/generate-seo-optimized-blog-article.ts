@@ -50,6 +50,7 @@ const prompt = ai.definePrompt({
   - Calculate wordCount and readingTime (based on 200 words per minute).
   - The article field must be a single string containing the full article formatted with Markdown.
   - Extract 3-5 main keywords for the keywords array.
+  - Return the original category provided in the input.
 `,
 });
 

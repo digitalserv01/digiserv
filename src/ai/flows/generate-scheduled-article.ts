@@ -1,14 +1,16 @@
 'use server';
 /**
- * @fileOverview A flow to generate a blog article based on a daily schedule.
+ * @fileOverview A flow to generate a blog article based on a daily schedule and save it to Firestore.
  *
- * - generateScheduledArticle - A function that triggers the daily article generation.
+ * - generateScheduledArticle - A function that triggers the daily article generation and saving.
  */
 
 import {ai} from '@/ai/genkit';
 import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
 import { GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export async function generateScheduledArticle(): Promise<GenerateSeoOptimizedBlogArticleOutput> {
     return generateScheduledArticleFlow();
@@ -35,7 +37,8 @@ const generateScheduledArticleFlow = ai.defineFlow(
         readingTime: '0 min',
         ctaText: '',
         ctaButton: '',
-        keywords: []
+        keywords: [],
+        category: ''
       };
     }
 
@@ -47,12 +50,20 @@ const generateScheduledArticleFlow = ai.defineFlow(
       category: dailyTopic.category,
     });
 
-    // Here you would typically save the article to your database.
-    // For now, we'll just log it to the console.
     console.log('Generated Article:', articleOutput.title);
     
-    // In a real application, you would save the full articleOutput to a database.
-    // e.g., await db.collection('articles').add(articleOutput);
+    try {
+      console.log('Saving article to Firestore...');
+      const docRef = await addDoc(collection(db, 'articles'), {
+        ...articleOutput,
+        createdAt: serverTimestamp(),
+      });
+      console.log('Article saved to Firestore with ID:', docRef.id);
+    } catch (error) {
+      console.error('Error saving article to Firestore:', error);
+      // We don't re-throw the error, so the flow can still return the article content.
+      // In a real app, you might want more robust error handling or retries.
+    }
 
     return articleOutput;
   }
