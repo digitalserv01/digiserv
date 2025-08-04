@@ -1,6 +1,8 @@
 import { generateScheduledArticle } from '@/ai/flows/generate-scheduled-article';
 import {NextResponse} from 'next/server';
 
+export const dynamic = 'force-dynamic'; // force dynamic rendering
+
 export async function POST(req: Request) {
   // Optional: Add a secret to protect the endpoint
   const cronSecret = process.env.CRON_SECRET;

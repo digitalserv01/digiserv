@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { handleGenerateArticle } from './actions';
 
 interface Article {
   title: string;
@@ -14,31 +15,24 @@ export default function TestCronPage() {
   const [article, setArticle] = useState<Article | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleGenerateArticle = async () => {
+  const onGenerateArticle = async () => {
     setLoading(true);
     setError(null);
     setArticle(null);
 
     try {
-      const response = await fetch('/api/cron', { 
-        method: 'POST',
-        headers: {
-          // NOTE: This will fail if you have set a CRON_SECRET on the server
-          // and are not running the app in a way that makes the secret available.
-          // For local testing, you might temporarily remove the secret check in the API route.
-        }
-      });
-      
-      const data = await response.json();
+      const result = await handleGenerateArticle();
 
-      if (!response.ok || data.success === false) {
-        throw new Error(data.error || 'Failed to generate article.');
+      if (result.error) {
+        throw new Error(result.error);
       }
 
-      setArticle({
-        title: data.title,
-        article: data.article,
-      });
+      if (result.article) {
+        setArticle({
+          title: result.article.title,
+          article: result.article.article,
+        });
+      }
 
     } catch (err: any) {
       setError(err.message);
@@ -59,7 +53,7 @@ export default function TestCronPage() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col items-start gap-4">
-            <Button onClick={handleGenerateArticle} disabled={loading}>
+            <Button onClick={onGenerateArticle} disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
