@@ -68,10 +68,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   
   const getArticleDate = () => {
     if (article.createdAt) {
-      return format(parseISO(article.createdAt), "d MMMM yyyy", { locale: fr });
+      // Si c'est un timestamp Firestore
+      if (article.createdAt.seconds) {
+        return format(new Date(article.createdAt.seconds * 1000), "dd MMMM yyyy", { locale: fr });
+      }
+      // Si c'est une string ISO
+      if (typeof article.createdAt === 'string') {
+        return format(parseISO(article.createdAt), "dd MMMM yyyy", { locale: fr });
+      }
+      // Si c'est déjà un objet Date
+      if (article.createdAt instanceof Date) {
+        return format(article.createdAt, "dd MMMM yyyy", { locale: fr });
+      }
     }
     return "Date inconnue";
-  }
+   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
