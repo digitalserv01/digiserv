@@ -6,10 +6,9 @@
  */
 
 import {ai} from '@/ai/genkit';
-import { generateSeoOptimizedBlogArticle, GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from './generate-seo-optimized-blog-article';
+import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
-
-const ScheduledArticleOutputSchema = GenerateSeoOptimizedBlogArticleOutputSchema;
+import { GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
 
 export async function generateScheduledArticle(): Promise<GenerateSeoOptimizedBlogArticleOutput> {
     return generateScheduledArticleFlow();
@@ -18,7 +17,7 @@ export async function generateScheduledArticle(): Promise<GenerateSeoOptimizedBl
 const generateScheduledArticleFlow = ai.defineFlow(
   {
     name: 'generateScheduledArticleFlow',
-    outputSchema: ScheduledArticleOutputSchema,
+    outputSchema: GenerateSeoOptimizedBlogArticleOutputSchema,
   },
   async () => {
     console.log('Running scheduled article generation...');
