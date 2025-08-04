@@ -6,10 +6,10 @@ export const DAILY_BLOG_PROMPTS = {
     category: "cv-emploi",
     keywords: ["CV français", "recherche emploi France", "entretien embauche", "lettre motivation", "ATS", "Pôle Emploi"],
     subjects: [
-      "CV qui passe l'ATS : Guide complet français 2024",
-      "Entretien d'embauche : 10 questions pièges et réponses parfaites",
-      "Lettre de motivation qui marque : Modèles français 2024",
-      "Reconversion professionnelle : Stratégie complète française",
+      "Comment créer un CV qui passe les filtres ATS en 2024",
+      "Les 10 questions les plus fréquentes en entretien d'embauche et comment y répondre",
+      "Le guide ultime pour une lettre de motivation percutante en France",
+      "Réussir sa reconversion professionnelle en France : le plan d'action",
     ],
   },
 
@@ -18,10 +18,10 @@ export const DAILY_BLOG_PROMPTS = {
     category: "developpement-web",
     keywords: ["création site web", "développement France", "site internet professionnel", "CMS français", "hébergement France"],
     subjects: [
-      "Site vitrine professionnel : Guide complet TPE françaises 2024",
-      "E-commerce français : Shopify vs WooCommerce, le match",
-      "Performance web : Optimiser son site pour Google France",
-      "RGPD et développement web : Checklist légale complète",
+      "Le guide complet pour la création d'un site vitrine pour les TPE françaises en 2024",
+      "Shopify vs WooCommerce : Quelle plateforme choisir pour le e-commerce en France ?",
+      "Optimiser la performance de son site web pour les moteurs de recherche en France",
+      "Checklist complète de conformité RGPD pour le développement web",
     ],
   },
 
@@ -30,10 +30,10 @@ export const DAILY_BLOG_PROMPTS = {
     category: "marketing-digital",
     keywords: ["marketing digital France", "publicité Facebook", "Google Ads français", "SEO local", "réseaux sociaux France"],
     subjects: [
-      "Google Ads rentable : Stratégie PME françaises (budget 500€/mois)",
-      "Facebook Ads 2024 : Cibler les consommateurs français efficacement",
-      "Email marketing RGPD : Automatisation légale et profitable",
-      "SEO local France : Dominer Google dans votre ville",
+      "Comment créer une campagne Google Ads rentable pour les PME françaises avec un budget de 500€/mois",
+      "Stratégies de ciblage efficaces sur Facebook Ads pour le marché français en 2024",
+      "Le guide de l'email marketing RGPD : automatisation légale et profitable",
+      "Comment dominer le SEO local sur Google dans votre ville en France",
     ],
   },
 
@@ -42,10 +42,10 @@ export const DAILY_BLOG_PROMPTS = {
     category: "ecommerce",
     keywords: ["boutique en ligne France", "e-commerce français", "vente en ligne", "Shopify France", "dropshipping légal"],
     subjects: [
-      "Boutique en ligne rentable : Business plan e-commerce français 2024",
-      "Dropshipping légal France : Guide complet entrepreneur 2024",
-      "Marketplace vs site propre : Quelle stratégie pour débuter ?",
-      "Conversion e-commerce : Optimiser ses ventes en ligne France",
+      "Comment créer un business plan pour une boutique en ligne rentable en France en 2024",
+      "Le guide complet du dropshipping légal pour les entrepreneurs français en 2024",
+      "Marketplace vs. site propre : Quelle est la meilleure stratégie pour débuter dans l'e-commerce ?",
+      "Comment optimiser le taux de conversion de votre site e-commerce en France",
     ],
   },
 
@@ -54,10 +54,10 @@ export const DAILY_BLOG_PROMPTS = {
     category: "ia-automation",
     keywords: ["intelligence artificielle France", "chatbot français", "automatisation PME", "IA business", "agents conversationnels"],
     subjects: [
-      "Chatbot qui convertit : Guide complet PME françaises 2024",
-      "Automatisation business : 10 tâches à déléguer à l'IA",
-      "IA générative au service des entreprises françaises",
-      "Agents conversationnels : Révolutionner le service client",
+      "Le guide complet pour créer un chatbot qui convertit pour les PME françaises en 2024",
+      "10 tâches que vous pouvez automatiser avec l'IA pour votre PME",
+      "Comment l'IA générative peut bénéficier aux entreprises françaises",
+      "Comment les agents conversationnels révolutionnent le service client",
     ],
   },
 };
@@ -70,7 +70,7 @@ export function getDailyTopic() {
     const frenchTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
     
     const dayOfWeek = frenchTime.getDay(); // Sunday - 0, Monday - 1, etc.
-    const weekOfYear = Math.floor(frenchTime.getDate() / 7); // Simple week rotation
+    const weekOfMonth = Math.floor((frenchTime.getDate() - 1) / 7); // 0-4, for 4 weeks in a month
 
     let promptInfo;
     switch (dayOfWeek) {
@@ -82,7 +82,7 @@ export function getDailyTopic() {
         default: return null; // No posts on weekends
     }
 
-    const subject = promptInfo.subjects[weekOfYear % promptInfo.subjects.length];
+    const subject = promptInfo.subjects[weekOfMonth % promptInfo.subjects.length];
 
     return {
         subject,

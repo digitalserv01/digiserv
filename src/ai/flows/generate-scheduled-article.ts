@@ -7,13 +7,10 @@
 
 import {ai} from '@/ai/genkit';
 import { z } from 'zod';
-import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
+import { generateSeoOptimizedBlogArticle, GenerateSeoOptimizedBlogArticleOutput } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
 
-const ScheduledArticleOutputSchema = z.object({
-  title: z.string(),
-  article: z.string(),
-});
+const ScheduledArticleOutputSchema = GenerateSeoOptimizedBlogArticleOutput;
 
 export async function generateScheduledArticle(): Promise<z.infer<typeof ScheduledArticleOutputSchema>> {
     return generateScheduledArticleFlow();
@@ -31,7 +28,17 @@ const generateScheduledArticleFlow = ai.defineFlow(
 
     if (!dailyTopic) {
       console.log('No article to generate today.');
-      return { title: 'No article today', article: '' };
+      // Return a compatible empty-like response
+      return { 
+        title: 'No article today', 
+        article: '', 
+        metaDescription: '',
+        wordCount: 0,
+        readingTime: '0 min',
+        ctaText: '',
+        ctaButton: '',
+        keywords: []
+      };
     }
 
     console.log(`Generating article for topic: ${dailyTopic.subject}`);
@@ -39,6 +46,7 @@ const generateScheduledArticleFlow = ai.defineFlow(
     const articleOutput = await generateSeoOptimizedBlogArticle({
       subject: dailyTopic.subject,
       keywords: dailyTopic.keywords,
+      category: dailyTopic.category,
     });
 
     // Here you would typically save the article to your database.
@@ -48,9 +56,6 @@ const generateScheduledArticleFlow = ai.defineFlow(
     // In a real application, you would save the full articleOutput to a database.
     // e.g., await db.collection('articles').add(articleOutput);
 
-    return {
-        title: articleOutput.title,
-        article: articleOutput.article,
-    };
+    return articleOutput;
   }
 );

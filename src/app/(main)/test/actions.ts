@@ -1,8 +1,9 @@
 'use server';
 
 import { generateScheduledArticle } from "@/ai/flows/generate-scheduled-article";
+import type { GenerateSeoOptimizedBlogArticleOutput } from "@/ai/flows/generate-seo-optimized-blog-article";
 
-export async function handleGenerateArticle() {
+export async function handleGenerateArticle(): Promise<{ article?: GenerateSeoOptimizedBlogArticleOutput; error?: string; }> {
   const cronSecret = process.env.CRON_SECRET;
   if (!cronSecret) {
     return { error: 'CRON_SECRET environment variable not set.' };

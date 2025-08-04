@@ -1,18 +1,15 @@
 'use client';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, Clock, FileText, Bot } from 'lucide-react';
 import { handleGenerateArticle } from './actions';
-
-interface Article {
-  title: string;
-  article: string;
-}
+import type { GenerateSeoOptimizedBlogArticleOutput } from '@/ai/flows/generate-seo-optimized-blog-article';
 
 export default function TestCronPage() {
   const [loading, setLoading] = useState(false);
-  const [article, setArticle] = useState<Article | null>(null);
+  const [article, setArticle] = useState<GenerateSeoOptimizedBlogArticleOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const onGenerateArticle = async () => {
@@ -28,10 +25,7 @@ export default function TestCronPage() {
       }
 
       if (result.article) {
-        setArticle({
-          title: result.article.title,
-          article: result.article.article,
-        });
+        setArticle(result.article);
       }
 
     } catch (err: any) {
@@ -74,17 +68,41 @@ export default function TestCronPage() {
         </CardContent>
       </Card>
 
-      {article && (
+      {article && article.title !== 'No article today' && (
         <Card className="mt-8">
           <CardHeader>
             <CardTitle>{article.title}</CardTitle>
+            <CardDescription>{article.metaDescription}</CardDescription>
+            <div className="flex flex-wrap gap-2 pt-2">
+              {article.keywords?.map(keyword => (
+                <Badge key={keyword} variant="secondary">{keyword}</Badge>
+              ))}
+            </div>
+            <div className="flex items-center gap-6 text-sm text-muted-foreground pt-4">
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                <span>{article.wordCount} words</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                <span>{article.readingTime} read</span>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <div 
               className="prose prose-lg dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: article.article.replace(/\\n/g, '<br />') }} 
+              dangerouslySetInnerHTML={{ __html: article.article.replace(/\n/g, '<br />') }} 
             />
           </CardContent>
+          <CardFooter className="flex-col items-start gap-4 bg-secondary/50 p-6 rounded-b-lg">
+             <div className="flex items-center gap-2">
+              <Bot className="h-5 w-5 text-primary" />
+              <h4 className="font-semibold text-primary">Call to Action</h4>
+            </div>
+            <p className="text-muted-foreground">{article.ctaText}</p>
+            <Button>{article.ctaButton}</Button>
+          </CardFooter>
         </Card>
       )}
     </div>
