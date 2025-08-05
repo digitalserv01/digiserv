@@ -32,16 +32,23 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
   const getCategoryName = (slug: string) => categoryDisplayName[slug] || slug;
 
   const getArticleDate = () => {
-    if (article.createdAt) {
-        try {
-            return format(parseISO(article.createdAt), "d MMM yyyy", { locale: fr });
-        } catch (error) {
-            console.error("Invalid date format:", article.createdAt, error);
-            return "Date inconnue";
+    if (!article.createdAt) return "Date inconnue";
+    try {
+        let date: Date;
+        if (typeof article.createdAt === 'string') {
+            date = parseISO(article.createdAt);
+        } else if (typeof article.createdAt === 'object' && 'seconds' in article.createdAt) {
+            // This handles the case where it might be a Firestore-like Timestamp object on the client
+            date = new Date((article.createdAt as any).seconds * 1000);
+        } else {
+             throw new Error("Unsupported date format");
         }
+        return format(date, "d MMM yyyy", { locale: fr });
+    } catch (error) {
+        console.error("Invalid date format in ArticleCard:", article.createdAt, error);
+        return "Date invalide";
     }
-    return "Date inconnue";
-  }
+  };
 
   return (
     <Link href={`/blog/${article.id}`} className="group">

@@ -69,26 +69,25 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
   const getArticleDate = () => {
-    if (article.createdAt) {
-      try {
-        // Si c'est un timestamp Firestore
-        if (typeof article.createdAt === 'object' && article.createdAt.seconds) {
-          return format(new Date(article.createdAt.seconds * 1000), "dd MMMM yyyy", { locale: fr });
-        }
-        // Si c'est une string ISO
+    if (!article.createdAt) return "Date inconnue";
+    try {
+        let date: Date;
         if (typeof article.createdAt === 'string') {
-          return format(parseISO(article.createdAt), "dd MMMM yyyy", { locale: fr });
+            date = parseISO(article.createdAt);
+        } else if (typeof article.createdAt === 'object' && 'seconds' in article.createdAt) {
+            // This handles the case where it might be a Firestore-like Timestamp object on the client
+            date = new Date((article.createdAt as any).seconds * 1000);
+        } else if (article.createdAt instanceof Date) {
+            date = article.createdAt;
+        } else {
+            throw new Error("Unsupported date format");
         }
-        // Si c'est déjà un Date object
-        if (article.createdAt instanceof Date) {
-          return format(article.createdAt, "dd MMMM yyyy", { locale: fr });
-        }
-      } catch (error) {
-        console.error("Invalid date format:", article.createdAt, error);
-      }
+        return format(date, "dd MMMM yyyy", { locale: fr });
+    } catch (error) {
+        console.error("Invalid date format in ArticlePage:", article.createdAt, error);
+        return "Date invalide";
     }
-    return "Date inconnue";
-   };
+  };
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
       <div className="lg:grid lg:grid-cols-12 lg:gap-8">
