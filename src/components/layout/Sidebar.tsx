@@ -14,8 +14,10 @@ const services = [
 ];
 
 const testimonials = [
-  { name: 'Marie D.', company: 'Artisan Boulangerie', text: 'Mon site web a triplé mes commandes en ligne!', rating: 5, avatar: 'https://images.unsplash.com/photo-1664575602554-2087b04935a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHxlbnwwfHx8fDE3NTQzNTc5NTh8MA&ixlib=rb-4.1.0&q=80&w=1080' },
-  { name: 'Pierre M.', company: 'Consultant RH', text: 'CV refait, 3 entretiens en 1 semaine. Merci !', rating: 5, avatar: 'https://images.unsplash.com/photo-1695927621677-ec96e048dce2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYW4lMjBzZWxmaWV8ZW58MHx8fHwxNzU0MzU3ODg2fDA&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Marie Dubois', company: 'Artisan Boulanger', text: 'Mon site web a triplé mes commandes en ligne!', rating: 5, avatar: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwb3J0cmFpdCUyMHdvbWFufGVufDB8fHx8MTc1NDQ0MDgwN3ww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Pierre Martin', company: 'Consultant RH', text: 'CV refait, 3 entretiens en 1 semaine. Merci !', rating: 5, avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMG1hbnxlbnwwfHx8fDE3NTQ0NDA4NDN8MA&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Sophie Leroy', company: 'Coach Sportive', text: 'Ma campagne pub a attiré 50 nouveaux clients !', rating: 5, avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdHxlbnwwfHx8fDE3NTQ0NDA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Julien Petit', company: 'E-commerçant', text: 'L\'IA me fait gagner 10h par semaine. Incroyable.', rating: 5, avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwb3J0cmFpdHxlbnwwfHx8fDE3NTQ0NDA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
 
 export default function Sidebar() {
