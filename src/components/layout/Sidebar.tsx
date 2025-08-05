@@ -14,7 +14,7 @@ const services = [
 ];
 
 const testimonials = [
-  { name: 'Marie D.', company: 'Artisan Boulangerie', text: 'Mon site web a triplé mes commandes en ligne!', rating: 5, avatar: 'https://placehold.co/40x40.png' },
+  { name: 'Marie D.', company: 'Artisan Boulangerie', text: 'Mon site web a triplé mes commandes en ligne!', rating: 5, avatar: 'https://images.unsplash.com/photo-1664575602554-2087b04935a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHxlbnwwfHx8fDE3NTQzNTc5NTh8MA&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Pierre M.', company: 'Consultant RH', text: 'CV refait, 3 entretiens en 1 semaine. Merci !', rating: 5, avatar: 'https://images.unsplash.com/photo-1695927621677-ec96e048dce2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYW4lMjBzZWxmaWV8ZW58MHx8fHwxNzU0MzU3ODg2fDA&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
 
