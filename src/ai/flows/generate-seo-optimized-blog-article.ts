@@ -37,8 +37,8 @@ const prompt = ai.definePrompt({
       *   **Conclusion (approx. 150 words)**: Summarize the key takeaways and provide encouragement. It MUST seamlessly transition to a specific, contextual Call-to-Action (CTA).
 
   4.  **Call-To-Action (CTA)**: The CTA must be specific to the article's topic and include a price.
-      *   Example for `ctaText`: "Our team develops professional showcase sites optimized for the French market starting at €209. Let's talk about your project on WhatsApp!"
-      *   For `ctaButton`, use a concise and direct call to action like "Discuter sur WhatsApp" or "Réserver sur WhatsApp".
+      *   Example for ctaText: "Our team develops professional showcase sites optimized for the French market starting at €209. Let's talk about your project on WhatsApp!"
+      *   For ctaButton, use a concise and direct call to action like "Discuter sur WhatsApp" or "Réserver sur WhatsApp".
 
   5.  **Tone & Style**:
       *   Use a professional yet accessible tone. Use "vous" instead of "tu".
@@ -86,7 +86,7 @@ const generateSeoOptimizedBlogArticleFlow = ai.defineFlow(
       },
     });
 
-    const imageUrl = media?.url || 'https://placehold.co/400x225.png'; // Fallback image
+    const imageUrl = media?.url || 'https://placehold.co/1200x600.png'; // Fallback image
     if (!media) {
       console.warn('Image generation failed, using fallback.');
     }
