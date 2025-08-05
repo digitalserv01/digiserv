@@ -1,47 +1,75 @@
-import { collection, getDocs, limit, orderBy, query, startAfter, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, limit, orderBy, query, startAfter, Timestamp, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Article, ArticleDocument } from '@/types/article';
 import ArticleCard from '@/components/blog/ArticleCard';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-const ARTICLES_PER_PAGE = 10;
+const ARTICLES_PER_PAGE = 9;
 
 interface BlogPageProps {
   searchParams: {
     page?: string;
+    category?: string;
   }
 }
 
-async function getArticles(page = 1) {
-  const articlesCol = collection(db, 'articles');
-  let q;
+const categoryDisplayName: { [key: string]: string } = {
+  'cv-emploi': 'CV & Emploi',
+  'developpement-web': 'Développement Web',
+  'marketing-digital': 'Marketing Digital',
+  'ecommerce': 'E-commerce',
+  'ia-automation': 'IA & Automation',
+};
+const getCategoryName = (slug: string) => categoryDisplayName[slug] || slug;
 
-  if (page > 1) {
-    // For pagination, we need to get the last document of the previous page
-    const prevPageQuery = query(articlesCol, orderBy('createdAt', 'desc'), limit(ARTICLES_PER_PAGE * (page - 1)));
-    const prevPageSnapshot = await getDocs(prevPageQuery);
-    const lastVisible = prevPageSnapshot.docs[prevPageSnapshot.docs.length - 1];
-    q = query(articlesCol, orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(ARTICLES_PER_PAGE));
+
+async function getArticles(page = 1, category?: string) {
+  let articlesCol = collection(db, 'articles');
+  
+  // Base queries
+  let paginatedQuery;
+  let totalQuery;
+
+  // Apply category filter if it exists
+  if (category) {
+    totalQuery = query(articlesCol, where('category', '==', category));
+    paginatedQuery = query(articlesCol, where('category', '==', category), orderBy('createdAt', 'desc'), limit(ARTICLES_PER_PAGE));
   } else {
-    q = query(articlesCol, orderBy('createdAt', 'desc'), limit(ARTICLES_PER_PAGE));
+    totalQuery = query(articlesCol);
+    paginatedQuery = query(articlesCol, orderBy('createdAt', 'desc'), limit(ARTICLES_PER_PAGE));
   }
 
-  const articlesSnapshot = await getDocs(q);
+  // Handle pagination
+  if (page > 1) {
+    const prevPageLimit = ARTICLES_PER_PAGE * (page - 1);
+    const prevPageQuery = category 
+      ? query(articlesCol, where('category', '==', category), orderBy('createdAt', 'desc'), limit(prevPageLimit))
+      : query(articlesCol, orderBy('createdAt', 'desc'), limit(prevPageLimit));
+      
+    const prevPageSnapshot = await getDocs(prevPageQuery);
+    const lastVisible = prevPageSnapshot.docs[prevPageSnapshot.docs.length - 1];
+    
+    if(lastVisible) {
+       paginatedQuery = category
+        ? query(articlesCol, where('category', '==', category), orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(ARTICLES_PER_PAGE))
+        : query(articlesCol, orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(ARTICLES_PER_PAGE));
+    }
+  }
+
+  const articlesSnapshot = await getDocs(paginatedQuery);
   const articles: Article[] = articlesSnapshot.docs.map(doc => {
     const data = doc.data() as ArticleDocument;
-    // Handle server-side timestamp conversion safely
     const createdAt = data.createdAt?.toJSON() || new Date().toJSON();
     return {
       id: doc.id,
       ...data,
       createdAt,
-      imageUrl: data.imageUrl || 'https://placehold.co/400x225.png',
+      imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
     };
   });
 
-  const totalArticlesQuery = query(articlesCol);
-  const totalArticlesSnapshot = await getDocs(totalArticlesQuery);
+  const totalArticlesSnapshot = await getDocs(totalQuery);
   const totalArticles = totalArticlesSnapshot.size;
 
   return { articles, totalArticles };
@@ -50,16 +78,34 @@ async function getArticles(page = 1) {
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
-  const { articles, totalArticles } = await getArticles(page);
+  const category = searchParams.category;
+  const { articles, totalArticles } = await getArticles(page, category);
   const totalPages = Math.ceil(totalArticles / ARTICLES_PER_PAGE);
+
+  const pageTitle = category ? `Catégorie : ${getCategoryName(category)}` : "Notre Blog";
+  const pageDescription = category 
+    ? `Parcourez tous les articles dans la catégorie "${getCategoryName(category)}".`
+    : "Découvrez nos conseils, guides et analyses pour accélérer votre transformation digitale.";
+
+  const createPageURL = (p: number) => {
+    const params = new URLSearchParams();
+    if(category) params.set('category', category);
+    if(p > 1) params.set('page', p.toString());
+    return `/blog?${params.toString()}`;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <header className="text-center mb-12">
-        <h1 className="text-4xl lg:text-5xl font-bold font-headline text-primary">Notre Blog</h1>
+        <h1 className="text-4xl lg:text-5xl font-bold font-headline text-primary">{pageTitle}</h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Découvrez nos conseils, guides et analyses pour accélérer votre transformation digitale.
+          {pageDescription}
         </p>
+        {category && (
+            <Button asChild variant="link" className="mt-4">
+                <Link href="/blog">Voir tous les articles</Link>
+            </Button>
+        )}
       </header>
 
       {articles.length > 0 ? (
@@ -71,20 +117,22 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       ) : (
         <div className="text-center py-16">
           <h2 className="text-2xl font-bold">Aucun article trouvé</h2>
-          <p className="text-muted-foreground mt-2">Revenez bientôt pour de nouveaux contenus !</p>
+          <p className="text-muted-foreground mt-2">
+            {category ? `Il n'y a pas encore d'articles dans cette catégorie.` : `Revenez bientôt pour de nouveaux contenus !`}
+          </p>
         </div>
       )}
 
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-4 mt-16">
           <Button asChild variant="outline" disabled={page <= 1}>
-            <Link href={`/blog?page=${page - 1}`}>Précédent</Link>
+            <Link href={createPageURL(page - 1)}>Précédent</Link>
           </Button>
           <span className="text-sm text-muted-foreground">
             Page {page} sur {totalPages}
           </span>
           <Button asChild variant="outline" disabled={page >= totalPages}>
-            <Link href={`/blog?page=${page + 1}`}>Suivant</Link>
+            <Link href={createPageURL(page + 1)}>Suivant</Link>
           </Button>
         </div>
       )}

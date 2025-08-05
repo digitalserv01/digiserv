@@ -49,7 +49,7 @@ export default function CategoriesSection() {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category) => (
-          <Link key={category.slug} href={`/blog/category/${category.slug}`} className="group">
+          <Link key={category.slug} href={`/blog?category=${category.slug}`} className="group">
             <Card className="h-full flex flex-col justify-between hover:border-accent transition-all duration-300 hover:shadow-lg">
               <CardHeader>
                 <div className="mb-4 flex justify-center items-center h-16 w-16 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-colors">
