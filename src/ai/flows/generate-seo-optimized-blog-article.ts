@@ -8,17 +8,6 @@
 import {ai} from '@/ai/genkit';
 import { GenerateSeoOptimizedBlogArticleInput, GenerateSeoOptimizedBlogArticleInputSchema, GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
 
-function slugify(text: string): string {
-    return text
-        .toString()
-        .normalize('NFD') // split an accented letter in the base letter and the accent
-        .replace(/[\u0300-\u036f]/g, '') // remove all previously split accents
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, '-') // replace spaces with -
-        .replace(/[^\w\-]+/g, '') // remove all non-word chars
-        .replace(/\-\-+/g, '-'); // replace multiple - with single -
-}
 
 export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimizedBlogArticleInput): Promise<GenerateSeoOptimizedBlogArticleOutput> {
   return generateSeoOptimizedBlogArticleFlow(input);
@@ -88,9 +77,8 @@ const generateSeoOptimizedBlogArticleFlow = ai.defineFlow(
         throw new Error('Failed to generate article text. The AI model did not return a valid JSON output.');
     }
 
-    // 2. Construct the local image URL from the article title
-    const imageSlug = slugify(output.title);
-    const imageUrl = `/assets/images/${imageSlug}.png`;
+    // 2. Generate a dynamic Unsplash image URL based on the category
+    const imageUrl = `https://source.unsplash.com/random/1200x600?${encodeURIComponent(input.category.replace(/-/g, ' '))}`;
     
     // 3. Combine text and image URL into the final output
     return {

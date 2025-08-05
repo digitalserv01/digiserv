@@ -51,7 +51,7 @@ export async function generateAndSaveScheduledArticle(): Promise<GenerateAndSave
         const successMessage = `Article saved to Firestore with ID: ${docRef.id}`;
         console.log(successMessage);
         
-        const notificationMessage = `New article saved: "${articleOutput.title}".\n\nPlease upload the corresponding image to the assets folder with the filename: "${articleOutput.imageUrl.split('/').pop()}".`;
+        const notificationMessage = `New article published: "${articleOutput.title}". An image from Unsplash has been automatically assigned.`;
         await sendTelegramNotification(notificationMessage);
 
         return { success: true, message: successMessage, articleId: docRef.id, articleTitle: articleOutput.title };
