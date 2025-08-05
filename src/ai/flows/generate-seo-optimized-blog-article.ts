@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview A flow that generates SEO-optimized blog articles in French, including a hero image from Unsplash.
+ * @fileOverview A flow that generates SEO-optimized blog articles in French, including a hero image.
  *
  * - generateSeoOptimizedBlogArticle - A function that handles the blog article generation process.
  */
@@ -76,14 +76,27 @@ const generateSeoOptimizedBlogArticleFlow = ai.defineFlow(
         throw new Error('Failed to generate article text. The AI model did not return a valid JSON output.');
     }
 
-    // 2. Get a relevant image from Unsplash
-    console.log(`Fetching image from Unsplash for category: ${input.category}`);
-    // Replace hyphens with spaces for a better search query
-    const unsplashQuery = input.category.replace(/-/g, ' ');
-    const imageUrl = `https://source.unsplash.com/1200x600/?${encodeURIComponent(unsplashQuery)}`;
+    // 2. Get a relevant image from nekos.best API
+    let imageUrl = 'https://placehold.co/1200x600.png'; // Fallback image
+    try {
+        console.log(`Fetching image from nekos.best for category: ${input.category}`);
+        const searchQuery = input.category.replace(/-/g, ' ');
+        const response = await fetch(`https://nekos.best/api/v2/search?query=${encodeURIComponent(searchQuery)}&type=1&amount=1`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.results && data.results.length > 0 && data.results[0].url) {
+                imageUrl = data.results[0].url;
+                console.log(`Using nekos.best image URL: ${imageUrl}`);
+            } else {
+                console.log('nekos.best API did not return any images for the query.');
+            }
+        } else {
+            console.error(`nekos.best API request failed with status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error fetching image from nekos.best:', error);
+    }
     
-    console.log(`Using Unsplash image URL: ${imageUrl}`);
-
     // 3. Combine text and image URL into the final output
     return {
       ...output,
