@@ -8,6 +8,18 @@
 import {ai} from '@/ai/genkit';
 import { GenerateSeoOptimizedBlogArticleInput, GenerateSeoOptimizedBlogArticleInputSchema, GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
 
+function slugify(text: string): string {
+    return text
+        .toString()
+        .normalize('NFD') // split an accented letter in the base letter and the accent
+        .replace(/[\u0300-\u036f]/g, '') // remove all previously split accents
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-') // replace spaces with -
+        .replace(/[^\w\-]+/g, '') // remove all non-word chars
+        .replace(/\-\-+/g, '-'); // replace multiple - with single -
+}
+
 export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimizedBlogArticleInput): Promise<GenerateSeoOptimizedBlogArticleOutput> {
   return generateSeoOptimizedBlogArticleFlow(input);
 }
@@ -76,26 +88,9 @@ const generateSeoOptimizedBlogArticleFlow = ai.defineFlow(
         throw new Error('Failed to generate article text. The AI model did not return a valid JSON output.');
     }
 
-    // 2. Get a relevant image from nekos.best API
-    let imageUrl = 'https://placehold.co/1200x600.png'; // Fallback image
-    try {
-        console.log(`Fetching image from nekos.best for category: ${input.category}`);
-        const searchQuery = input.category.replace(/-/g, ' ');
-        const response = await fetch(`https://nekos.best/api/v2/search?query=${encodeURIComponent(searchQuery)}&type=1&amount=1`);
-        if (response.ok) {
-            const data = await response.json();
-            if (data.results && data.results.length > 0 && data.results[0].url) {
-                imageUrl = data.results[0].url;
-                console.log(`Using nekos.best image URL: ${imageUrl}`);
-            } else {
-                console.log('nekos.best API did not return any images for the query.');
-            }
-        } else {
-            console.error(`nekos.best API request failed with status: ${response.status}`);
-        }
-    } catch (error) {
-        console.error('Error fetching image from nekos.best:', error);
-    }
+    // 2. Construct the local image URL from the article title
+    const imageSlug = slugify(output.title);
+    const imageUrl = `/assets/images/${imageSlug}.png`;
     
     // 3. Combine text and image URL into the final output
     return {

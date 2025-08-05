@@ -1,5 +1,6 @@
 import { generateScheduledArticle } from '@/ai/flows/generate-scheduled-article';
 import { db } from '@/lib/firebase';
+import { sendTelegramNotification } from '@/services/telegram';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import {NextResponse} from 'next/server';
 
@@ -31,6 +32,11 @@ export async function POST(req: Request) {
             createdAt: serverTimestamp(),
         });
         console.log(`Cron job finished: Article saved to Firestore with ID: ${docRef.id}`);
+        
+        // Send Telegram notification
+        const notificationMessage = `New article saved via CRON: "${article.title}".\n\nPlease upload the corresponding image to the assets folder with the filename: "${article.imageUrl.split('/').pop()}".`;
+        await sendTelegramNotification(notificationMessage);
+
         return NextResponse.json({ success: true, articleId: docRef.id });
 
     } catch(error: any) {
