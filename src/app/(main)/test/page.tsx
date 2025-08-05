@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Save, Wand, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
+import { Loader2, Save, Wand, CheckCircle, AlertCircle, ExternalLink, FileText, Clock, Bot } from 'lucide-react';
 import { handleGenerateArticle, handleSaveArticle } from './actions';
 import type { GenerateSeoOptimizedBlogArticleOutput } from '@/ai/schemas';
 import ReactMarkdown from 'react-markdown';
