@@ -31,7 +31,7 @@ export default function HeroSection() {
             <div className="flex items-center justify-center lg:justify-start gap-4 pt-4">
               <div className="flex items-center">
                 <div className="flex -space-x-2">
-                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 1" className="rounded-full border-2 border-white" data-ai-hint="woman smiling" />
+                  <Image src="https://images.unsplash.com/photo-1672257493626-038f96997ade?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyMHx8YmFyYmVyc2hvcHxlbnwwfHx8fDE3NTQ0MzcyODl8MA&ixlib=rb-4.1.0&q=80&w=1080" width={40} height={40} alt="Client 1" className="rounded-full border-2 border-white" data-ai-hint="woman smiling" />
                   <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 2" className="rounded-full border-2 border-white" data-ai-hint="man portrait" />
                   <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 3" className="rounded-full border-2 border-white" data-ai-hint="woman portrait" />
                 </div>
