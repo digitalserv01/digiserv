@@ -9,15 +9,25 @@ import {ai} from '@/ai/genkit';
 import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
 import { GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { z } from 'zod';
 
-export async function generateScheduledArticle(): Promise<GenerateSeoOptimizedBlogArticleOutput> {
+
+const GenerateScheduledArticleOutputSchema = GenerateSeoOptimizedBlogArticleOutputSchema.extend({
+    articleId: z.string().optional(),
+});
+type GenerateScheduledArticleOutput = z.infer<typeof GenerateScheduledArticleOutputSchema>;
+
+
+export async function generateScheduledArticle(): Promise<GenerateScheduledArticleOutput> {
     return generateScheduledArticleFlow();
 }
 
 const generateScheduledArticleFlow = ai.defineFlow(
   {
     name: 'generateScheduledArticleFlow',
-    outputSchema: GenerateSeoOptimizedBlogArticleOutputSchema,
+    outputSchema: GenerateScheduledArticleOutputSchema,
   },
   async () => {
     console.log('Running scheduled article generation...');
@@ -51,8 +61,21 @@ const generateScheduledArticleFlow = ai.defineFlow(
 
     console.log('Generated Article:', articleOutput.title);
     
-    // The article is no longer saved here automatically. 
-    // It is returned and can be saved by the calling function.
-    return articleOutput;
+    // Save the article to Firestore
+    try {
+        console.log('Saving article to Firestore...');
+        const docRef = await addDoc(collection(db, 'articles'), {
+            ...articleOutput,
+            createdAt: serverTimestamp(),
+        });
+        console.log('Article saved to Firestore with ID:', docRef.id);
+        return {
+            ...articleOutput,
+            articleId: docRef.id,
+        };
+    } catch (error) {
+        console.error('Error saving article to Firestore:', error);
+        throw new Error('Failed to save article to Firestore.');
+    }
   }
 );
