@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Article, ArticleDocument } from '@/types/article';
+import CategoriesSection from '@/components/sections/CategoriesSection';
 
 export const revalidate = 3600; // Revalidate every hour
 
@@ -33,6 +34,8 @@ export default async function HomePage() {
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <main className="lg:col-span-8 xl:col-span-9">
             <BlogSection articles={articles} />
+            <Separator className="my-12" />
+            <CategoriesSection />
           </main>
           
           <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
