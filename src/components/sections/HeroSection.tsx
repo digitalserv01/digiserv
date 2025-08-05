@@ -49,12 +49,11 @@ export default function HeroSection() {
           <div className="relative hidden lg:block">
             <div className="relative z-10">
               <Image
-                src="https://placehold.co/500x550.png"
+                src="https://images.unsplash.com/photo-1599933959041-19cbf8d470f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNHx8bW9kZXJuJTIwd29ya3NwYWNlJTIwcGFyaXN8ZW58MHx8fHwxNzU0MzU0MjgxfDA&ixlib=rb-4.1.0&q=80&w=1080"
                 alt="Entrepreneur français travaillant sur ordinateur portable avec graphiques de croissance"
                 width={500}
                 height={550}
                 className="w-full object-cover rounded-2xl shadow-2xl"
-                data-ai-hint="team collaboration"
               />
             </div>
             
