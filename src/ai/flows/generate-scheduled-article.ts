@@ -1,59 +1,65 @@
 'use server';
 /**
- * @fileOverview A flow to generate a blog article based on a daily schedule.
+ * @fileOverview A flow to generate a blog article based on a daily schedule and save it.
  *
- * - generateScheduledArticle - A function that triggers the daily article generation.
+ * - generateAndSaveScheduledArticle - Triggers article generation, saves to Firestore, and sends a notification.
  */
 
 import {ai} from '@/ai/genkit';
 import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
-import { GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
+import { GenerateSeoOptimizedBlogArticleOutput } from '../schemas';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { sendTelegramNotification } from '@/services/telegram';
 
-
-export async function generateScheduledArticle(): Promise<GenerateSeoOptimizedBlogArticleOutput> {
-    return generateScheduledArticleFlow();
+interface GenerateAndSaveOutput {
+  success: boolean;
+  message: string;
+  articleId?: string;
+  articleTitle?: string;
 }
 
-const generateScheduledArticleFlow = ai.defineFlow(
-  {
-    name: 'generateScheduledArticleFlow',
-    outputSchema: GenerateSeoOptimizedBlogArticleOutputSchema,
-  },
-  async () => {
+
+export async function generateAndSaveScheduledArticle(): Promise<GenerateAndSaveOutput> {
     console.log('Running scheduled article generation...');
 
     const dailyTopic = getDailyTopic();
 
     if (!dailyTopic) {
-      console.log('No article to generate today.');
-      // Return a compatible empty-like response
-      return { 
-        title: 'No article today', 
-        article: '', 
-        metaDescription: '',
-        wordCount: 0,
-        readingTime: '0 min',
-        ctaText: '',
-        ctaButton: '',
-        keywords: [],
-        category: '',
-        imageUrl: '',
-      };
+      const message = 'No article to generate today.';
+      console.log(message);
+      return { success: true, message };
     }
 
     console.log(`Generating article for topic: ${dailyTopic.subject}`);
-
-    const articleOutput = await generateSeoOptimizedBlogArticle({
-      subject: dailyTopic.subject,
-      keywords: dailyTopic.keywords,
-      category: dailyTopic.category,
-    });
-
-    console.log('Generated Article:', articleOutput.title);
     
-    // The article is no longer saved here automatically. 
-    // It is returned and can be saved by the calling function.
-    return articleOutput;
-  }
-);
+    try {
+        const articleOutput = await generateSeoOptimizedBlogArticle({
+          subject: dailyTopic.subject,
+          keywords: dailyTopic.keywords,
+          category: dailyTopic.category,
+        });
+
+        console.log(`Article "${articleOutput.title}" generated. Now saving to Firestore...`);
+
+        const docRef = await addDoc(collection(db, 'articles'), {
+            ...articleOutput,
+            createdAt: serverTimestamp(),
+        });
+
+        const successMessage = `Article saved to Firestore with ID: ${docRef.id}`;
+        console.log(successMessage);
+        
+        const notificationMessage = `New article saved: "${articleOutput.title}".\n\nPlease upload the corresponding image to the assets folder with the filename: "${articleOutput.imageUrl.split('/').pop()}".`;
+        await sendTelegramNotification(notificationMessage);
+
+        return { success: true, message: successMessage, articleId: docRef.id, articleTitle: articleOutput.title };
+
+    } catch (error: any) {
+        console.error('Error during article generation or saving process:', error);
+        const errorMessage = error.message || 'An unknown error occurred.';
+        await sendTelegramNotification(`Failed to generate/save article. Error: ${errorMessage}`);
+        return { success: false, message: errorMessage };
+    }
+}
