@@ -31,9 +31,9 @@ export default function HeroSection() {
             <div className="flex items-center justify-center lg:justify-start gap-4 pt-4">
               <div className="flex items-center">
                 <div className="flex -space-x-2">
-                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 1" className="rounded-full border-2 border-white" data-ai-hint="person face" />
-                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 2" className="rounded-full border-2 border-white" data-ai-hint="person face" />
-                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 3" className="rounded-full border-2 border-white" data-ai-hint="person face" />
+                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 1" className="rounded-full border-2 border-white" data-ai-hint="woman smiling" />
+                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 2" className="rounded-full border-2 border-white" data-ai-hint="man portrait" />
+                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 3" className="rounded-full border-2 border-white" data-ai-hint="woman portrait" />
                 </div>
               </div>
               <div>
@@ -54,7 +54,7 @@ export default function HeroSection() {
                 width={500}
                 height={550}
                 className="w-full object-cover rounded-2xl shadow-2xl"
-                data-ai-hint="business meeting"
+                data-ai-hint="team collaboration"
               />
             </div>
             
