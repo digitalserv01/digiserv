@@ -12,11 +12,11 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const services = [
-  { name: 'CV Professionnel', href: '#' },
-  { name: 'Sites Web & Vitrine', href: '#' },
-  { name: 'Marketing Digital', href: '#' },
-  { name: 'Boutique E-commerce', href: '#' },
-  { name: 'Formation IA', href: '#' }
+  { name: 'CV Professionnel', href: '/services' },
+  { name: 'Sites Web & Vitrine', href: '/services' },
+  { name: 'Marketing Digital', href: '/services' },
+  { name: 'Boutique E-commerce', href: '/services' },
+  { name: 'Formation IA', href: '/services' }
 ];
 
 export default function Header() {
@@ -47,22 +47,9 @@ export default function Header() {
           <nav className="hidden lg:flex items-center space-x-10">
             <Link href="/" className="text-sm font-medium text-primary hover:text-accent transition-colors">Accueil</Link>
             
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center text-sm font-medium text-primary hover:text-accent transition-colors outline-none">
-                  Services <ChevronDown className="ml-1 h-4 w-4" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {services.map((service) => (
-                  <DropdownMenuItem key={service.name} asChild>
-                    <Link href={service.href}>{service.name}</Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link href="/services" className="text-sm font-medium text-primary hover:text-accent transition-colors">Services</Link>
 
-            <Link href="#" className="text-sm font-medium text-primary hover:text-accent transition-colors">Blog</Link>
+            <Link href="/blog" className="text-sm font-medium text-primary hover:text-accent transition-colors">Blog</Link>
             <Link href="#" className="text-sm font-medium text-primary hover:text-accent transition-colors">À propos</Link>
             <Link href="#" className="text-sm font-medium text-primary hover:text-accent transition-colors">Contact</Link>
           </nav>
@@ -85,20 +72,9 @@ export default function Header() {
             <nav className="flex flex-col space-y-2">
               <Link href="/" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Accueil</Link>
               
-              <Collapsible>
-                <CollapsibleTrigger className="flex w-full justify-between items-center px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary">
-                  Services <ChevronDown className="h-4 w-4" />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pl-8 pt-2 space-y-2">
-                   {services.map((service) => (
-                    <Link key={service.name} href={service.href} className="block py-2 text-base font-medium text-muted-foreground rounded-md hover:text-primary" onClick={toggleMobileMenu}>
-                      {service.name}
-                    </Link>
-                  ))}
-                </CollapsibleContent>
-              </Collapsible>
+              <Link href="/services" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Services</Link>
               
-              <Link href="#" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Blog</Link>
+              <Link href="/blog" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Blog</Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>À propos</Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Contact</Link>
               <div className="pt-4">

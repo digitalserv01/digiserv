@@ -48,11 +48,12 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
       <Card className="flex h-full flex-col overflow-hidden shadow-sm transition-all duration-300 hover:shadow-xl">
         <div className="relative overflow-hidden">
           <Image
-            src={`https://placehold.co/400x225.png?text=${encodeURIComponent(article.title)}`}
+            src={`https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(article.category))}`}
             alt={article.title}
             width={400}
             height={225}
             className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            data-ai-hint={article.category.replace(/-/g, ' ')}
           />
         </div>
 
@@ -85,7 +86,7 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
-                <span>{article.readingTime} read</span>
+                <span>{article.readingTime}</span>
               </div>
             </div>
             

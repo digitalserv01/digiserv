@@ -32,7 +32,7 @@ async function getArticle(id: string): Promise<Article | null> {
   return { 
       id: docSnap.id, 
       ...data,
-      createdAt: data.createdAt.toJSON()
+      createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
   };
 }
 
@@ -113,7 +113,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  <span>{article.readingTime} de lecture</span>
+                  <span>{article.readingTime}</span>
                 </div>
               </div>
             </CardHeader>
