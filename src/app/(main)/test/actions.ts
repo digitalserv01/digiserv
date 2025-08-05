@@ -3,6 +3,7 @@
 import { generateScheduledArticle } from "@/ai/flows/generate-scheduled-article";
 import type { GenerateSeoOptimizedBlogArticleOutput } from "@/ai/schemas";
 import { db } from "@/lib/firebase";
+import { uploadImage } from "@/services/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 export async function handleGenerateArticle(): Promise<{ article?: GenerateSeoOptimizedBlogArticleOutput; error?: string; }> {
@@ -20,15 +21,24 @@ export async function handleSaveArticle(article: GenerateSeoOptimizedBlogArticle
         return { success: false, error: 'Invalid article data provided.' };
     }
     try {
+        console.log('Uploading hero image to Firebase Storage...');
+        const publicImageUrl = await uploadImage(article.imageUrl, 'blogs');
+        console.log('Image uploaded successfully:', publicImageUrl);
+
+        const articleToSave = {
+            ...article,
+            imageUrl: publicImageUrl,
+        };
+
         console.log('Saving article to Firestore...');
         const docRef = await addDoc(collection(db, 'articles'), {
-            ...article,
+            ...articleToSave,
             createdAt: serverTimestamp(),
         });
         console.log('Article saved to Firestore with ID:', docRef.id);
         return { success: true, articleId: docRef.id };
     } catch (error: any) {
-        console.error('Error saving article to Firestore:', error);
+        console.error('Error in handleSaveArticle:', error);
         return { success: false, error: error.message || 'Failed to save article.' };
     }
 }
