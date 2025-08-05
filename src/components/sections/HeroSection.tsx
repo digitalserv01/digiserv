@@ -33,7 +33,7 @@ export default function HeroSection() {
                 <div className="flex -space-x-2">
                   <Image src="https://images.unsplash.com/photo-1672257493626-038f96997ade?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyMHx8YmFyYmVyc2hvcHxlbnwwfHx8fDE3NTQ0MzcyODl8MA&ixlib=rb-4.1.0&q=80&w=1080" width={40} height={40} alt="Client 1" className="rounded-full border-2 border-white" data-ai-hint="woman smiling" />
                   <Image src="https://images.unsplash.com/photo-1620194544222-8c956ca15f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyMHx8cmVzdGF1cmFudCUyMGxvZ298ZW58MHx8fHwxNzU0NDM3MzU5fDA&ixlib=rb-4.1.0&q=80&w=1080" width={40} height={40} alt="Client 2" className="rounded-full border-2 border-white" data-ai-hint="man portrait" />
-                  <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Client 3" className="rounded-full border-2 border-white" data-ai-hint="woman portrait" />
+                  <Image src="https://images.unsplash.com/photo-1600320254374-ce2d293c324e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyMHx8Y2FyJTIwcmVudGFsfGVufDB8fHx8MTc1NDQzNzQxM3ww&ixlib=rb-4.1.0&q=80&w=1080" width={40} height={40} alt="Client 3" className="rounded-full border-2 border-white" data-ai-hint="woman portrait" />
                 </div>
               </div>
               <div>
