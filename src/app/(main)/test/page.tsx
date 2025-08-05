@@ -2,30 +2,27 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Wand, CheckCircle, AlertCircle, ExternalLink, Bot, FileText, Clock } from 'lucide-react';
+import { Loader2, Wand, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
 import { handleGenerateAndSaveArticle } from './actions';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
-import Image from 'next/image';
-import type { GenerateSeoOptimizedBlogArticleOutput } from '@/ai/schemas';
 
 export default function TestCronPage() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
   const [articleId, setArticleId] = useState<string | null>(null);
-  const [article, setArticle] = useState<GenerateSeoOptimizedBlogArticleOutput | null>(null);
   
   const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && (!user || user.uid !== process.env.NEXT_PUBLIC_ADMIN_ID)) {
-      router.push('/');
+    if (!loading) {
+      if (!user || user.uid !== process.env.NEXT_PUBLIC_ADMIN_ID) {
+        router.push('/');
+      }
     }
   }, [user, loading, router]);
-
 
   const onGenerateAndSave = async () => {
     setState('loading');
@@ -35,11 +32,9 @@ export default function TestCronPage() {
     const result = await handleGenerateAndSaveArticle();
     
     setMessage(result.message);
-    if (result.success) {
+    if (result.success && result.articleId) {
       setState('success');
-      if (result.articleId) {
-        setArticleId(result.articleId);
-      }
+      setArticleId(result.articleId);
     } else {
       setState('error');
     }
@@ -52,7 +47,6 @@ export default function TestCronPage() {
         </div>
     )
   }
-
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
