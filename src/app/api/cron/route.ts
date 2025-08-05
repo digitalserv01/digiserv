@@ -1,6 +1,5 @@
 import { generateScheduledArticle } from '@/ai/flows/generate-scheduled-article';
 import { db } from '@/lib/firebase';
-import { uploadImage } from '@/services/storage';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import {NextResponse} from 'next/server';
 
@@ -27,17 +26,8 @@ export async function POST(req: Request) {
     console.log(`Cron job: Article "${article.title}" generated. Now saving to Firestore...`);
 
     try {
-        console.log('Cron job: Uploading hero image to Firebase Storage...');
-        const publicImageUrl = await uploadImage(article.imageUrl, 'blogs');
-        console.log('Cron job: Image uploaded successfully:', publicImageUrl);
-        
-        const articleToSave = {
-            ...article,
-            imageUrl: publicImageUrl,
-        };
-        
         const docRef = await addDoc(collection(db, 'articles'), {
-            ...articleToSave,
+            ...article,
             createdAt: serverTimestamp(),
         });
         console.log(`Cron job finished: Article saved to Firestore with ID: ${docRef.id}`);

@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview A flow that generates SEO-optimized blog articles in French, including a hero image.
+ * @fileOverview A flow that generates SEO-optimized blog articles in French, including a hero image from Unsplash.
  *
  * - generateSeoOptimizedBlogArticle - A function that handles the blog article generation process.
  */
@@ -71,29 +71,22 @@ const generateSeoOptimizedBlogArticleFlow = ai.defineFlow(
   },
   async input => {
     // 1. Generate the text content of the article
-    const {output: textOutput} = await prompt(input);
-    if (!textOutput) {
-        throw new Error('Failed to generate article text.');
+    const {output} = await prompt(input);
+    if (!output) {
+        throw new Error('Failed to generate article text. The AI model did not return a valid JSON output.');
     }
 
-    // 2. Generate the hero image
-    console.log('Generating hero image for article:', textOutput.title);
-    const { media } = await ai.generate({
-      model: 'googleai/gemini-2.0-flash-preview-image-generation',
-      prompt: `Photorealistic hero image for a blog article titled "${textOutput.title}". The image should be professional, engaging, and relevant to the French business market. Avoid text and logos.`,
-      config: {
-        responseModalities: ['TEXT', 'IMAGE'],
-      },
-    });
-
-    const imageUrl = media?.url || 'https://placehold.co/1200x600.png'; // Fallback image
-    if (!media) {
-      console.warn('Image generation failed, using fallback.');
-    }
+    // 2. Get a relevant image from Unsplash
+    console.log(`Fetching image from Unsplash for category: ${input.category}`);
+    // Replace hyphens with spaces for a better search query
+    const unsplashQuery = input.category.replace(/-/g, ' ');
+    const imageUrl = `https://source.unsplash.com/1200x600/?${encodeURIComponent(unsplashQuery)}`;
+    
+    console.log(`Using Unsplash image URL: ${imageUrl}`);
 
     // 3. Combine text and image URL into the final output
     return {
-      ...textOutput,
+      ...output,
       imageUrl,
     };
   }
