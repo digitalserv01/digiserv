@@ -37,8 +37,8 @@ const prompt = ai.definePrompt({
       *   **Conclusion (approx. 150 words)**: Summarize the key takeaways and provide encouragement. It MUST seamlessly transition to a specific, contextual Call-to-Action (CTA).
 
   4.  **Call-To-Action (CTA)**: The CTA must be specific to the article's topic and include a price.
-      *   Example for a Web Dev article: "Our team develops professional showcase sites optimized for the French market starting at €209. Let's talk about your project on WhatsApp!"
-      *   Example for a CV article: "If you want a professional CV that gets past all French ATS filters, our team can help you create one for just €17."
+      *   Example for `ctaText`: "Our team develops professional showcase sites optimized for the French market starting at €209. Let's talk about your project on WhatsApp!"
+      *   For `ctaButton`, use a concise and direct call to action like "Discuter sur WhatsApp" or "Réserver sur WhatsApp".
 
   5.  **Tone & Style**:
       *   Use a professional yet accessible tone. Use "vous" instead of "tu".
