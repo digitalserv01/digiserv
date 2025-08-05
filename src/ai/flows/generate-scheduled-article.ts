@@ -9,8 +9,6 @@ import {ai} from '@/ai/genkit';
 import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
 import { GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export async function generateScheduledArticle(): Promise<GenerateSeoOptimizedBlogArticleOutput> {
     return generateScheduledArticleFlow();
@@ -38,7 +36,8 @@ const generateScheduledArticleFlow = ai.defineFlow(
         ctaText: '',
         ctaButton: '',
         keywords: [],
-        category: ''
+        category: '',
+        imageUrl: '',
       };
     }
 
@@ -52,19 +51,8 @@ const generateScheduledArticleFlow = ai.defineFlow(
 
     console.log('Generated Article:', articleOutput.title);
     
-    try {
-      console.log('Saving article to Firestore...');
-      const docRef = await addDoc(collection(db, 'articles'), {
-        ...articleOutput,
-        createdAt: serverTimestamp(),
-      });
-      console.log('Article saved to Firestore with ID:', docRef.id);
-    } catch (error) {
-      console.error('Error saving article to Firestore:', error);
-      // We don't re-throw the error, so the flow can still return the article content.
-      // In a real app, you might want more robust error handling or retries.
-    }
-
+    // The article is no longer saved here automatically. 
+    // It is returned and can be saved by the calling function.
     return articleOutput;
   }
 );
