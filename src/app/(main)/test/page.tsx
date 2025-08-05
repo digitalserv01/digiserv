@@ -1,16 +1,32 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Wand, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
+import { Loader2, Wand, CheckCircle, AlertCircle, ExternalLink, Bot, FileText, Clock } from 'lucide-react';
 import { handleGenerateAndSaveArticle } from './actions';
 import Link from 'next/link';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
+import type { GenerateSeoOptimizedBlogArticleOutput } from '@/ai/schemas';
 
 export default function TestCronPage() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
   const [articleId, setArticleId] = useState<string | null>(null);
+  const [article, setArticle] = useState<GenerateSeoOptimizedBlogArticleOutput | null>(null);
   
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && (!user || user.uid !== process.env.NEXT_PUBLIC_ADMIN_ID)) {
+      router.push('/');
+    }
+  }, [user, loading, router]);
+
+
   const onGenerateAndSave = async () => {
     setState('loading');
     setMessage(null);
@@ -28,6 +44,15 @@ export default function TestCronPage() {
       setState('error');
     }
   };
+
+  if (loading || !user) {
+    return (
+        <div className="flex h-screen items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+    )
+  }
+
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
