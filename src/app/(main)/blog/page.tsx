@@ -25,52 +25,64 @@ const getCategoryName = (slug: string) => categoryDisplayName[slug] || slug;
 
 
 async function getArticles(page = 1, category?: string) {
-  let articlesCol = collection(db, 'articles');
+  const articlesCol = collection(db, 'articles');
   
-  // Base queries
-  let paginatedQuery;
-  let totalQuery;
+  let articles: Article[] = [];
+  let totalArticles = 0;
 
-  // Apply category filter if it exists
   if (category) {
-    totalQuery = query(articlesCol, where('category', '==', category));
-    paginatedQuery = query(articlesCol, where('category', '==', category), orderBy('createdAt', 'desc'), limit(ARTICLES_PER_PAGE));
-  } else {
-    totalQuery = query(articlesCol);
-    paginatedQuery = query(articlesCol, orderBy('createdAt', 'desc'), limit(ARTICLES_PER_PAGE));
-  }
+    // Query by category first, then sort in code to avoid composite index requirement for now
+    const categoryQuery = query(articlesCol, where('category', '==', category));
+    const snapshot = await getDocs(categoryQuery);
+    const allCategoryArticles = snapshot.docs.map(doc => {
+        const data = doc.data() as ArticleDocument;
+        return {
+            id: doc.id,
+            ...data,
+            createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
+            imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
+        };
+    });
 
-  // Handle pagination
-  if (page > 1) {
-    const prevPageLimit = ARTICLES_PER_PAGE * (page - 1);
-    const prevPageQuery = category 
-      ? query(articlesCol, where('category', '==', category), orderBy('createdAt', 'desc'), limit(prevPageLimit))
-      : query(articlesCol, orderBy('createdAt', 'desc'), limit(prevPageLimit));
-      
-    const prevPageSnapshot = await getDocs(prevPageQuery);
-    const lastVisible = prevPageSnapshot.docs[prevPageSnapshot.docs.length - 1];
+    // Sort by date manually
+    allCategoryArticles.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     
-    if(lastVisible) {
-       paginatedQuery = category
-        ? query(articlesCol, where('category', '==', category), orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(ARTICLES_PER_PAGE))
-        : query(articlesCol, orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(ARTICLES_PER_PAGE));
+    totalArticles = allCategoryArticles.length;
+    const startIndex = (page - 1) * ARTICLES_PER_PAGE;
+    const endIndex = startIndex + ARTICLES_PER_PAGE;
+    articles = allCategoryArticles.slice(startIndex, endIndex);
+
+  } else {
+    // Original logic for when there's no category filter
+    const totalQuery = query(articlesCol);
+    const totalSnapshot = await getDocs(totalQuery);
+    totalArticles = totalSnapshot.size;
+
+    let paginatedQuery = query(articlesCol, orderBy('createdAt', 'desc'), limit(ARTICLES_PER_PAGE));
+
+    if (page > 1) {
+      const prevPageLimit = ARTICLES_PER_PAGE * (page - 1);
+      const prevPageQuery = query(articlesCol, orderBy('createdAt', 'desc'), limit(prevPageLimit));
+      const prevPageSnapshot = await getDocs(prevPageQuery);
+      const lastVisible = prevPageSnapshot.docs[prevPageSnapshot.docs.length - 1];
+      
+      if(lastVisible) {
+         paginatedQuery = query(articlesCol, orderBy('createdAt', 'desc'), startAfter(lastVisible), limit(ARTICLES_PER_PAGE));
+      }
     }
+    
+    const articlesSnapshot = await getDocs(paginatedQuery);
+    articles = articlesSnapshot.docs.map(doc => {
+      const data = doc.data() as ArticleDocument;
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
+        imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
+      };
+    });
   }
 
-  const articlesSnapshot = await getDocs(paginatedQuery);
-  const articles: Article[] = articlesSnapshot.docs.map(doc => {
-    const data = doc.data() as ArticleDocument;
-    const createdAt = data.createdAt?.toJSON() || new Date().toJSON();
-    return {
-      id: doc.id,
-      ...data,
-      createdAt,
-      imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
-    };
-  });
-
-  const totalArticlesSnapshot = await getDocs(totalQuery);
-  const totalArticles = totalArticlesSnapshot.size;
 
   return { articles, totalArticles };
 }
