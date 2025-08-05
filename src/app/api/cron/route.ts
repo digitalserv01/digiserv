@@ -1,4 +1,6 @@
 import { generateScheduledArticle } from '@/ai/flows/generate-scheduled-article';
+import { db } from '@/lib/firebase';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import {NextResponse} from 'next/server';
 
 export const dynamic = 'force-dynamic'; // force dynamic rendering
@@ -13,19 +15,31 @@ export async function POST(req: Request) {
   }
 
   try {
-    console.log('Cron job started: Generating and saving scheduled article...');
-    const result = await generateScheduledArticle();
+    console.log('Cron job started: Generating scheduled article...');
+    const article = await generateScheduledArticle();
     
-    if (result.title === 'No article today') {
+    if (article.title === 'No article today') {
       console.log('Cron job finished: No article to generate today.');
       return NextResponse.json({ success: true, message: 'No article to generate today.' });
     }
 
-    console.log(`Cron job finished: Article "${result.title}" saved to Firestore with ID: ${result.articleId}`);
+    console.log(`Cron job: Article "${article.title}" generated. Now saving to Firestore...`);
 
-    return NextResponse.json({ success: true, articleId: result.articleId });
-  } catch (error) {
-    console.error('Error in cron job while generating/saving article:', error);
-    return NextResponse.json({ success: false, error: 'Failed to generate and save article' }, { status: 500 });
+    try {
+        const docRef = await addDoc(collection(db, 'articles'), {
+            ...article,
+            createdAt: serverTimestamp(),
+        });
+        console.log(`Cron job finished: Article saved to Firestore with ID: ${docRef.id}`);
+        return NextResponse.json({ success: true, articleId: docRef.id });
+
+    } catch(error: any) {
+        console.error('Error in cron job while saving article to Firestore:', error);
+        return NextResponse.json({ success: false, error: `Failed to save article. Firestore error: ${error.message}` }, { status: 500 });
+    }
+
+  } catch (error: any) {
+    console.error('Error in cron job while generating article:', error);
+    return NextResponse.json({ success: false, error: `Failed to generate article. AI flow error: ${error.message}` }, { status: 500 });
   }
 }
