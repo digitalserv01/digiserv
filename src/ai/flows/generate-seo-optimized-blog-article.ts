@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview A flow that generates SEO-optimized blog articles in French.
+ * @fileOverview A flow that generates SEO-optimized blog articles in French, including a hero image.
  *
  * - generateSeoOptimizedBlogArticle - A function that handles the blog article generation process.
  */
@@ -15,7 +15,7 @@ export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimize
 const prompt = ai.definePrompt({
   name: 'generateSeoOptimizedBlogArticlePrompt',
   input: {schema: GenerateSeoOptimizedBlogArticleInputSchema},
-  output: {schema: GenerateSeoOptimizedBlogArticleOutputSchema},
+  output: {schema: GenerateSeoOptimizedBlogArticleOutputSchema.omit({ imageUrl: true })}, // The prompt itself doesn't generate the URL
   prompt: `
   You are an expert French content creator for a digital services blog. Your audience is French entrepreneurs and small business owners.
   Your task is to write a comprehensive, professional, and SEO-optimized blog post of 1000-1200 words on the given subject.
@@ -70,7 +70,31 @@ const generateSeoOptimizedBlogArticleFlow = ai.defineFlow(
     outputSchema: GenerateSeoOptimizedBlogArticleOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    // 1. Generate the text content of the article
+    const {output: textOutput} = await prompt(input);
+    if (!textOutput) {
+        throw new Error('Failed to generate article text.');
+    }
+
+    // 2. Generate the hero image
+    console.log('Generating hero image for article:', textOutput.title);
+    const { media } = await ai.generate({
+      model: 'googleai/gemini-2.0-flash-preview-image-generation',
+      prompt: `Photorealistic hero image for a blog article titled "${textOutput.title}". The image should be professional, engaging, and relevant to the French business market. Avoid text and logos.`,
+      config: {
+        responseModalities: ['TEXT', 'IMAGE'],
+      },
+    });
+
+    const imageUrl = media?.url || 'https://placehold.co/400x225.png'; // Fallback image
+    if (!media) {
+      console.warn('Image generation failed, using fallback.');
+    }
+
+    // 3. Combine text and image URL into the final output
+    return {
+      ...textOutput,
+      imageUrl,
+    };
   }
 );

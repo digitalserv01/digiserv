@@ -20,5 +20,6 @@ export const GenerateSeoOptimizedBlogArticleOutputSchema = z.object({
   ctaButton: z.string().describe('The text for the call-to-action button (e.g., "Discuss on WhatsApp").'),
   keywords: z.array(z.string()).describe('A list of 3-5 relevant SEO keywords for the article.'),
   category: z.string().describe('The category of the blog article.'),
+  imageUrl: z.string().url().describe('The URL of the generated hero image for the article.'),
 });
 export type GenerateSeoOptimizedBlogArticleOutput = z.infer<typeof GenerateSeoOptimizedBlogArticleOutputSchema>;

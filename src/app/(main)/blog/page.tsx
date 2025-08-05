@@ -36,6 +36,7 @@ async function getArticles(page = 1) {
       id: doc.id,
       ...data,
       createdAt,
+      imageUrl: data.imageUrl || 'https://placehold.co/400x225.png',
     };
   });
 

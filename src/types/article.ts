@@ -12,6 +12,7 @@ export interface Article {
   keywords: string[];
   category: string;
   createdAt: string; // Changed from Timestamp to string
+  imageUrl: string;
 }
 
 export interface ArticleDocument extends Omit<Article, 'id' | 'createdAt'> {

@@ -21,6 +21,7 @@ export default async function HomePage() {
       id: doc.id,
       ...data,
       createdAt,
+      imageUrl: data.imageUrl || 'https://placehold.co/400x225.png',
     }
   });
 

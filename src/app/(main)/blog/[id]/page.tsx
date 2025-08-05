@@ -12,6 +12,7 @@ import Sidebar from '@/components/layout/Sidebar';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Image from 'next/image';
 
 interface ArticlePageProps {
   params: {
@@ -33,6 +34,8 @@ async function getArticle(id: string): Promise<Article | null> {
       id: docSnap.id, 
       ...data,
       createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
+      // Ensure imageUrl is always a string, provide fallback
+      imageUrl: data.imageUrl || 'https://placehold.co/1200x600.png',
   };
 }
 
@@ -91,6 +94,15 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <div className="lg:grid lg:grid-cols-12 lg:gap-8">
         <main className="lg:col-span-8 xl:col-span-9">
           <Card className="overflow-hidden">
+            <div className="relative w-full aspect-video">
+                <Image 
+                    src={article.imageUrl}
+                    alt={article.title}
+                    fill
+                    className="object-cover"
+                    priority
+                />
+            </div>
             <CardHeader className="flex-col items-start gap-4">
               <div>
                 <Badge variant="secondary">{getCategoryName(article.category)}</Badge>

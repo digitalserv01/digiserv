@@ -46,13 +46,12 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
   return (
     <Link href={`/blog/${article.id}`} className="group">
       <Card className="flex h-full flex-col overflow-hidden shadow-sm transition-all duration-300 hover:shadow-xl">
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden aspect-[16/9]">
           <Image
-            src={`https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(article.category))}`}
+            src={article.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(article.category))}`}
             alt={article.title}
-            width={400}
-            height={225}
-            className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             data-ai-hint={article.category.replace(/-/g, ' ')}
           />
         </div>
