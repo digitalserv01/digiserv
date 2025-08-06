@@ -1,5 +1,6 @@
 'use client';
-import { useActionState, useFormStatus } from 'react';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { useEffect, useRef } from 'react';
 import { subscribeToNewsletter } from '@/app/actions/subscribe';
 import { Input } from '@/components/ui/input';
