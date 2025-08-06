@@ -43,7 +43,7 @@ const services = [
     description: "Vendez vos produits en ligne avec une boutique performante, sécurisée et facile à gérer au quotidien.",
     features: ['Basée sur Shopify ou WooCommerce', 'Intégration de paiement sécurisé', 'Optimisation de la conversion', 'Formation à la gestion'],
     price: 'dès 499€',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1727174439417-8c2d2c73fd1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxN3x8ZS1jb21tZXJjZXxlbnwwfHx8fDE3NTQ0NDM3MDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
     aiHint: 'online store products',
     icon: <ShoppingCart className="w-8 h-8 text-accent" />,
   },
