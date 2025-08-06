@@ -50,7 +50,7 @@ export default function Header() {
             <Link href="/services" className="text-sm font-medium text-primary hover:text-accent transition-colors">Services</Link>
 
             <Link href="/blog" className="text-sm font-medium text-primary hover:text-accent transition-colors">Blog</Link>
-            <Link href="#" className="text-sm font-medium text-primary hover:text-accent transition-colors">À propos</Link>
+            <Link href="/about" className="text-sm font-medium text-primary hover:text-accent transition-colors">À propos</Link>
             <Link href="#" className="text-sm font-medium text-primary hover:text-accent transition-colors">Contact</Link>
           </nav>
 
@@ -75,7 +75,7 @@ export default function Header() {
               <Link href="/services" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Services</Link>
               
               <Link href="/blog" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Blog</Link>
-              <Link href="#" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>À propos</Link>
+              <Link href="/about" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>À propos</Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Contact</Link>
               <div className="pt-4">
                 <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={toggleMobileMenu}>Consultation Gratuite</Button>
