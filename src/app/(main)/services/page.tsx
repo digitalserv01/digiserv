@@ -53,7 +53,7 @@ const services = [
     description: "Gagnez du temps et de l'efficacité en automatisant vos tâches répétitives grâce à l'intelligence artificielle.",
     features: ['Analyse de vos processus', 'Développement de chatbots', 'Automatisation des e-mails', 'Intégration d\'outils IA'],
     price: 'Sur devis',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhaXxlbnwwfHx8fDE3NTQzNDYwODB8MA&ixlib=rb-4.1.0&q=80&w=1080',
     aiHint: 'artificial intelligence robot',
     icon: <Bot className="w-8 h-8 text-accent" />,
   },
