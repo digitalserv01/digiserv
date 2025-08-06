@@ -82,7 +82,14 @@ export default function Sidebar() {
         <CardContent className="space-y-4">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="flex items-start gap-4">
-              <Image src={testimonial.avatar} alt={testimonial.name} width={40} height={40} className="rounded-full" data-ai-hint="person portrait"/>
+              <Image 
+                src={testimonial.avatar} 
+                alt={`Témoignage de ${testimonial.name}, ${testimonial.company}`} 
+                width={40} 
+                height={40} 
+                className="rounded-full" 
+                data-ai-hint="person portrait"
+              />
               <div>
                 <div className="flex items-center gap-0.5 mb-1">
                   {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />)}

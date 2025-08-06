@@ -92,74 +92,108 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         return "Date invalide";
     }
   };
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-      <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-        <main className="lg:col-span-8 xl:col-span-9">
-          <Card className="overflow-hidden">
-            <div className="relative w-full aspect-video">
-                <Image 
-                    src={article.imageUrl}
-                    alt={article.title}
-                    fill
-                    className="object-cover"
-                    priority
-                />
-            </div>
-            <CardHeader className="flex-col items-start gap-4">
-              <div>
-                <Badge variant="secondary">{getCategoryName(article.category)}</Badge>
-              </div>
-              <CardTitle className="font-headline text-3xl lg:text-4xl text-primary !leading-tight">
-                {article.title}
-              </CardTitle>
-              <CardDescription className="text-lg">
-                {article.metaDescription}
-              </CardDescription>
 
-              <div className="w-full flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground pt-4 border-t">
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://www.amadigiconseils.com/blog/${article.id}`,
+    },
+    headline: article.title,
+    description: article.metaDescription,
+    image: article.imageUrl,
+    author: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+      url: 'https://www.amadigiconseils.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.amadigiconseils.com/logo.png', // You should have a logo file
+      },
+    },
+    datePublished: article.createdAt,
+    dateModified: article.createdAt,
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+          <main className="lg:col-span-8 xl:col-span-9">
+            <Card className="overflow-hidden">
+              <div className="relative w-full aspect-video">
+                  <Image 
+                      src={article.imageUrl}
+                      alt={article.title}
+                      fill
+                      className="object-cover"
+                      priority
+                  />
+              </div>
+              <CardHeader className="flex-col items-start gap-4">
+                <div>
+                  <Badge variant="secondary">{getCategoryName(article.category)}</Badge>
+                </div>
+                <CardTitle className="font-headline text-3xl lg:text-4xl text-primary !leading-tight">
+                  {article.title}
+                </CardTitle>
+                <CardDescription className="text-lg">
+                  {article.metaDescription}
+                </CardDescription>
+
+                <div className="w-full flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground pt-4 border-t">
+                   <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    <span>Publié le {getArticleDate()}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    <span>{article.wordCount} mots</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    <span>{article.readingTime}</span>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="prose prose-lg dark:prose-invert max-w-none">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {article.article}
+                  </ReactMarkdown>
+                </div>
+              </CardContent>
+              <CardFooter className="flex-col items-start gap-4 bg-secondary/50 p-6 rounded-b-lg">
                  <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>Publié le {getArticleDate()}</span>
+                  <Bot className="h-5 w-5 text-primary" />
+                  <h4 className="font-semibold text-lg text-primary">Prêt à passer à l'action ?</h4>
                 </div>
-                <div className="flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  <span>{article.wordCount} mots</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>{article.readingTime}</span>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="prose prose-lg dark:prose-invert max-w-none">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {article.article}
-                </ReactMarkdown>
-              </div>
-            </CardContent>
-            <CardFooter className="flex-col items-start gap-4 bg-secondary/50 p-6 rounded-b-lg">
-               <div className="flex items-center gap-2">
-                <Bot className="h-5 w-5 text-primary" />
-                <h4 className="font-semibold text-lg text-primary">Prêt à passer à l'action ?</h4>
-              </div>
-              <p className="text-muted-foreground">{article.ctaText}</p>
-              <Button size="lg" asChild>
-                <Link href={whatsappUrl} target="_blank">
-                  {article.ctaButton}
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        </main>
-        
-        <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
-          <div className="sticky top-24 space-y-8">
-            <Sidebar />
-          </div>
-        </aside>
+                <p className="text-muted-foreground">{article.ctaText}</p>
+                <Button size="lg" asChild>
+                  <Link href={whatsappUrl} target="_blank">
+                    {article.ctaButton}
+                  </Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          </main>
+          
+          <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
+            <div className="sticky top-24 space-y-8">
+              <Sidebar />
+            </div>
+          </aside>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

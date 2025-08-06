@@ -351,56 +351,75 @@ const categoryTitles: { [key: string]: string } = {
 const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20une%20question%20suite%20%C3%A0%20la%20lecture%20de%20votre%20FAQ.";
 
 export default function FAQPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: Object.values(faqData).flat().map(item => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+        },
+    })),
+  };
+  
   return (
-    <div className="bg-secondary/50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary">Foire Aux Questions (FAQ)</h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Trouvez les réponses à vos questions les plus fréquentes sur nos services et notre processus.
-          </p>
-        </header>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="bg-secondary/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <header className="text-center mb-12">
+            <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary">Foire Aux Questions (FAQ)</h1>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Trouvez les réponses à vos questions les plus fréquentes sur nos services et notre processus.
+            </p>
+          </header>
 
-        <main className="bg-background p-8 md:p-12 rounded-lg shadow-sm">
-          <div className="space-y-10">
-            {Object.entries(faqData).map(([category, items]) => (
-                 <div key={category}>
-                    <h2 className="text-2xl font-bold font-headline text-primary mb-6">{categoryTitles[category]}</h2>
-                    <Accordion type="single" collapsible className="w-full">
-                        {items.map((item, index) => (
-                        <AccordionItem key={`${category}-${index}`} value={`item-${category}-${index}`}>
-                            <AccordionTrigger className="text-left font-semibold text-lg hover:text-accent">{item.question}</AccordionTrigger>
-                            <AccordionContent className="text-muted-foreground text-base">
-                            {item.answer}
-                            </AccordionContent>
-                        </AccordionItem>
-                        ))}
-                    </Accordion>
-                </div>
-            ))}
-          </div>
-        </main>
-
-        <footer className="mt-16 text-center">
-            <h3 className="text-2xl font-bold font-headline text-primary">Vous ne trouvez pas votre réponse ?</h3>
-            <p className="mt-3 text-muted-foreground">Contactez-nous directement. Nous sommes là pour vous aider.</p>
-            <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild>
-                    <Link href={whatsappUrl} target='_blank'>
-                        <MessageCircle className="mr-2" />
-                        Discuter sur WhatsApp
-                    </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                    <Link href="mailto:nexusai.maroc@outlook.com">
-                        <Mail className="mr-2" />
-                        Envoyer un e-mail
-                    </Link>
-                </Button>
+          <main className="bg-background p-8 md:p-12 rounded-lg shadow-sm">
+            <div className="space-y-10">
+              {Object.entries(faqData).map(([category, items]) => (
+                   <div key={category}>
+                      <h2 className="text-2xl font-bold font-headline text-primary mb-6">{categoryTitles[category]}</h2>
+                      <Accordion type="single" collapsible className="w-full">
+                          {items.map((item, index) => (
+                          <AccordionItem key={`${category}-${index}`} value={`item-${category}-${index}`}>
+                              <AccordionTrigger className="text-left font-semibold text-lg hover:text-accent">{item.question}</AccordionTrigger>
+                              <AccordionContent className="text-muted-foreground text-base">
+                              {item.answer}
+                              </AccordionContent>
+                          </AccordionItem>
+                          ))}
+                      </Accordion>
+                  </div>
+              ))}
             </div>
-        </footer>
+          </main>
 
+          <footer className="mt-16 text-center">
+              <h3 className="text-2xl font-bold font-headline text-primary">Vous ne trouvez pas votre réponse ?</h3>
+              <p className="mt-3 text-muted-foreground">Contactez-nous directement. Nous sommes là pour vous aider.</p>
+              <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" asChild>
+                      <Link href={whatsappUrl} target='_blank'>
+                          <MessageCircle className="mr-2" />
+                          Discuter sur WhatsApp
+                      </Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild>
+                      <Link href="mailto:nexusai.maroc@outlook.com">
+                          <Mail className="mr-2" />
+                          Envoyer un e-mail
+                      </Link>
+                  </Button>
+              </div>
+          </footer>
+
+        </div>
       </div>
-    </div>
+    </>
   );
 }
