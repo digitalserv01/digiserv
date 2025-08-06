@@ -5,9 +5,12 @@ import HeroAbout from '@/components/about/HeroAbout';
 import Portfolio from '@/components/about/Portfolio';
 import Culture from '@/components/about/Culture';
 import Values from '@/components/about/Values';
+import Link from 'next/link';
 
 
 export default function AboutPage() {
+  const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20vu%20votre%20site%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).";
+
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section */}
@@ -55,9 +58,11 @@ export default function AboutPage() {
                 Stop looking for a freelancer. Start looking for a partner. Let's talk about your vision, not just your budget.
                 </p>
                 
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-6 text-base">
+                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-6 text-base" asChild>
+                  <Link href={whatsappUrl} target="_blank">
                     <MessageCircle className="mr-2 h-5 w-5" />
                     Start the Conversation on WhatsApp
+                  </Link>
                 </Button>
             </AnimatedSection>
       </div>

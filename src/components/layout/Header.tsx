@@ -22,6 +22,8 @@ const services = [
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20vu%20votre%20site%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).";
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +57,9 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <Button className="hidden lg:flex bg-accent hover:bg-accent/90 text-accent-foreground">Consultation Gratuite</Button>
+            <Button className="hidden lg:flex bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+                <Link href={whatsappUrl} target="_blank">Consultation Gratuite</Link>
+            </Button>
             <button
               type="button"
               className="lg:hidden text-primary hover:text-accent"
@@ -78,7 +82,9 @@ export default function Header() {
               <Link href="/about" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>À propos</Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-primary rounded-md hover:bg-secondary" onClick={toggleMobileMenu}>Contact</Link>
               <div className="pt-4">
-                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={toggleMobileMenu}>Consultation Gratuite</Button>
+                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" asChild onClick={toggleMobileMenu}>
+                    <Link href={whatsappUrl} target="_blank">Consultation Gratuite</Link>
+                </Button>
               </div>
             </nav>
           </div>

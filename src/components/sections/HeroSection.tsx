@@ -2,8 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CheckCircle, Star } from 'lucide-react';
+import Link from 'next/link';
 
 export default function HeroSection() {
+  const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20vu%20votre%20site%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).";
+
   return (
     <section className="relative bg-secondary/50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
@@ -19,12 +22,16 @@ export default function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-base px-8 py-6">
-                Voir nos Services
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-base px-8 py-6" asChild>
+                <Link href="/services">
+                    Voir nos Services
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
-              <Button size="lg" variant="outline" className="text-base px-8 py-6">
-                Prendre rendez-vous
+              <Button size="lg" variant="outline" className="text-base px-8 py-6" asChild>
+                <Link href={whatsappUrl} target="_blank">
+                    Prendre rendez-vous
+                </Link>
               </Button>
             </div>
             

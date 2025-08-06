@@ -94,10 +94,10 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-white">Contact</h4>
             <div className="space-y-4">
-              <a href="mailto:contact@amadigiconseils.com" className="flex items-center gap-3 group">
+              <a href="mailto:nexusai.maroc@outlook.com" className="flex items-center gap-3 group">
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <span className="text-sm text-gray-300 group-hover:text-accent transition-colors">
-                  contact@amadigiconseils.com
+                  nexusai.maroc@outlook.com
                 </span>
               </a>
               <a href="https://wa.me/212699020158" className="flex items-center gap-3 group" target="_blank" rel="noopener noreferrer">

@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Star, MessageCircle, Download } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import SidebarNewsletterForm from './SidebarNewsletterForm';
+import Link from 'next/link';
 
 const services = [
   { name: 'CV Pro', price: '17€', originalPrice: '25€', popular: true },
@@ -31,23 +32,30 @@ export default function Sidebar() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {services.map((service, index) => (
-            <div key={index} className="flex items-center justify-between p-3 bg-secondary rounded-lg">
-              <div>
-                <span className="text-sm font-semibold text-primary">{service.name}</span>
-                {service.popular && <Badge variant="outline" className="text-xs ml-2">Populaire</Badge>}
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-accent font-bold">{service.price}</span>
-                  <span className="text-xs text-muted-foreground line-through">{service.originalPrice}</span>
+          {services.map((service, index) => {
+            const whatsappUrl = `https://wa.me/212699020158?text=Bonjour%20!%20Je%20suis%20int%C3%A9ress%C3%A9(e)%20par%20votre%20service%20express%20'${encodeURIComponent(service.name)}'.`;
+            return (
+              <div key={index} className="flex items-center justify-between p-3 bg-secondary rounded-lg">
+                <div>
+                  <span className="text-sm font-semibold text-primary">{service.name}</span>
+                  {service.popular && <Badge variant="outline" className="text-xs ml-2">Populaire</Badge>}
+                  <div className="flex items-baseline gap-2 mt-1">
+                    <span className="text-accent font-bold">{service.price}</span>
+                    <span className="text-xs text-muted-foreground line-through">{service.originalPrice}</span>
+                  </div>
                 </div>
+                <Button size="icon" className="bg-whatsapp hover:bg-whatsapp/90 text-white rounded-full h-9 w-9" asChild>
+                  <Link href={whatsappUrl} target='_blank'>
+                    <MessageCircle className="w-4 h-4" />
+                  </Link>
+                </Button>
               </div>
-              <Button size="icon" className="bg-whatsapp hover:bg-whatsapp/90 text-white rounded-full h-9 w-9">
-                <MessageCircle className="w-4 h-4" />
-              </Button>
-            </div>
-          ))}
-          <Button className="w-full mt-2 bg-accent hover:bg-accent/90 text-accent-foreground">
-            Voir tous les services
+            )
+          })}
+          <Button className="w-full mt-2 bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+            <Link href="/services">
+                Voir tous les services
+            </Link>
           </Button>
         </CardContent>
       </Card>

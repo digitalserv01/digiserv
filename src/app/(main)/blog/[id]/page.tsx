@@ -13,6 +13,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription }
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface ArticlePageProps {
   params: {
@@ -68,6 +69,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   if (!article) {
     notFound();
   }
+
+  const whatsappUrl = `https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20lu%20votre%20article%20'${encodeURIComponent(article.title)}'%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).`;
+
   const getArticleDate = () => {
     if (!article.createdAt) return "Date inconnue";
     try {
@@ -141,7 +145,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <h4 className="font-semibold text-lg text-primary">Prêt à passer à l'action ?</h4>
               </div>
               <p className="text-muted-foreground">{article.ctaText}</p>
-              <Button size="lg">{article.ctaButton}</Button>
+              <Button size="lg" asChild>
+                <Link href={whatsappUrl} target="_blank">
+                  {article.ctaButton}
+                </Link>
+              </Button>
             </CardFooter>
           </Card>
         </main>

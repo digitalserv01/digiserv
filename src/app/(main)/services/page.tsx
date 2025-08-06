@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { CheckCircle, ArrowRight, Lightbulb, Code, Briefcase, Megaphone, ShoppingCart, Bot } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
+import Link from 'next/link';
 
 const services = [
   {
@@ -77,6 +78,8 @@ function AnimatedSection({ children, x = 0 }: { children: React.ReactNode, x?: n
 }
 
 export default function ServicesPage() {
+  const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20vu%20votre%20site%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).";
+
   return (
     <div className="bg-background text-foreground">
       {/* Hero/Philosophy Section */}
@@ -96,9 +99,11 @@ export default function ServicesPage() {
                 <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
                     Votre projet est unique. C'est pourquoi nous voulons d'abord entendre votre idée, comprendre vos ambitions et ensuite, seulement, construire la solution digitale qui vous mènera au succès. Le prix n'est qu'une conséquence de la valeur que nous créons ensemble.
                 </p>
-                <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90">
+                <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90" asChild>
+                  <Link href={whatsappUrl} target="_blank">
                     Racontez-nous votre idée
                     <ArrowRight className="ml-2"/>
+                  </Link>
                 </Button>
             </motion.div>
         </div>
@@ -142,6 +147,8 @@ export default function ServicesPage() {
 }
 
 const ServiceCard = ({ service }: { service: typeof services[0] }) => {
+  const whatsappUrl = `https://wa.me/212699020158?text=Bonjour%20!%20Je%20suis%20int%C3%A9ress%C3%A9(e)%20par%20votre%20service%20'${encodeURIComponent(service.title)}'.`;
+
   return (
      <Card className="flex flex-col h-full overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
       <div className="relative aspect-video w-full overflow-hidden">
@@ -176,8 +183,10 @@ const ServiceCard = ({ service }: { service: typeof services[0] }) => {
         </ul>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">
-          Discutons de votre projet <ArrowRight className="ml-2" />
+        <Button className="w-full" asChild>
+          <Link href={whatsappUrl} target="_blank">
+            Discutons de votre projet <ArrowRight className="ml-2" />
+          </Link>
         </Button>
       </CardFooter>
     </Card>
