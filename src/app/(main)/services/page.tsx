@@ -24,20 +24,6 @@ const values = [
 export default function ServicesPage() {
   return (
     <>
-      <div className="bg-secondary/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="text-center">
-            <p className="text-base font-semibold text-accent tracking-wide uppercase">Notre histoire</p>
-            <h1 className="mt-2 text-4xl lg:text-5xl font-bold font-headline text-primary text-balance">
-              Votre partenaire de croissance digitale
-            </h1>
-            <p className="mt-6 max-w-3xl mx-auto text-lg text-muted-foreground">
-              Nous combinons expertise technique, créativité et intelligence artificielle pour transformer les défis des entrepreneurs français en opportunités de succès.
-            </p>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 lg:gap-16 items-center">
           <div className="mb-12 lg:mb-0">

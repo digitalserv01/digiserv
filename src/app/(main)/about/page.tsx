@@ -67,16 +67,18 @@ export default function AboutPage() {
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 text-center">
-        <AnimatedSection>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-headline text-primary !leading-tight text-balance">
-            We Don't Just Build Websites.
-            <span className="text-accent block mt-2">We Build Your Entire Digital Universe.</span>
-          </h1>
-          <p className="mt-6 max-w-3xl mx-auto text-lg text-muted-foreground">
-            You have a vision. We have the 360° strategy to make it a reality. We combine design, technology, and marketing to create digital experiences that don't just exist—they perform, convert, and grow.
-          </p>
-        </AnimatedSection>
+      <div className="bg-secondary/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <div className="text-center">
+            <p className="text-base font-semibold text-accent tracking-wide uppercase">Notre histoire</p>
+            <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-bold font-headline text-primary !leading-tight text-balance">
+              Votre partenaire de croissance digitale
+            </h1>
+            <p className="mt-6 max-w-3xl mx-auto text-lg text-muted-foreground">
+              Nous combinons expertise technique, créativité et intelligence artificielle pour transformer les défis des entrepreneurs français en opportunités de succès.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Portfolio Section */}
