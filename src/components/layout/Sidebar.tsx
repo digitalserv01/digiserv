@@ -3,10 +3,17 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Star, MessageCircle, Download } from 'lucide-react';
+import { Star, MessageCircle, Download, Newspaper } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import SidebarNewsletterForm from './SidebarNewsletterForm';
 import Link from 'next/link';
+import type { Article } from '@/types/article';
+import { format, parseISO } from 'date-fns';
+import { fr } from 'date-fns/locale';
+
+interface SidebarProps {
+  recentArticles?: Article[];
+}
 
 const services = [
   { name: 'CV Pro', price: '17€', originalPrice: '25€', popular: true },
@@ -21,9 +28,41 @@ const testimonials = [
   { name: 'Julien Petit', company: 'E-commerçant', text: 'L\'IA me fait gagner 10h par semaine. Incroyable.', rating: 5, avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwb3J0cmFpdHxlbnwwfHx8fDE3NTQ0NDA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ recentArticles }: SidebarProps) {
   return (
     <aside className="space-y-8">
+      {recentArticles && recentArticles.length > 0 && (
+         <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Newspaper className="w-5 h-5" />
+              <span>Articles Récents</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+             {recentArticles.map(article => (
+                <Link key={article.id} href={`/blog/${article.id}`} className="flex gap-4 group">
+                    <div className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
+                       <Image 
+                          src={article.imageUrl} 
+                          alt={article.title} 
+                          fill
+                          className="object-cover"
+                          data-ai-hint={article.category.replace(/-/g, ' ')}
+                        />
+                    </div>
+                    <div>
+                        <h4 className="text-sm font-semibold text-primary group-hover:text-accent transition-colors line-clamp-2">{article.title}</h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {format(parseISO(article.createdAt), "d MMM yyyy", { locale: fr })}
+                        </p>
+                    </div>
+                </Link>
+             ))}
+          </CardContent>
+        </Card>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex justify-between items-center">

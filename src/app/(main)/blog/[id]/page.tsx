@@ -3,7 +3,7 @@ import { db } from '@/lib/firebase';
 import type { Article, ArticleDocument } from '@/types/article';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock, FileText, Bot } from 'lucide-react';
+import { Calendar, Clock, FileText, Bot, Linkedin, Facebook, Twitter } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'next/image';
 import Link from 'next/link';
+import SocialShare from '@/components/blog/SocialShare';
 
 interface ArticlePageProps {
   params: {
@@ -71,6 +72,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const whatsappUrl = `https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20lu%20votre%20article%20'${encodeURIComponent(article.title)}'%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).`;
+  const articleUrl = `https://www.amadigiconseils.com/blog/${article.id}`;
 
   const getArticleDate = () => {
     if (!article.createdAt) return "Date inconnue";
@@ -137,6 +139,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       fill
                       className="object-cover"
                       priority
+                      data-ai-hint={article.category.replace(/-/g, ' ')}
                   />
               </div>
               <CardHeader className="flex-col items-start gap-4">
@@ -172,6 +175,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </ReactMarkdown>
                 </div>
               </CardContent>
+
+              <Separator />
+
+              <div className="p-6">
+                <SocialShare articleTitle={article.title} articleUrl={articleUrl} />
+              </div>
+
               <CardFooter className="flex-col items-start gap-4 bg-secondary/50 p-6 rounded-b-lg">
                  <div className="flex items-center gap-2">
                   <Bot className="h-5 w-5 text-primary" />

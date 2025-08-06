@@ -4,6 +4,8 @@ import type { Article, ArticleDocument } from '@/types/article';
 import ArticleCard from '@/components/blog/ArticleCard';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Sidebar from '@/components/layout/Sidebar';
+import { Separator } from '@/components/ui/separator';
 
 const ARTICLES_PER_PAGE = 9;
 
@@ -29,6 +31,21 @@ async function getArticles(page = 1, category?: string) {
   
   let articles: Article[] = [];
   let totalArticles = 0;
+  let recentArticles: Article[] = [];
+
+  // Fetch recent articles regardless of category filter
+  const recentQuery = query(articlesCol, orderBy('createdAt', 'desc'), limit(5));
+  const recentSnapshot = await getDocs(recentQuery);
+  recentArticles = recentSnapshot.docs.map(doc => {
+    const data = doc.data() as ArticleDocument;
+    return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
+        imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
+    };
+  });
+
 
   if (category) {
     // Query by category first, then sort in code to avoid composite index requirement for now
@@ -84,14 +101,14 @@ async function getArticles(page = 1, category?: string) {
   }
 
 
-  return { articles, totalArticles };
+  return { articles, totalArticles, recentArticles };
 }
 
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const category = searchParams.category;
-  const { articles, totalArticles } = await getArticles(page, category);
+  const { articles, totalArticles, recentArticles } = await getArticles(page, category);
   const totalPages = Math.ceil(totalArticles / ARTICLES_PER_PAGE);
 
   const pageTitle = category ? `Catégorie : ${getCategoryName(category)}` : "Notre Blog";
@@ -120,34 +137,50 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         )}
       </header>
 
-      {articles.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-16">
-          <h2 className="text-2xl font-bold">Aucun article trouvé</h2>
-          <p className="text-muted-foreground mt-2">
-            {category ? `Il n'y a pas encore d'articles dans cette catégorie.` : `Revenez bientôt pour de nouveaux contenus !`}
-          </p>
-        </div>
-      )}
+      <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+        <main className="lg:col-span-8 xl:col-span-9">
+            {articles.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {articles.map((article) => (
+                    <ArticleCard key={article.id} article={article} />
+                ))}
+                </div>
+            ) : (
+                <div className="text-center py-16">
+                <h2 className="text-2xl font-bold">Aucun article trouvé</h2>
+                <p className="text-muted-foreground mt-2">
+                    {category ? `Il n'y a pas encore d'articles dans cette catégorie.` : `Revenez bientôt pour de nouveaux contenus !`}
+                </p>
+                </div>
+            )}
 
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-4 mt-16">
-          <Button asChild variant="outline" disabled={page <= 1}>
-            <Link href={createPageURL(page - 1)}>Précédent</Link>
-          </Button>
-          <span className="text-sm text-muted-foreground">
-            Page {page} sur {totalPages}
-          </span>
-          <Button asChild variant="outline" disabled={page >= totalPages}>
-            <Link href={createPageURL(page + 1)}>Suivant</Link>
-          </Button>
+            {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 mt-16">
+                <Button asChild variant="outline" disabled={page <= 1}>
+                    <Link href={createPageURL(page - 1)}>Précédent</Link>
+                </Button>
+                <span className="text-sm text-muted-foreground">
+                    Page {page} sur {totalPages}
+                </span>
+                <Button asChild variant="outline" disabled={page >= totalPages}>
+                    <Link href={createPageURL(page + 1)}>Suivant</Link>
+                </Button>
+                </div>
+            )}
+        </main>
+         <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
+            <div className="sticky top-24 space-y-8">
+              <Sidebar recentArticles={recentArticles} />
+            </div>
+          </aside>
+      </div>
+
+       {/* Sidebar content for mobile, rendered below main content */}
+        <div className="mt-12 space-y-8 lg:hidden">
+          <Separator />
+          <h2 className="text-2xl font-headline font-bold text-primary text-center">Nos Services & Garanties</h2>
+          <Sidebar recentArticles={recentArticles} />
         </div>
-      )}
     </div>
   );
 }
