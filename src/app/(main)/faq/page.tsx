@@ -1,3 +1,4 @@
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Mail, MessageCircle } from 'lucide-react';
@@ -10,13 +11,17 @@ const faqData = {
       answer: "Nous accompagnons principalement les entrepreneurs, TPE et PME en France et au Maroc qui cherchent à se digitaliser. Que vous soyez artisan, consultant, coach ou e-commerçant, nos services sont conçus pour répondre à vos besoins spécifiques."
     },
     {
+      question: "Comment se déroule un projet avec vous, du début à la fin ?",
+      answer: "Notre processus est simple et transparent. 1) **Prise de contact** via WhatsApp pour un appel découverte gratuit. 2) **Devis et acompte** de 50%. 3) **Phase de développement/création** avec des points réguliers. 4) **Livraison et validation**. 5) **Paiement du solde** et formation si nécessaire. 6) **Support de 30 jours**."
+    },
+    {
       question: "Proposez-vous des facilités de paiement ?",
       answer: "Oui, nous comprenons les contraintes budgétaires des entrepreneurs. Pour les projets importants, nous proposons généralement un paiement en deux fois : un acompte de 50% au démarrage et le solde de 50% à la livraison finale du projet."
     },
     {
-      question: "Fournissez-vous un support après la livraison du projet ?",
-      answer: "Absolument. Nous offrons une période de support de 30 jours après la livraison de chaque projet pour corriger tout bug ou problème technique. Nous proposons également des contrats de maintenance pour des mises à jour et un support continus."
-    }
+      question: "Quels sont vos délais de livraison moyens ?",
+      answer: "Les délais varient selon le service. Un CV est généralement livré en 24-48h. Un site vitrine prend entre 1 et 2 semaines. Un projet e-commerce ou d'automatisation plus complexe peut prendre 3 à 4 semaines. Nous vous donnons une estimation précise dans le devis."
+    },
   ],
   services: [
     {
@@ -30,6 +35,24 @@ const faqData = {
     {
       question: "Quelle est la différence entre vos services E-commerce et IA & Automation ?",
       answer: "Notre service E-commerce se concentre sur la création de votre boutique en ligne (sur Shopify ou WooCommerce) pour vendre des produits. Le service IA & Automation, quant à lui, vise à optimiser vos processus internes. Nous pouvons par exemple créer un chatbot pour votre service client, automatiser vos campagnes d'e-mailing ou intégrer des outils d'IA pour vous faire gagner un temps précieux."
+    },
+     {
+      question: "Faites-vous de la gestion de publicités en ligne (Google Ads, Facebook Ads) ?",
+      answer: "Oui, notre service de Marketing Digital inclut la création et la gestion de campagnes publicitaires sur Google Ads et les réseaux sociaux comme Facebook et Instagram. Nous ciblons précisément votre audience pour maximiser votre retour sur investissement."
+    }
+  ],
+  technique: [
+    {
+        question: "Sur quelles technologies vous appuyez-vous pour créer les sites web ?",
+        answer: "Nous utilisons des technologies modernes et performantes comme Next.js et React pour des sites rapides et optimisés. Pour les CMS, nous travaillons principalement avec des solutions headless pour plus de flexibilité, et pour l'e-commerce, nous recommandons Shopify ou WooCommerce selon les besoins."
+    },
+    {
+        question: "Le site que vous créez m'appartient-il à la fin du projet ?",
+        answer: "Oui, absolument. Une fois le paiement final effectué, vous êtes propriétaire à 100% de votre site web et de tous les livrables. Nous vous fournissons tous les accès nécessaires."
+    },
+    {
+        question: "Fournissez-vous un support après la livraison du projet ?",
+        answer: "Absolument. Nous offrons une période de support gratuit de 30 jours après la livraison de chaque projet pour corriger tout bug ou problème technique. Nous proposons également des contrats de maintenance pour des mises à jour et un support continus."
     }
   ]
 };
@@ -53,7 +76,7 @@ export default function FAQPage() {
               <h2 className="text-2xl font-bold font-headline text-primary mb-6">Questions Générales</h2>
               <Accordion type="single" collapsible className="w-full">
                 {faqData.general.map((item, index) => (
-                  <AccordionItem key={`general-${index}`} value={`item-${index}`}>
+                  <AccordionItem key={`general-${index}`} value={`item-general-${index}`}>
                     <AccordionTrigger className="text-left font-semibold text-lg hover:text-accent">{item.question}</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground text-base">
                       {item.answer}
@@ -67,7 +90,21 @@ export default function FAQPage() {
               <h2 className="text-2xl font-bold font-headline text-primary mb-6">À Propos de nos Services</h2>
               <Accordion type="single" collapsible className="w-full">
                 {faqData.services.map((item, index) => (
-                   <AccordionItem key={`services-${index}`} value={`item-${index}`}>
+                   <AccordionItem key={`services-${index}`} value={`item-services-${index}`}>
+                    <AccordionTrigger className="text-left font-semibold text-lg hover:text-accent">{item.question}</AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground text-base">
+                      {item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+            
+            <div>
+              <h2 className="text-2xl font-bold font-headline text-primary mb-6">Technique & Support</h2>
+              <Accordion type="single" collapsible className="w-full">
+                {faqData.technique.map((item, index) => (
+                   <AccordionItem key={`technique-${index}`} value={`item-technique-${index}`}>
                     <AccordionTrigger className="text-left font-semibold text-lg hover:text-accent">{item.question}</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground text-base">
                       {item.answer}
