@@ -25,8 +25,27 @@ const testimonials = [
   { name: 'Marie Dubois', company: 'Artisan Boulangère', text: 'Mon site web a triplé mes commandes en ligne !', rating: 5, avatar: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwb3J0cmFpdCUyMHdvbWFufGVufDB8fHx8MTc1NDQ0MDgwN3ww&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Pierre Martin', company: 'Consultant RH', text: 'CV refait, 3 entretiens en 1 semaine. Merci !', rating: 5, avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMG1hbnxlbnwwfHx8fDE3NTQ0NDA4NDN8MA&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Sophie Leroy', company: 'Coach Sportive', text: 'Ma campagne pub a attiré 50 nouveaux clients !', rating: 5, avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdHxlbnwwfHx8fDE3NTQ0NDA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080' },
-  { name: 'Julien Petit', company: 'E-commerçant', text: 'L\'IA me fait gagner 10h par semaine. Incroyable.', rating: 5, avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwb3J0cmFpdHxlbnwwfHx8fDE3NTQ0NDA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Julien Petit', company: 'E-commerçant', text: "L'IA me fait gagner 10h par semaine. Incroyable.", rating: 5, avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwb3J0cmFpdHxlbnwwfHx8fDE3NTQ0NDA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
+
+const formatDate = (date: any) => {
+  if (!date) return 'Date inconnue';
+  try {
+    if (typeof date === 'string') {
+      return format(parseISO(date), "d MMM yyyy", { locale: fr });
+    }
+    if (date.toDate) { // Firestore Timestamp
+      return format(date.toDate(), "d MMM yyyy", { locale: fr });
+    }
+    // Fallback for other object types if necessary
+    if (typeof date === 'object' && date.seconds) {
+      return format(new Date(date.seconds * 1000), "d MMM yyyy", { locale: fr });
+    }
+  } catch (error) {
+    console.error("Error formatting date in Sidebar:", error);
+  }
+  return 'Date invalide';
+}
 
 export default function Sidebar({ recentArticles }: SidebarProps) {
   return (
@@ -54,7 +73,7 @@ export default function Sidebar({ recentArticles }: SidebarProps) {
                     <div>
                         <h4 className="text-sm font-semibold text-primary group-hover:text-accent transition-colors line-clamp-2">{article.title}</h4>
                         <p className="text-xs text-muted-foreground mt-1">
-                          {format(parseISO(article.createdAt), "d MMM yyyy", { locale: fr })}
+                          {formatDate(article.createdAt)}
                         </p>
                     </div>
                 </Link>
