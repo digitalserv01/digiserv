@@ -22,7 +22,7 @@ const footerLinks = {
   ],
   resources: [
     { name: 'Blog', href: '/blog' },
-    { name: 'Guides gratuits', href: '#' },
+    { name: 'Guides gratuits', href: 'https://drive.google.com/file/d/1NkryiJbzraEgcA_4algkCdx4FMEeN-dL/view?usp=sharing' },
     { name: 'Études de cas', href: '/about' },
     { name: 'Templates', href: '#' },
     { name: 'Webinaires', href: '#' },
@@ -72,13 +72,21 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-white">Ressources</h4>
             <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {footerLinks.resources.map((link) => {
+                const isExternal = link.href.startsWith('http');
+                return (
+                    <li key={link.name}>
+                    <Link 
+                        href={link.href} 
+                        className="text-gray-300 hover:text-accent transition-colors text-sm"
+                        target={isExternal ? '_blank' : undefined}
+                        rel={isExternal ? 'noopener noreferrer' : undefined}
+                    >
+                        {link.name}
+                    </Link>
+                    </li>
+                );
+              })}
             </ul>
           </div>
 
