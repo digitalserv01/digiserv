@@ -2,10 +2,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Star, MessageCircle, Download, Shield, Users, Award } from 'lucide-react';
+import { Star, MessageCircle, Download } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import SidebarNewsletterForm from './SidebarNewsletterForm';
 
 const services = [
   { name: 'CV Pro', price: '17€', originalPrice: '25€', popular: true },
@@ -63,10 +63,7 @@ export default function Sidebar() {
           <p className="text-sm text-primary-foreground/80">
             15 techniques pour booster votre visibilité.
           </p>
-          <Input type="email" placeholder="Votre email professionnel" className="bg-white/90 text-primary border-0" />
-          <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-            Télécharger Gratuitement
-          </Button>
+          <SidebarNewsletterForm />
         </CardContent>
       </Card>
       
