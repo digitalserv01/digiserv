@@ -89,10 +89,10 @@ export default function Footer() {
                   contact@amadigiconseils.com
                 </span>
               </a>
-              <a href="tel:+33123456789" className="flex items-center gap-3 group">
-                <Phone className="w-5 h-5 text-accent flex-shrink-0" />
+              <a href="https://wa.me/212699020158" className="flex items-center gap-3 group" target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="w-5 h-5 text-accent flex-shrink-0" />
                 <span className="text-sm text-gray-300 group-hover:text-accent transition-colors">
-                  +33 1 23 45 67 89
+                  +212 699 020 158
                 </span>
               </a>
               <div className="flex items-start gap-3">
