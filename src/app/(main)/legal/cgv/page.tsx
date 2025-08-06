@@ -1,9 +1,8 @@
 
-import LegalLayout from '../LegalLayout';
 
 export default function CGVPage() {
   return (
-    <LegalLayout title="Conditions Générales de Vente">
+    <>
       <section>
         <h2>Article 1 : Objet</h2>
         <p>
@@ -76,6 +75,6 @@ export default function CGVPage() {
           Les présentes conditions de vente en ligne sont soumises à la loi française. En cas de litige, compétence est attribuée aux tribunaux compétents de [Ville de votre tribunal], nonobstant pluralité de défendeurs ou appel en garantie.
         </p>
       </section>
-    </LegalLayout>
+    </>
   );
 }

@@ -1,12 +1,15 @@
 
-import LegalLayout from '../LegalLayout';
+
 import Link from 'next/link';
 
 export default function MentionsLegalesPage() {
   const email = "nexusai.maroc@outlook.com";
 
   return (
-    <LegalLayout title="Mentions Légales">
+    <>
+      <header>
+        <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary">Mentions Légales</h1>
+      </header>
       <section>
         <h2>Éditeur du site</h2>
         <p>
@@ -61,6 +64,6 @@ export default function MentionsLegalesPage() {
           AmadiDigiConseils s'efforce d'assurer au mieux de ses possibilités, l'exactitude et la mise à jour des informations diffusées sur ce site. Toutefois, AmadiDigiConseils ne peut garantir l'exactitude, la précision ou l'exhaustivité des informations mises à la disposition sur ce site.
         </p>
       </section>
-    </LegalLayout>
+    </>
   );
 }

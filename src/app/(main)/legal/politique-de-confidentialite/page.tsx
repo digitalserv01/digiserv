@@ -1,9 +1,11 @@
 
-import LegalLayout from '../LegalLayout';
 
 export default function PolitiqueConfidentialitePage() {
   return (
-    <LegalLayout title="Politique de Confidentialité">
+    <>
+      <header>
+          <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary">Politique de Confidentialité</h1>
+      </header>
       <p>
         Cette politique de confidentialité décrit comment vos informations personnelles sont collectées, utilisées et partagées lorsque vous visitez ou effectuez une interaction sur amadigiconseils.com (le "Site").
       </p>
@@ -79,6 +81,6 @@ export default function PolitiqueConfidentialitePage() {
           Pour toute question concernant cette politique de confidentialité, veuillez nous contacter par e-mail à l'adresse indiquée dans les mentions légales de ce site.
         </p>
       </section>
-    </LegalLayout>
+    </>
   );
 }
