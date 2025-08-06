@@ -1,40 +1,181 @@
+'use client';
+import React, { useRef } from 'react';
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, Handshake, Lightbulb, ShieldCheck } from 'lucide-react';
-import CtaSection from '@/components/sections/CtaSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { CheckCircle, ArrowRight, Lightbulb, Code, Briefcase, Megaphone, ShoppingCart, Bot } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
 
+const services = [
+  {
+    title: 'Création de Site Vitrine',
+    slug: 'site-vitrine',
+    description: "Votre présence en ligne professionnelle. Un site élégant et performant pour présenter votre activité et attirer vos premiers clients.",
+    features: ['Design sur-mesure', 'Optimisé pour le SEO local', 'Intégration de formulaire de contact', 'Responsive sur tous les écrans'],
+    price: 'dès 209€',
+    imageUrl: 'https://placehold.co/800x600.png',
+    aiHint: 'modern website design',
+    icon: <Code className="w-8 h-8 text-accent" />,
+    gridClass: 'md:col-span-2 md:row-span-2',
+  },
+  {
+    title: 'Rédaction de CV Professionnel',
+    slug: 'cv-pro',
+    description: "Décrochez plus d'entretiens avec un CV percutant, optimisé pour les systèmes de suivi des candidatures (ATS).",
+    features: ['Analyse de votre profil', 'Mots-clés pertinents', 'Design professionnel et moderne', 'Lettre de motivation en option'],
+    price: 'dès 17€',
+    imageUrl: 'https://placehold.co/600x400.png',
+    aiHint: 'professional resume document',
+    icon: <Briefcase className="w-8 h-8 text-accent" />,
+    gridClass: '',
+  },
+  {
+    title: 'Marketing Digital & SEO',
+    slug: 'marketing',
+    description: "Augmentez votre visibilité et attirez un trafic qualifié grâce à des stratégies de référencement naturel et de publicité ciblée.",
+    features: ['Audit SEO complet', 'Gestion de campagnes Google Ads', 'Stratégie de contenu', 'Reporting mensuel'],
+    price: 'dès 99€/mois',
+    imageUrl: 'https://placehold.co/600x400.png',
+    aiHint: 'digital marketing analytics',
+    icon: <Megaphone className="w-8 h-8 text-accent" />,
+    gridClass: '',
+  },
+  {
+    title: 'Boutique E-commerce',
+    slug: 'e-commerce',
+    description: "Vendez vos produits en ligne avec une boutique performante, sécurisée et facile à gérer au quotidien.",
+    features: ['Basée sur Shopify ou WooCommerce', 'Intégration de paiement sécurisé', 'Optimisation de la conversion', 'Formation à la gestion'],
+    price: 'dès 499€',
+    imageUrl: 'https://placehold.co/600x400.png',
+    aiHint: 'online store products',
+    icon: <ShoppingCart className="w-8 h-8 text-accent" />,
+    gridClass: '',
+  },
+  {
+    title: 'Automatisation & IA',
+    slug: 'ia-automation',
+    description: "Gagnez du temps et de l'efficacité en automatisant vos tâches répétitives grâce à l'intelligence artificielle.",
+    features: ['Analyse de vos processus', 'Développement de chatbots', 'Automatisation des e-mails', 'Intégration d\'outils IA'],
+    price: 'Sur devis',
+    imageUrl: 'https://placehold.co/600x400.png',
+    aiHint: 'artificial intelligence robot',
+    icon: <Bot className="w-8 h-8 text-accent" />,
+    gridClass: '',
+  },
+];
+
+function AnimatedSection({ children, x = 0, y = 50 }: { children: React.ReactNode, x?: number, y?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y, x }}
+      animate={isInView ? { opacity: 1, y: 0, x: 0 } : {}}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="h-full"
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function ServicesPage() {
   return (
-    <>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div className="grid lg:grid-cols-2 lg:gap-16 items-center">
-          <div className="mb-12 lg:mb-0">
-            <h2 className="text-3xl font-bold font-headline text-primary">Rencontrez le fondateur</h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Passionné par l'entrepreneuriat et la technologie, Amadi a fondé AmadiDigiConseils avec une mission claire : rendre les outils digitaux de pointe accessibles et profitables pour les TPE et PME en France et au-delà.
-            </p>
-            <p className="mt-4 text-muted-foreground">
-              Après des années d'expérience en développement web et en marketing digital, il a constaté que de nombreux entrepreneurs talentueux peinaient à naviguer dans la complexité du monde numérique. Son objectif est de devenir le partenaire de confiance qui simplifie cette complexité et fournit des résultats concrets, mesurables, et durables.
-            </p>
-            <p className="mt-6 font-semibold text-primary">
-              - Amadi Diallo, Fondateur de amadigiconseils.com
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <Image
-              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop"
-              alt="Amadi Diallo, Fondateur"
-              width={400}
-              height={400}
-              className="rounded-full object-cover shadow-lg aspect-square"
-              data-ai-hint="professional man portrait"
-            />
-          </div>
+    <div className="bg-background text-foreground">
+      {/* Hero/Philosophy Section */}
+      <div className="bg-secondary/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+            <AnimatedSection>
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/10 rounded-full mb-6">
+                    <Lightbulb className="w-8 h-8 text-accent" />
+                </div>
+                <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary !leading-tight text-balance">
+                    On ne vend pas un service, on réalise une vision.
+                </h1>
+                <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Votre projet est unique. C'est pourquoi nous voulons d'abord entendre votre idée, comprendre vos ambitions et ensuite, seulement, construire la solution digitale qui vous mènera au succès. Le prix n'est qu'une conséquence de la valeur que nous créons ensemble.
+                </p>
+                <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90">
+                    Racontez-nous votre idée
+                    <ArrowRight className="ml-2"/>
+                </Button>
+            </AnimatedSection>
         </div>
       </div>
-      
-      <CtaSection />
-    </>
+
+      {/* Services Grid Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <AnimatedSection x={-50} y={0}>
+              <ServiceCard service={services[0]} />
+            </AnimatedSection>
+            <div className="space-y-8 md:col-span-1">
+                <AnimatedSection x={50} y={0}>
+                  <ServiceCard service={services[1]} />
+                </AnimatedSection>
+                <AnimatedSection x={50} y={0}>
+                  <ServiceCard service={services[2]} />
+                </AnimatedSection>
+            </div>
+         </div>
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+             <div className="space-y-8 md:col-span-1">
+                <AnimatedSection x={-50} y={0}>
+                  <ServiceCard service={services[3]} />
+                </AnimatedSection>
+            </div>
+            <div className="space-y-8 md:col-span-1">
+                <AnimatedSection x={50} y={0}>
+                  <ServiceCard service={services[4]} />
+                </AnimatedSection>
+            </div>
+         </div>
+      </div>
+    </div>
   );
+}
+
+const ServiceCard = ({ service }: { service: typeof services[0] }) => {
+  return (
+     <Card className={`flex flex-col h-full overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 ${service.gridClass}`}>
+      <div className="relative aspect-video w-full overflow-hidden">
+        <Image
+          src={service.imageUrl}
+          alt={service.title}
+          fill
+          className="object-cover"
+          data-ai-hint={service.aiHint}
+        />
+      </div>
+      <CardHeader>
+        <div className="flex items-center gap-4">
+            <div className="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+                {service.icon}
+            </div>
+            <div>
+                <CardTitle className="text-xl font-bold text-primary">{service.title}</CardTitle>
+                <CardDescription className="text-sm">{service.price}</CardDescription>
+            </div>
+        </div>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <p className="text-muted-foreground mb-4">{service.description}</p>
+        <ul className="space-y-2">
+          {service.features.map(feature => (
+            <li key={feature} className="flex items-start">
+              <CheckCircle className="w-5 h-5 text-emerald-500 mr-2 mt-0.5 flex-shrink-0" />
+              <span className="text-sm text-muted-foreground">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full">
+          Discutons de votre projet <ArrowRight className="ml-2" />
+        </Button>
+      </CardFooter>
+    </Card>
+  )
 }
