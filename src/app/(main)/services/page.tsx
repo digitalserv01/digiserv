@@ -13,7 +13,7 @@ const services = [
     description: "Votre présence en ligne professionnelle. Un site élégant et performant pour présenter votre activité et attirer vos premiers clients.",
     features: ['Design sur-mesure', 'Optimisé pour le SEO local', 'Intégration de formulaire de contact', 'Responsive sur tous les écrans'],
     price: 'dès 209€',
-    imageUrl: 'https://placehold.co/800x600.png',
+    imageUrl: 'https://images.unsplash.com/photo-1585332889055-059af80a9b5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8amF2YXxlbnwwfHx8fDE3NTQ0NDM5NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     aiHint: 'modern website design',
     icon: <Code className="w-8 h-8 text-accent" />,
   },
