@@ -98,7 +98,7 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                 <div className="text-sm text-gray-300">
-                  123 Avenue des Entrepreneurs<br/>75001 Paris, France
+                  Oqba Avenue, Agdal<br/>Rabat, Morocco
                 </div>
               </div>
             </div>
