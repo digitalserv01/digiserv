@@ -16,7 +16,6 @@ const services = [
     imageUrl: 'https://placehold.co/800x600.png',
     aiHint: 'modern website design',
     icon: <Code className="w-8 h-8 text-accent" />,
-    gridClass: 'md:col-span-2 md:row-span-2',
   },
   {
     title: 'Rédaction de CV Professionnel',
@@ -27,7 +26,6 @@ const services = [
     imageUrl: 'https://placehold.co/600x400.png',
     aiHint: 'professional resume document',
     icon: <Briefcase className="w-8 h-8 text-accent" />,
-    gridClass: '',
   },
   {
     title: 'Marketing Digital & SEO',
@@ -38,7 +36,6 @@ const services = [
     imageUrl: 'https://placehold.co/600x400.png',
     aiHint: 'digital marketing analytics',
     icon: <Megaphone className="w-8 h-8 text-accent" />,
-    gridClass: '',
   },
   {
     title: 'Boutique E-commerce',
@@ -49,7 +46,6 @@ const services = [
     imageUrl: 'https://placehold.co/600x400.png',
     aiHint: 'online store products',
     icon: <ShoppingCart className="w-8 h-8 text-accent" />,
-    gridClass: '',
   },
   {
     title: 'Automatisation & IA',
@@ -60,19 +56,18 @@ const services = [
     imageUrl: 'https://placehold.co/600x400.png',
     aiHint: 'artificial intelligence robot',
     icon: <Bot className="w-8 h-8 text-accent" />,
-    gridClass: '',
   },
 ];
 
-function AnimatedSection({ children, x = 0, y = 50 }: { children: React.ReactNode, x?: number, y?: number }) {
+function AnimatedSection({ children, x = 0 }: { children: React.ReactNode, x?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y, x }}
-      animate={isInView ? { opacity: 1, y: 0, x: 0 } : {}}
+      initial={{ opacity: 0, x }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="h-full"
     >
@@ -87,7 +82,11 @@ export default function ServicesPage() {
       {/* Hero/Philosophy Section */}
       <div className="bg-secondary/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-            <AnimatedSection>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/10 rounded-full mb-6">
                     <Lightbulb className="w-8 h-8 text-accent" />
                 </div>
@@ -101,36 +100,18 @@ export default function ServicesPage() {
                     Racontez-nous votre idée
                     <ArrowRight className="ml-2"/>
                 </Button>
-            </AnimatedSection>
+            </motion.div>
         </div>
       </div>
 
       {/* Services Grid Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <AnimatedSection x={-50} y={0}>
-              <ServiceCard service={services[0]} />
-            </AnimatedSection>
-            <div className="space-y-8 md:col-span-1">
-                <AnimatedSection x={50} y={0}>
-                  <ServiceCard service={services[1]} />
-                </AnimatedSection>
-                <AnimatedSection x={50} y={0}>
-                  <ServiceCard service={services[2]} />
-                </AnimatedSection>
-            </div>
-         </div>
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-             <div className="space-y-8 md:col-span-1">
-                <AnimatedSection x={-50} y={0}>
-                  <ServiceCard service={services[3]} />
-                </AnimatedSection>
-            </div>
-            <div className="space-y-8 md:col-span-1">
-                <AnimatedSection x={50} y={0}>
-                  <ServiceCard service={services[4]} />
-                </AnimatedSection>
-            </div>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <AnimatedSection key={service.slug} x={index % 2 === 0 ? -50 : 50}>
+                <ServiceCard service={service} />
+              </AnimatedSection>
+            ))}
          </div>
       </div>
     </div>
@@ -139,7 +120,7 @@ export default function ServicesPage() {
 
 const ServiceCard = ({ service }: { service: typeof services[0] }) => {
   return (
-     <Card className={`flex flex-col h-full overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 ${service.gridClass}`}>
+     <Card className="flex flex-col h-full overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
       <div className="relative aspect-video w-full overflow-hidden">
         <Image
           src={service.imageUrl}
