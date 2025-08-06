@@ -1,10 +1,10 @@
 'use client';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useFormStatus } from 'react-dom';
 import { useEffect, useRef } from 'react';
 import { subscribeToNewsletter } from '@/app/actions/subscribe';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Mail, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 function SubmitButton() {
@@ -24,7 +24,7 @@ function SubmitButton() {
 }
 
 export default function NewsletterForm() {
-  const [state, formAction] = useFormState(subscribeToNewsletter, { message: undefined, error: undefined });
+  const [state, formAction] = useActionState(subscribeToNewsletter, { message: undefined, error: undefined });
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 
