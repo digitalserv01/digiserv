@@ -2,9 +2,8 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { PlayCircle, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import AnimatedSection from '@/components/about/AnimatedSection';
 import HeroAbout from '@/components/about/HeroAbout';
 import Portfolio from '@/components/about/Portfolio';
@@ -25,13 +24,16 @@ export default function AboutPage() {
       <div className="py-20 sm:py-32">
         <AnimatedSection>
           <div className="relative h-[60vh] lg:h-[80vh] bg-secondary flex items-center justify-center overflow-hidden">
-            <iframe
-                src="https://drive.google.com/file/d/152sd5W5rQFraN3fLCibP87lQgv9ha4OD/preview?autoplay=1"
-                className="absolute top-0 left-0 w-full h-full border-0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                title="Showcase Video"
-            ></iframe>
+            <video
+              src="/assets/videos/creations.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute top-0 left-0 w-full h-full object-cover"
+            >
+              Your browser does not support the video tag.
+            </video>
              <div className="relative text-center z-10 p-4 bg-black/50 rounded-lg">
                 <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-white">Our Creations in Motion</h2>
                 <p className="mt-2 text-lg text-white/80">Bringing ideas to life.</p>
