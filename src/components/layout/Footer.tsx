@@ -9,20 +9,21 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import NewsletterForm from '@/components/sections/NewsletterForm';
+import Link from 'next/link';
 
 const footerLinks = {
   services: [
-    { name: 'CV Professionnel', href: '#' },
-    { name: 'Sites Web', href: '#' },
-    { name: 'E-commerce', href: '#' },
-    { name: 'Marketing Digital', href: '#' },
-    { name: 'Formation IA', href: '#' },
-    { name: 'Audit SEO', href: '#' }
+    { name: 'CV Professionnel', href: '/services' },
+    { name: 'Sites Web', href: '/services' },
+    { name: 'E-commerce', href: '/services' },
+    { name: 'Marketing Digital', href: '/services' },
+    { name: 'Formation IA', href: '/services' },
+    { name: 'Audit SEO', href: '/services' }
   ],
   resources: [
-    { name: 'Blog', href: '#' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Guides gratuits', href: '#' },
-    { name: 'Études de cas', href: '#' },
+    { name: 'Études de cas', href: '/about' },
     { name: 'Templates', href: '#' },
     { name: 'Webinaires', href: '#' },
     { name: 'FAQ', href: '#' }
@@ -35,6 +36,8 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20vu%20votre%20site%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).";
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
@@ -57,9 +60,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
+                  <Link href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -70,9 +73,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
+                  <Link href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -83,9 +86,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
+                  <Link href={link.href} className="text-gray-300 hover:text-accent transition-colors text-sm">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -100,7 +103,7 @@ export default function Footer() {
                   nexusai.maroc@outlook.com
                 </span>
               </a>
-              <a href="https://wa.me/212699020158" className="flex items-center gap-3 group" target="_blank" rel="noopener noreferrer">
+              <a href={whatsappUrl} className="flex items-center gap-3 group" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5 text-accent flex-shrink-0" />
                 <span className="text-sm text-gray-300 group-hover:text-accent transition-colors">
                   +212 699 020 158
@@ -114,12 +117,12 @@ export default function Footer() {
               </div>
             </div>
              <div className="mt-6 flex gap-3">
-                <a href="#" aria-label="LinkedIn" className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                <Link href="#" aria-label="LinkedIn" className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
                   <Linkedin className="w-4 h-4 text-white" />
-                </a>
-                <a href="#" aria-label="Facebook" className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                </Link>
+                <Link href="#" aria-label="Facebook" className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
                   <Facebook className="w-4 h-4 text-white" />
-                </a>
+                </Link>
               </div>
           </div>
         </div>
