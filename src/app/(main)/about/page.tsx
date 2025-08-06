@@ -23,20 +23,17 @@ export default function AboutPage() {
       {/* Full-Screen Video Section */}
       <div className="py-20 sm:py-32">
         <AnimatedSection>
-          <div className="relative h-[60vh] lg:h-[80vh] bg-secondary flex items-center justify-center">
-            <Image
-                src="https://placehold.co/1920x1080.png"
-                alt="Showcase video thumbnail"
-                fill
-                className="object-cover opacity-20"
-                data-ai-hint="digital agency work montage"
-            />
-            <div className="relative text-center z-10 p-4">
-                <button aria-label="Play video">
-                    <PlayCircle className="h-24 w-24 text-primary hover:text-accent transition-colors duration-300" />
-                </button>
-                <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-primary">Our Creations in Motion</h2>
-                <p className="mt-2 text-lg text-muted-foreground">Click to see how we bring ideas to life.</p>
+          <div className="relative h-[60vh] lg:h-[80vh] bg-secondary flex items-center justify-center overflow-hidden">
+            <iframe
+                src="https://drive.google.com/file/d/152sd5W5rQFraN3fLCibP87lQgv9ha4OD/preview"
+                className="absolute top-0 left-0 w-full h-full border-0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                title="Showcase Video"
+            ></iframe>
+             <div className="relative text-center z-10 p-4 bg-black/50 rounded-lg">
+                <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-white">Our Creations in Motion</h2>
+                <p className="mt-2 text-lg text-white/80">Bringing ideas to life.</p>
             </div>
           </div>
         </AnimatedSection>
