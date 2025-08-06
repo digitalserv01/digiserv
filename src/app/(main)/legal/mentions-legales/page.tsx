@@ -1,5 +1,4 @@
 
-
 import Link from 'next/link';
 
 export default function MentionsLegalesPage() {
@@ -16,7 +15,7 @@ export default function MentionsLegalesPage() {
           Le site amadigiconseils.com est édité par un entrepreneur individuel agissant en son nom propre.
         </p>
         <ul>
-          <li><strong>Directeur de la publication :</strong> [Votre nom complet]</li>
+          <li><strong>Directeur de la publication :</strong> AMADI DIGICONSEILS</li>
           <li><strong>Contact e-mail :</strong> <a href={`mailto:${email}`}>{email}</a></li>
           <li><strong>Contact téléphonique :</strong> +212 699 020 158</li>
         </ul>
