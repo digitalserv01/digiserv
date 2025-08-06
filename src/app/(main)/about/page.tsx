@@ -35,7 +35,7 @@ export default function AboutPage() {
               Your browser does not support the video tag.
             </video>
              <div className="relative text-center z-10 p-4 bg-black/50 rounded-lg">
-                <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-white">Our Creations in Motion</h2>
+                <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-white">Our Creations in Motion: binova.it practice project</h2>
                 <p className="mt-2 text-lg text-white/80">Bringing ideas to life.</p>
             </div>
           </div>
