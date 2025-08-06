@@ -25,7 +25,7 @@ export default function BlogSection({ articles }: BlogSectionProps) {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {articles.map((article) => (
+        {articles.slice(0, 4).map((article) => (
           <ArticleCard key={article.id} article={article} />
         ))}
       </div>
