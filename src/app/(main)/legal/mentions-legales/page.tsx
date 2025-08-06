@@ -8,12 +8,12 @@ export default function MentionsLegalesPage() {
   return (
     <>
       <header>
-        <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary">Mentions Légales</h1>
+        <h1>Mentions Légales</h1>
       </header>
       <section>
         <h2>Éditeur du site</h2>
         <p>
-          Le site amadigiconseils.com est édité par [Nom de votre entreprise ou votre nom], [Forme juridique de votre entreprise (ex: micro-entreprise, SASU)] immatriculée sous le numéro SIRET [Votre numéro SIRET], dont le siège social est situé au [Votre adresse complète].
+          Le site amadigiconseils.com est édité par un entrepreneur individuel agissant en son nom propre.
         </p>
         <ul>
           <li><strong>Directeur de la publication :</strong> [Votre nom complet]</li>
