@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -25,7 +26,7 @@ export default function AboutPage() {
         <AnimatedSection>
           <div className="relative h-[60vh] lg:h-[80vh] bg-secondary flex items-center justify-center overflow-hidden">
             <iframe
-                src="https://drive.google.com/file/d/152sd5W5rQFraN3fLCibP87lQgv9ha4OD/preview"
+                src="https://drive.google.com/file/d/152sd5W5rQFraN3fLCibP87lQgv9ha4OD/preview?autoplay=1"
                 className="absolute top-0 left-0 w-full h-full border-0"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
