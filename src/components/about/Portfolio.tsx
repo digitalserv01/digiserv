@@ -5,25 +5,25 @@ import AnimatedSection from "./AnimatedSection";
 const portfolioItems = [
     {
       title: 'Zibran.ma',
-      description: 'We developed a comprehensive e-commerce strategy, boosting online sales by 120% in six months through targeted SEO, a seamless user experience, and a high-converting checkout process.',
+      description: 'Nous avons développé une stratégie e-commerce complète, augmentant les ventes en ligne de 120% en six mois grâce à un SEO ciblé, une expérience utilisateur fluide et un processus de paiement à haute conversion.',
       imageUrl: '/assets/images/zibran.png',
       aiHint: 'luxury fashion website',
     },
     {
       title: 'Younipouf.fr',
-      description: 'From brand identity to a viral social media campaign, we built a digital ecosystem that captured the youth market, leading to a 300% increase in brand engagement and record launch sales.',
+      description: 'De l\'identité de marque à une campagne virale sur les réseaux sociaux, nous avons bâti un écosystème digital qui a captivé le marché jeune, menant à une augmentation de 300% de l\'engagement et des ventes record au lancement.',
       imageUrl: '/assets/images/younipouf.png',
       aiHint: 'modern furniture product',
     },
     {
       title: '360luxury.shop',
-      description: "For this high-end marketplace, we implemented an exclusive, content-driven marketing strategy that attracted a niche clientele, resulting in a 75% higher average order value than industry benchmarks.",
+      description: "Pour cette place de marché haut de gamme, nous avons mis en œuvre une stratégie marketing exclusive axée sur le contenu qui a attiré une clientèle de niche, résultant en une valeur de commande moyenne 75% plus élevée que la norme du secteur.",
       imageUrl: '/assets/images/360luxury.png',
       aiHint: 'luxury product showcase',
     },
     {
       title: 'Mimidsofa.ma',
-      description: "We transformed a traditional furniture business into a digital-first brand. By building a visually rich online catalog and automating lead generation, we expanded their market reach across Morocco.",
+      description: "Nous avons transformé une entreprise de meubles traditionnelle en une marque digitale. En créant un catalogue en ligne visuellement riche et en automatisant la génération de leads, nous avons étendu leur portée de marché à travers le Maroc.",
       videoUrl: '/assets/videos/mimid.mp4',
       aiHint: 'minimalist sofa living room',
     },
@@ -34,8 +34,8 @@ const Portfolio = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center mb-16">
                 <AnimatedSection>
-                    <h2 className="text-3xl lg:text-4xl font-bold font-headline text-primary">Our Blueprint for Success</h2>
-                    <p className="mt-4 text-lg text-muted-foreground">Four pillars of our work, four stories of growth.</p>
+                    <h2 className="text-3xl lg:text-4xl font-bold font-headline text-primary">Notre plan pour le succès</h2>
+                    <p className="mt-4 text-lg text-muted-foreground">Quatre piliers de notre travail, quatre histoires de croissance.</p>
                 </AnimatedSection>
             </div>
             <div className="space-y-20">

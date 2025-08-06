@@ -52,17 +52,17 @@ export default function TestCronPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Card>
         <CardHeader>
-          <CardTitle>Test Article Generation & Saving</CardTitle>
+          <CardTitle>Test de Génération d'Article</CardTitle>
           <CardDescription>
-            This page allows you to manually trigger the full article generation and saving process, identical to the cron job.
+            Cette page vous permet de déclencher manuellement le processus complet de génération et de sauvegarde d'articles, identique à la tâche cron.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Button onClick={onGenerateAndSave} disabled={state === 'loading'}>
             {state === 'loading' ? (
-              <><Loader2 className="animate-spin" /> Working...</>
+              <><Loader2 className="animate-spin" /> En cours...</>
             ) : (
-              <><Wand /> Generate & Save Article</>
+              <><Wand /> Générer & Sauvegarder l'Article</>
             )}
           </Button>
 
@@ -70,7 +70,7 @@ export default function TestCronPage() {
               <div className="mt-4 w-full p-4 bg-destructive/10 border border-destructive/50 text-destructive rounded-md flex items-center gap-2">
                 <AlertCircle className="h-5 w-5"/>
                 <div>
-                  <h4 className="font-bold">Error</h4>
+                  <h4 className="font-bold">Erreur</h4>
                   <p>{message}</p>
                 </div>
               </div>
@@ -82,12 +82,12 @@ export default function TestCronPage() {
                     <div className="flex items-center gap-3 text-emerald-700">
                         <CheckCircle className="h-5 w-5 flex-shrink-0" />
                         <div>
-                            <h4 className="font-bold">Success!</h4>
+                            <h4 className="font-bold">Succès !</h4>
                             <p className="text-sm">{message}</p>
                             {articleId && (
                                 <Button asChild variant="link" className="p-0 h-auto text-emerald-700">
                                     <Link href={`/blog/${articleId}`} target="_blank">
-                                        View Saved Article <ExternalLink className="ml-2 h-4 w-4" />
+                                        Voir l'article sauvegardé <ExternalLink className="ml-2 h-4 w-4" />
                                     </Link>
                                 </Button>
                             )}

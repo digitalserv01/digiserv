@@ -132,11 +132,11 @@ export default function ServicesPage() {
               playsInline
               className="absolute top-0 left-0 w-full h-full object-cover"
             >
-              Your browser does not support the video tag.
+              Votre navigateur ne supporte pas la balise vidéo.
             </video>
              <div className="relative text-center z-10 p-4 bg-black/50 rounded-lg">
-                <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-white">Our Creations in Motion: binova.it practice project</h2>
-                <p className="mt-2 text-lg text-white/80">Bringing ideas to life.</p>
+                <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-white">Nos créations en mouvement : projet d'entraînement binova.it</h2>
+                <p className="mt-2 text-lg text-white/80">Donner vie aux idées.</p>
             </div>
           </div>
         </AnimatedSection>
