@@ -29,14 +29,15 @@ const footerLinks = {
     { name: 'FAQ', href: '#' }
   ],
   legal: [
-    { name: 'Mentions légales', href: '#' },
-    { name: 'Politique RGPD', href: '#' },
-    { name: 'Conditions Générales de Vente', href: '#' },
+    { name: 'Mentions légales', href: '/legal/mentions-legales' },
+    { name: 'Politique de Confidentialité', href: '/legal/politique-de-confidentialite' },
+    { name: 'Conditions Générales de Vente', href: '/legal/cgv' },
   ]
 };
 
 export default function Footer() {
   const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20vu%20votre%20site%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).";
+  const email = "nexusai.maroc@outlook.com";
 
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -97,10 +98,10 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-white">Contact</h4>
             <div className="space-y-4">
-              <a href="mailto:nexusai.maroc@outlook.com" className="flex items-center gap-3 group">
+              <a href={`mailto:${email}`} className="flex items-center gap-3 group">
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <span className="text-sm text-gray-300 group-hover:text-accent transition-colors">
-                  nexusai.maroc@outlook.com
+                  {email}
                 </span>
               </a>
               <a href={whatsappUrl} className="flex items-center gap-3 group" target="_blank" rel="noopener noreferrer">
