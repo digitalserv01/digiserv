@@ -26,7 +26,7 @@ const footerLinks = {
     { name: 'Études de cas', href: '/about' },
     { name: 'Templates', href: '/about' },
     { name: 'Webinaires', href: '#' },
-    { name: 'FAQ', href: '#' }
+    { name: 'FAQ', href: '/faq' }
   ],
   legal: [
     { name: 'Mentions légales', href: '/legal/mentions-legales' },
