@@ -1,7 +1,3 @@
-
-'use client';
-
-import React, { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
 import AnimatedSection from '@/components/about/AnimatedSection';
@@ -12,25 +8,6 @@ import Values from '@/components/about/Values';
 
 
 export default function AboutPage() {
-    const videoRef = useRef<HTMLVideoElement>(null);
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        const handleTimeUpdate = () => {
-            if (video.currentTime >= 45) {
-                video.currentTime = 0;
-            }
-        };
-
-        video.addEventListener('timeupdate', handleTimeUpdate);
-
-        return () => {
-            video.removeEventListener('timeupdate', handleTimeUpdate);
-        };
-    }, []);
-
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section */}
@@ -44,7 +21,6 @@ export default function AboutPage() {
         <AnimatedSection>
           <div className="relative h-[60vh] lg:h-[80vh] bg-secondary flex items-center justify-center overflow-hidden">
             <video
-              ref={videoRef}
               src="/assets/videos/creations.mp4"
               autoPlay
               muted
