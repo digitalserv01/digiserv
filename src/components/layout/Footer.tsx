@@ -24,7 +24,7 @@ const footerLinks = {
     { name: 'Blog', href: '/blog' },
     { name: 'Guides gratuits', href: 'https://drive.google.com/file/d/1NkryiJbzraEgcA_4algkCdx4FMEeN-dL/view?usp=sharing' },
     { name: 'Études de cas', href: '/about' },
-    { name: 'Templates', href: '#' },
+    { name: 'Templates', href: '/about' },
     { name: 'Webinaires', href: '#' },
     { name: 'FAQ', href: '#' }
   ],
