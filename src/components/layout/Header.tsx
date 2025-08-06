@@ -39,8 +39,8 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex-shrink-0">
             <div className="flex items-center">
-              <span className="text-2xl font-bold font-headline text-primary">DigiConseil</span>
-              <span className="text-2xl font-bold font-headline text-accent">.fr</span>
+              <span className="text-2xl font-bold font-headline text-primary">Amadi</span>
+              <span className="text-2xl font-bold font-headline text-accent">DigiConseils</span>
             </div>
           </Link>
 

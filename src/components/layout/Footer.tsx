@@ -83,10 +83,10 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-white">Contact</h4>
             <div className="space-y-4">
-              <a href="mailto:contact@digiconseil.fr" className="flex items-center gap-3 group">
+              <a href="mailto:contact@amadigiconseils.com" className="flex items-center gap-3 group">
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <span className="text-sm text-gray-300 group-hover:text-accent transition-colors">
-                  contact@digiconseil.fr
+                  contact@amadigiconseils.com
                 </span>
               </a>
               <a href="tel:+33123456789" className="flex items-center gap-3 group">
@@ -119,11 +119,11 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center space-x-1">
-            <span className="text-2xl font-bold font-headline">DigiConseil</span>
-            <span className="text-2xl font-bold font-headline text-accent">.fr</span>
+            <span className="text-2xl font-bold font-headline">Amadi</span>
+            <span className="text-2xl font-bold font-headline text-accent">DigiConseils</span>
           </div>
           <p className="text-sm text-gray-400 text-center md:text-left">
-            © {new Date().getFullYear()} DigiConseil.fr - Tous droits réservés
+            © {new Date().getFullYear()} amadigiconseils.com - Tous droits réservés
           </p>
         </div>
       </div>

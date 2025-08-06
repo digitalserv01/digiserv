@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/hooks/useAuth';
 
 export const metadata: Metadata = {
-  title: 'Blog IA France | DigiConseil.fr',
+  title: 'Blog IA France | AmadiDigiConseils.com',
   description: 'Services digitaux professionnels pour entrepreneurs français.',
   icons: {
     icon: '/favicon.ico',
