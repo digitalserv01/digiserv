@@ -1,3 +1,4 @@
+
 import { collection, getDocs, limit, orderBy, query, startAfter, Timestamp, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Article, ArticleDocument } from '@/types/article';
@@ -41,6 +42,7 @@ async function getArticles(page = 1, category?: string) {
     return {
         id: doc.id,
         ...data,
+        slug: data.slug,
         createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
         imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
     };
@@ -56,6 +58,7 @@ async function getArticles(page = 1, category?: string) {
         return {
             id: doc.id,
             ...data,
+            slug: data.slug,
             createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
             imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
         };
@@ -94,6 +97,7 @@ async function getArticles(page = 1, category?: string) {
       return {
         id: doc.id,
         ...data,
+        slug: data.slug,
         createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
         imageUrl: data.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(data.category))}`,
       };

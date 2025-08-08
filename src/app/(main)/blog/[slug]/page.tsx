@@ -1,3 +1,4 @@
+
 import { doc, getDoc, collection, getDocs, Timestamp, query, where, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Article, ArticleDocument } from '@/types/article';
@@ -37,6 +38,7 @@ async function getArticle(slug: string): Promise<Article | null> {
   return { 
       id: docSnap.id, 
       ...data,
+      slug: data.slug,
       createdAt: data.createdAt?.toJSON() || new Date().toJSON(),
       // Ensure imageUrl is always a string, provide fallback
       imageUrl: data.imageUrl || 'https://placehold.co/1200x600.png',
@@ -48,7 +50,7 @@ export async function generateStaticParams() {
     const articlesCol = collection(db, 'articles');
     const articlesSnapshot = await getDocs(articlesCol);
     return articlesSnapshot.docs.map(doc => ({
-      slug: doc.data().slug || doc.id,
+      slug: doc.data().slug,
     }));
   } catch (error) {
     console.error("Error fetching static params for articles:", error)

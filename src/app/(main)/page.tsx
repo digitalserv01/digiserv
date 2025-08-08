@@ -1,3 +1,4 @@
+
 import HeroSection from '@/components/sections/HeroSection';
 import BlogSection from '@/components/sections/BlogSection';
 import CtaSection from '@/components/sections/CtaSection';
@@ -21,6 +22,7 @@ export default async function HomePage() {
     return {
       id: doc.id,
       ...data,
+      slug: data.slug,
       createdAt,
       imageUrl: data.imageUrl || 'https://placehold.co/400x225.png',
     }
