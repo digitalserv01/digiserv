@@ -15,14 +15,18 @@ export default function TestCronPage() {
   
   const { user, loading } = useAuth();
   const router = useRouter();
+  const adminId = process.env.NEXT_PUBLIC_ADMIN_ID;
 
   useEffect(() => {
-    if (!loading) {
-      if (!user || user.uid !== process.env.NEXT_PUBLIC_ADMIN_ID) {
-        router.push('/');
-      }
+    if (loading) {
+      return; // Wait until authentication state is resolved
     }
-  }, [user, loading, router]);
+
+    // If loading is finished, but there's no adminId configured or the user doesn't match, redirect.
+    if (!adminId || !user || user.uid !== adminId) {
+      router.push('/');
+    }
+  }, [user, loading, router, adminId]);
 
   const onGenerateAndSave = async () => {
     setState('loading');
@@ -40,7 +44,7 @@ export default function TestCronPage() {
     }
   };
 
-  if (loading || !user) {
+  if (loading || !user || user.uid !== adminId) {
     return (
         <div className="flex h-screen items-center justify-center">
             <Loader2 className="h-8 w-8 animate-spin" />
