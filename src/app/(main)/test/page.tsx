@@ -24,7 +24,7 @@ export default function TestCronPage() {
 
     // If loading is finished, but there's no adminId configured or the user doesn't match, redirect.
     if (!adminId || !user || user.uid !== adminId) {
-      router.push('/');
+      router.push('/login');
     }
   }, [user, loading, router, adminId]);
 
