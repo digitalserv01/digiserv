@@ -49,9 +49,11 @@ export async function generateStaticParams() {
   try {
     const articlesCol = collection(db, 'articles');
     const articlesSnapshot = await getDocs(articlesCol);
-    return articlesSnapshot.docs.map(doc => ({
-      slug: doc.data().slug,
-    }));
+    return articlesSnapshot.docs
+      .map(doc => ({
+        slug: doc.data().slug,
+      }))
+      .filter(item => !!item.slug); // Filter out any articles that don't have a slug
   } catch (error) {
     console.error("Error fetching static params for articles:", error)
     return [];
