@@ -1,9 +1,9 @@
-import { doc, getDoc, collection, getDocs, Timestamp } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs, Timestamp, query, where, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Article, ArticleDocument } from '@/types/article';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock, FileText, Bot, Linkedin, Facebook, Twitter } from 'lucide-react';
+import { Calendar, Clock, FileText, Bot } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
@@ -18,18 +18,20 @@ import SocialShare from '@/components/blog/SocialShare';
 
 interface ArticlePageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 
-async function getArticle(id: string): Promise<Article | null> {
-  const docRef = doc(db, 'articles', id);
-  const docSnap = await getDoc(docRef);
+async function getArticle(slug: string): Promise<Article | null> {
+  const articlesCol = collection(db, 'articles');
+  const q = query(articlesCol, where('slug', '==', slug), limit(1));
+  const snapshot = await getDocs(q);
 
-  if (!docSnap.exists()) {
+  if (snapshot.empty) {
     return null;
   }
   
+  const docSnap = snapshot.docs[0];
   const data = docSnap.data() as ArticleDocument;
 
   return { 
@@ -46,7 +48,7 @@ export async function generateStaticParams() {
     const articlesCol = collection(db, 'articles');
     const articlesSnapshot = await getDocs(articlesCol);
     return articlesSnapshot.docs.map(doc => ({
-      id: doc.id,
+      slug: doc.data().slug || doc.id,
     }));
   } catch (error) {
     console.error("Error fetching static params for articles:", error)
@@ -65,14 +67,14 @@ const getCategoryName = (slug: string) => categoryDisplayName[slug] || slug;
 
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const article = await getArticle(params.id);
+  const article = await getArticle(params.slug);
 
   if (!article) {
     notFound();
   }
 
   const whatsappUrl = `https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20lu%20votre%20article%20'${encodeURIComponent(article.title)}'%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).`;
-  const articleUrl = `https://www.amadigiconseils.com/blog/${article.id}`;
+  const articleUrl = `https://www.amadigiconseils.com/blog/${article.slug}`;
 
   const getArticleDate = () => {
     if (!article.createdAt) return "Date inconnue";
@@ -100,7 +102,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     '@type': 'Article',
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://www.amadigiconseils.com/blog/${article.id}`,
+      '@id': articleUrl,
     },
     headline: article.title,
     description: article.metaDescription,

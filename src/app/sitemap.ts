@@ -53,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
      const data = doc.data() as ArticleDocument;
      const createdAt = data.createdAt?.toDate() || new Date();
     return {
-      url: `${siteUrl}/blog/${doc.id}`,
+      url: `${siteUrl}/blog/${data.slug}`,
       lastModified: createdAt,
       changeFrequency: 'never',
       priority: 0.8,

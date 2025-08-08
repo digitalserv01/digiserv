@@ -48,7 +48,7 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
 
   return (
     <Card className="flex h-full flex-col overflow-hidden shadow-sm transition-all duration-300 hover:shadow-xl group">
-      <Link href={`/blog/${article.id}`} className="flex flex-col flex-1">
+      <Link href={`/blog/${article.slug}`} className="flex flex-col flex-1">
         <div className="relative overflow-hidden aspect-[16/9]">
           <Image
             src={article.imageUrl || `https://placehold.co/400x225.png?text=${encodeURIComponent(getCategoryName(article.category))}`}

@@ -12,6 +12,7 @@ export type GenerateSeoOptimizedBlogArticleInput = z.infer<typeof GenerateSeoOpt
 
 export const GenerateSeoOptimizedBlogArticleOutputSchema = z.object({
   title: z.string().describe('The SEO-optimized H1 title of the blog article (60 characters max).'),
+  slug: z.string().describe('The URL-friendly slug generated from the title.'),
   metaDescription: z.string().describe('The SEO-optimized meta description (155 characters max).'),
   article: z.string().describe('The full generated blog article in Markdown format.'),
   wordCount: z.number().describe('The total word count of the article.'),

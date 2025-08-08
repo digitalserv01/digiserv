@@ -60,7 +60,7 @@ export default function Sidebar({ recentArticles }: SidebarProps) {
           </CardHeader>
           <CardContent className="space-y-4">
              {recentArticles.map(article => (
-                <Link key={article.id} href={`/blog/${article.id}`} className="flex gap-4 group">
+                <Link key={article.id} href={`/blog/${article.slug}`} className="flex gap-4 group">
                     <div className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
                        <Image 
                           src={article.imageUrl} 

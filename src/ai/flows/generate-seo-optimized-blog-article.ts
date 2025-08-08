@@ -8,6 +8,17 @@
 import {ai} from '@/ai/genkit';
 import { GenerateSeoOptimizedBlogArticleInput, GenerateSeoOptimizedBlogArticleInputSchema, GenerateSeoOptimizedBlogArticleOutput, GenerateSeoOptimizedBlogArticleOutputSchema } from '../schemas';
 
+// Helper function to generate a URL-friendly slug
+function generateSlug(title: string): string {
+    return title
+        .toLowerCase()
+        .normalize("NFD") // Decompose accented characters
+        .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+        .replace(/[^a-z0-9\s-]/g, '') // Remove non-alphanumeric characters except spaces and hyphens
+        .trim()
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+}
 
 export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimizedBlogArticleInput): Promise<GenerateSeoOptimizedBlogArticleOutput> {
   return generateSeoOptimizedBlogArticleFlow(input);
@@ -16,7 +27,7 @@ export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimize
 const prompt = ai.definePrompt({
   name: 'generateSeoOptimizedBlogArticlePrompt',
   input: {schema: GenerateSeoOptimizedBlogArticleInputSchema},
-  output: {schema: GenerateSeoOptimizedBlogArticleOutputSchema.omit({ imageUrl: true })}, // The prompt itself doesn't generate the URL
+  output: {schema: GenerateSeoOptimizedBlogArticleOutputSchema.omit({ imageUrl: true, slug: true })}, // The prompt itself doesn't generate the URL or slug
   prompt: `
   You are an expert French content creator for a digital services blog. Your audience is French entrepreneurs and small business owners.
   Your task is to write a comprehensive, professional, and SEO-optimized blog post of 1000-1200 words on the given subject.
@@ -76,13 +87,17 @@ const generateSeoOptimizedBlogArticleFlow = ai.defineFlow(
     if (!output) {
         throw new Error('Failed to generate article text. The AI model did not return a valid JSON output.');
     }
+    
+    // 2. Generate the slug from the title
+    const slug = generateSlug(output.title);
 
-    // 2. Generate a dynamic Unsplash image URL based on the category
+    // 3. Generate a dynamic Unsplash image URL based on the category
     const imageUrl = `https://source.unsplash.com/random/1200x600?${encodeURIComponent(input.category.replace(/-/g, ' '))}`;
     
-    // 3. Combine text and image URL into the final output
+    // 4. Combine text, slug, and image URL into the final output
     return {
       ...output,
+      slug,
       imageUrl,
     };
   }

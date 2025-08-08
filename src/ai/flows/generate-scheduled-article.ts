@@ -8,7 +8,6 @@
 import {ai} from '@/ai/genkit';
 import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
 import { getDailyTopic } from '../daily-prompts';
-import { GenerateSeoOptimizedBlogArticleOutput } from '../schemas';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { sendTelegramNotification } from '@/services/telegram';

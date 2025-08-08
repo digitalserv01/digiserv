@@ -3,6 +3,7 @@ import type { Timestamp } from 'firebase/firestore';
 export interface Article {
   id: string;
   title: string;
+  slug: string;
   metaDescription: string;
   article: string;
   wordCount: number;
