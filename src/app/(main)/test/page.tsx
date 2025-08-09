@@ -35,18 +35,23 @@ export default function TestCronPage() {
   const onGenerateAndSave = async () => {
     setState('loading');
     setMessage(null);
-
-    const result = await handleGenerateAndSaveArticle();
-    
-    setMessage(result.message);
-    if (result.success) {
-      setState('success');
-      // Refresh the dashboard by changing its key
-       setKey(prevKey => prevKey + 1);
-    } else {
+    try {
+      const result = await handleGenerateAndSaveArticle();
+      setMessage(result.message);
+      if (result.success) {
+        setState('success');
+        setKey(prevKey => prevKey + 1); // Refresh dashboard
+      } else {
+        // This case might be for partial successes in batch generation
+        setState('error');
+      }
+    } catch (error: any) {
+      // Catch the raw error and display its message
+      setMessage(error.message || 'An unknown error occurred.');
       setState('error');
     }
   };
+
 
   if (loading || !user) {
     return (
