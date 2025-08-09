@@ -22,5 +22,6 @@ export const GenerateSeoOptimizedBlogArticleOutputSchema = z.object({
   keywords: z.array(z.string()).describe('A list of 3-5 relevant SEO keywords for the article.'),
   category: z.string().describe('The category of the blog article.'),
   imageUrl: z.string().describe('The URL of the generated hero image for the article.'),
+  seoScore: z.number().min(0).max(100).optional().describe('Calculated SEO score out of 100.'),
 });
 export type GenerateSeoOptimizedBlogArticleOutput = z.infer<typeof GenerateSeoOptimizedBlogArticleOutputSchema>;

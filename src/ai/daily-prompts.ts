@@ -10,6 +10,8 @@ export const DAILY_BLOG_PROMPTS = {
       "Les 10 questions les plus fréquentes en entretien d'embauche et comment y répondre",
       "Le guide ultime pour une lettre de motivation percutante en France",
       "Réussir sa reconversion professionnelle en France : le plan d'action",
+      "CV moderne 2025 : Les nouvelles tendances qui font la différence",
+      "Négocier son salaire en France : Stratégies gagnantes pour 2025",
     ],
   },
 
@@ -22,6 +24,8 @@ export const DAILY_BLOG_PROMPTS = {
       "Shopify vs WooCommerce : Quelle plateforme choisir pour le e-commerce en France ?",
       "Optimiser la performance de son site web pour les moteurs de recherche en France",
       "Checklist complète de conformité RGPD pour le développement web",
+      "Next.js vs React : Quel framework choisir pour votre projet web en 2025",
+      "WordPress vs Webflow : Comparatif complet pour créer son site professionnel",
     ],
   },
 
@@ -34,6 +38,8 @@ export const DAILY_BLOG_PROMPTS = {
       "Stratégies de ciblage efficaces sur Facebook Ads pour le marché français en 2025",
       "Le guide de l'email marketing RGPD : automatisation légale et profitable",
       "Comment dominer le SEO local sur Google dans votre ville en France",
+      "TikTok pour entreprises : Comment réussir sur la plateforme en France en 2025",
+      "Marketing d'influence français : Trouver et collaborer avec les bons créateurs",
     ],
   },
 
@@ -46,6 +52,8 @@ export const DAILY_BLOG_PROMPTS = {
       "Le guide complet du dropshipping légal pour les entrepreneurs français en 2025",
       "Marketplace vs. site propre : Quelle est la meilleure stratégie pour débuter dans l'e-commerce ?",
       "Comment optimiser le taux de conversion de votre site e-commerce en France",
+      "Amazon FBA France : Guide complet pour débuter la vente sur Amazon",
+      "Cross-border e-commerce : Vendre à l'international depuis la France",
     ],
   },
 
@@ -58,6 +66,8 @@ export const DAILY_BLOG_PROMPTS = {
       "10 tâches que vous pouvez automatiser avec l'IA pour votre PME",
       "Comment l'IA générative peut bénéficier aux entreprises françaises",
       "Comment les agents conversationnels révolutionnent le service client",
+      "Automatiser sa comptabilité avec l'IA : Outils et stratégies pour les PME",
+      "IA et création de contenu : Booster sa productité marketing en 2025",
     ],
   },
 };

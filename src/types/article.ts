@@ -14,6 +14,7 @@ export interface Article {
   category: string;
   createdAt: string; // Changed from Timestamp to string
   imageUrl: string;
+  seoScore?: number;
 }
 
 export interface ArticleDocument extends Omit<Article, 'id' | 'createdAt'> {

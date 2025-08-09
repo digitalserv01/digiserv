@@ -1,3 +1,4 @@
+// This file is no longer used for article generation but is kept for potential future use with other Genkit features.
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 
