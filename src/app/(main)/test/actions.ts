@@ -10,7 +10,7 @@ export async function handleGenerateAndSaveArticle(): Promise<{ success: boolean
     return { success: result.success, message: result.message, generatedArticles: result.generatedArticles };
   } catch (error: any) {
     console.error('Critical error in handleGenerateAndSaveArticle:', error);
-    // Re-throw the original error to be caught by the client component
+    // Re-throw the raw error to be caught by the client component
     throw error;
   }
 }

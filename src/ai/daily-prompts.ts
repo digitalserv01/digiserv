@@ -73,18 +73,14 @@ export const DAILY_BLOG_PROMPTS = {
   },
 };
 
-export function getDailyTopic() {
+export function getDailyTopics(): Array<{ subject: string; keywords: string; category: string }> {
     const now = new Date();
-    // France is UTC+2 during summer and UTC+1 during winter.
-    // To get the correct day in France, we adjust the UTC time.
-    const frenchTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
-    
-    const dayOfWeek = frenchTime.getDay(); // Sunday - 0, Monday - 1, etc.
-    const weekOfMonth = Math.floor((frenchTime.getDate() - 1) / 7);
+    // Create a new date object for Paris timezone
+    const parisDate = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" }));
+    const dayOfWeek = parisDate.getDay(); // Sunday - 0, Monday - 1, etc.
 
     let promptInfo;
     switch (dayOfWeek) {
-        case 0: // Sunday -> Default to Monday
         case 1: 
             promptInfo = DAILY_BLOG_PROMPTS.monday; 
             break;
@@ -100,22 +96,17 @@ export function getDailyTopic() {
         case 5: 
             promptInfo = DAILY_BLOG_PROMPTS.friday; 
             break;
-        case 6: // Saturday -> Default to Monday
-            promptInfo = DAILY_BLOG_PROMPTS.monday;
-            break;
-        default: // Should not happen, but default to Monday as a fallback
-            promptInfo = DAILY_BLOG_PROMPTS.monday;
-            break;
+        case 0: // Sunday
+        case 6: // Saturday
+        default:
+            // No articles on weekends
+            return [];
     }
     
-    // Cycle through subjects based on the week of the month
-    const subject = promptInfo.subjects[weekOfMonth % promptInfo.subjects.length];
-    
-    if (!subject) return null;
-
-    return {
+    // Return all subjects for the day
+    return promptInfo.subjects.map(subject => ({
         subject,
         keywords: promptInfo.keywords.join(', '),
         category: promptInfo.category,
-    };
+    }));
 }
