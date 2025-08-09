@@ -79,7 +79,9 @@ export async function generateAndSaveScheduledArticle(): Promise<{ success: bool
     if (!dailyTopic) {
       const message = 'No article to generate today.';
       console.log(message);
-      return { success: true, message, generatedArticles: 0 };
+      // For debugging in the test page, we throw an error.
+      // For the actual cron job, this is a valid state.
+      throw new Error(message);
     }
 
     console.log(`Generating article for topic: ${dailyTopic.subject}`);

@@ -10,6 +10,7 @@ export async function handleGenerateAndSaveArticle(): Promise<{ success: boolean
     return { success: result.success, message: result.message, generatedArticles: result.generatedArticles };
   } catch (error: any) {
     console.error('Critical error in handleGenerateAndSaveArticle:', error);
+    // Ensure we always return a message key, even for thrown errors
     return { 
       success: false, 
       message: error.message || 'An unknown critical error occurred in the action.', 
