@@ -134,9 +134,12 @@ export async function generateAndSaveScheduledArticle(): Promise<{ success: bool
         }
     }
     
-    const finalMessage = `Batch generation complete. ${generatedCount}/${dailyTopics.length} articles generated. Average SEO score: ${generatedCount > 0 ? Math.round(totalSeoScore / generatedCount) : 0}.`;
-    console.log(finalMessage);
-    await sendTelegramNotification(`Fin de la tâche de génération. ${generatedCount}/${dailyTopics.length} articles créés.`);
+    const finalMessage = allMessages.join('\n');
+    console.log(`Batch generation complete. ${generatedCount}/${dailyTopics.length} articles generated. Average SEO score: ${generatedCount > 0 ? Math.round(totalSeoScore / generatedCount) : 0}.`);
+    
+    if (generatedCount > 0) {
+        await sendTelegramNotification(`Fin de la tâche de génération. ${generatedCount}/${dailyTopics.length} articles créés.`);
+    }
     
     return { success: generatedCount > 0, message: finalMessage, generatedArticles: generatedCount };
 }

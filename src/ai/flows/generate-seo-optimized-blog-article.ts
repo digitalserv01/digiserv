@@ -131,6 +131,6 @@ export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimize
 
   } catch (error) {
     console.error('Error in generateSeoOptimizedBlogArticle:', error);
-    throw new Error(`Failed to generate SEO article: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(`Failed to generate SEO article for subject "${input.subject}": ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
