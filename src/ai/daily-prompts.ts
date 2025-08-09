@@ -81,6 +81,7 @@ export function getDailyTopics(): Array<{ subject: string; keywords: string; cat
 
     let promptInfo;
     switch (dayOfWeek) {
+        case 0: // Sunday -> use Monday
         case 1: 
             promptInfo = DAILY_BLOG_PROMPTS.monday; 
             break;
@@ -96,11 +97,12 @@ export function getDailyTopics(): Array<{ subject: string; keywords: string; cat
         case 5: 
             promptInfo = DAILY_BLOG_PROMPTS.friday; 
             break;
-        case 0: // Sunday
-        case 6: // Saturday
+        case 6: // Saturday -> use Monday
+             promptInfo = DAILY_BLOG_PROMPTS.monday; 
+            break;
         default:
-            // No articles on weekends
-            return [];
+            // Should not happen, but as a fallback, use Monday
+             promptInfo = DAILY_BLOG_PROMPTS.monday; 
     }
     
     // Return all subjects for the day
