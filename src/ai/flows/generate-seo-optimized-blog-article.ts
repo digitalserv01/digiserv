@@ -19,54 +19,62 @@ function generateSlug(title: string): string {
 // Enhanced SEO-focused prompt for DeepSeek
 function createSEOPrompt(input: GenerateSeoOptimizedBlogArticleInput): string {
   return `
-MISSION : Créer un article de blog SEO-optimisé de 1000-1200 mots pour entrepreneurs français.
+MISSION : Créer un article de blog SEO-optimisé de 1000-1200 mots pour entrepreneurs français, qui surpasse la concurrence.
 
 SUJET : ${input.subject}
 MOTS-CLÉS : ${input.keywords}
 CATÉGORIE : ${input.category}
 
-STRUCTURE OBLIGATOIRE :
+STRUCTURE OBLIGATOIRE ET DÉTAILLÉE :
 
-1. TITRE SEO (H1) : 60 caractères max, inclure mot-clé principal, année 2025
-2. META DESCRIPTION : 155 caractères max avec mots-clés et bénéfice client
-3. CONTENU MARKDOWN :
+1. TITRE SEO (H1) :
+- 60 caractères max.
+- Inclure le mot-clé principal et l'année 2025.
+- Doit être percutant et susciter la curiosité (ex: "Les 10 Questions Pièges en Entretien et les Réponses pour les Déjouer").
 
-**Introduction (150 mots)** :
-- Statistique française récente et frappante
-- Problème concret des entrepreneurs français
-- Promesse de solution dans l'article
+2. META DESCRIPTION :
+- 155 caractères max.
+- Inclure mots-clés, un bénéfice client clair et un appel à l'action implicite (ex: "Réussissez votre entretien en 2025 ! Découvrez les questions pièges et les réponses gagnantes pour décrocher le poste.").
 
-**7 CONSEILS PRATIQUES** (sections H2, 120-150 mots chacune) :
-- Conseils actionnables avec exemples français
-- Étapes concrètes à suivre
-- Chiffres et données françaises quand possible
+3. CONTENU MARKDOWN (1000-1200 mots) :
 
-**OUTILS RECOMMANDÉS** (section H2, 150 mots) :
-- Comparaison de 3-4 outils spécifiques
-- Prix réalistes français (ex: hébergement 5€/mois)
-- Avantages/inconvénients pour PME françaises
+**Introduction (environ 150 mots)** :
+- Démarrer avec une statistique française récente et surprenante.
+- Présenter un problème concret et relatable pour les entrepreneurs ou chercheurs d'emploi français.
+- Annoncer clairement la solution que l'article va apporter.
 
-**ÉTUDE DE CAS** (section H2, 200 mots) :
-- Entreprise française réelle ou réaliste
-- Résultats quantifiés (avant/après)
-- Secteur spécifique (boulangerie Lyon, menuiserie Bordeaux, etc.)
+**7 CONSEILS PRATIQUES (sections H2, 120-150 mots CHACUNE)** :
+- Chaque conseil doit être un sous-titre H2.
+- **Approfondir chaque point** : ne pas donner de conseil générique. Fournir des étapes concrètes, des exemples précis et des "mini-scripts" si applicable.
+- Intégrer des chiffres et données sourcées (INSEE, Pôle Emploi, etc.) lorsque c'est pertinent.
+- Varier les exemples pour toucher différents secteurs (artisanat, tech, conseil, etc.).
+- Inclure des références aux spécificités françaises (ex: Code du Travail, RGPD, statuts d'entreprise).
 
-**Conclusion (150 mots)** :
-- Résumé des points clés
-- Encouragement et transition naturelle vers CTA
+**OUTILS RECOMMANDÉS (section H2, environ 150 mots)** :
+- Comparer 3-4 outils pertinents pour le sujet.
+- Indiquer des prix réalistes pour le marché français (ex: "Canva Pro à 12€/mois").
+- Lister les avantages et inconvénients pour une PME ou un entrepreneur individuel.
+
+**ÉTUDE DE CAS CONCRÈTE (section H2, environ 200 mots)** :
+- Inventer une étude de cas réaliste d'une entreprise française (ex: "Une TPE de menuiserie à Bordeaux", "Une consultante RH à Lyon").
+- **Présenter des résultats chiffrés et quantifiables (avant/après)**. Par exemple: "En optimisant son SEO local, l'entreprise a vu une augmentation de 40% des demandes de devis en 3 mois."
+
+**Conclusion (environ 150 mots)** :
+- Résumer les 3 points clés les plus importants de l'article.
+- Terminer par un encouragement fort et une transition naturelle vers le Call-To-Action.
 
 4. CALL-TO-ACTION :
-- ctaText : Offre spécifique avec prix (ex: "Notre équipe développe des sites vitrines optimisés SEO à partir de 209€")
-- ctaButton : Action directe ("Discuter sur WhatsApp", "Réserver un appel")
+- ctaText : Créer une offre spécifique et irrésistible avec un prix (ex: "Obtenez un audit SEO complet de votre site pour seulement 99€").
+- ctaButton : Rédiger un texte de bouton qui pousse à l'action (ex: "Je veux mon audit", "Discuter de mon projet").
 
-EXIGENCES TECHNIQUES :
-- Utiliser "vous" (vouvoiement)
-- Références légales françaises (RGPD, Code du Travail)
-- Ton professionnel mais accessible
-- Mots-clés intégrés naturellement
-- Exemples secteurs variés français
+EXIGENCES TECHNIQUES ET STYLISTIQUES :
+- Utiliser le vouvoiement ("vous").
+- Ton professionnel, expert, mais très accessible et pédagogique.
+- Intégrer les mots-clés de manière naturelle (densité entre 0.5% et 2%).
+- **Inclure des éléments de tendance pour 2025** : télétravail, impact de l'IA, compétences numériques, etc.
 
 IMPORTANT : Tu dois retourner UNIQUEMENT un objet JSON valide avec la structure exacte suivante. Ne retourne rien d'autre.
+Vérifie que le JSON est valide et que l'article est complet (1000-1200 mots) et non tronqué avant de le retourner.
 {
   "title": "Titre H1 optimisé SEO",
   "metaDescription": "Meta description 155 caractères max",
@@ -77,8 +85,7 @@ IMPORTANT : Tu dois retourner UNIQUEMENT un objet JSON valide avec la structure 
   "ctaButton": "Texte bouton CTA",
   "keywords": ["mot-clé1", "mot-clé2", "mot-clé3"]
 }
-
-Vérifie que l'article est complet (1000-1200 mots) et non tronqué avant de retourner le JSON.`;
+`;
 }
 
 export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimizedBlogArticleInput): Promise<GenerateSeoOptimizedBlogArticleOutput> {
