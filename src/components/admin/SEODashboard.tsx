@@ -40,6 +40,20 @@ export default function SEODashboard() {
   if (!metrics) {
     return <p>Impossible de charger les données du tableau de bord.</p>;
   }
+  
+  const formatDate = (date: any) => {
+    if (!date) return 'Inconnue';
+    if (typeof date === 'string') {
+      return format(parseISO(date), "dd MMM yyyy", { locale: fr });
+    }
+    if (date.toDate) { // Firestore Timestamp
+      return format(date.toDate(), "dd MMM yyyy", { locale: fr });
+    }
+    if (date instanceof Date) {
+        return format(date, "dd MMM yyyy", { locale: fr });
+    }
+    return 'Date invalide';
+  };
 
   return (
     <div className="space-y-8">
@@ -139,7 +153,7 @@ export default function SEODashboard() {
                   </TableCell>
                   <TableCell className="text-right font-medium">{article.seoScore || 'N/A'}</TableCell>
                    <TableCell className="text-right text-muted-foreground text-xs">
-                     {format(parseISO(article.createdAt), "dd MMM yyyy", { locale: fr })}
+                     {formatDate(article.createdAt)}
                   </TableCell>
                 </TableRow>
               ))}
