@@ -83,7 +83,7 @@ export class DeepSeekAPI {
       {
         role: 'system',
         content: `Tu es un expert en création de contenu SEO français pour entrepreneurs et PME. 
-        Tu dois TOUJOURS répondre avec un JSON valide contenant les champs requis.
+        Tu dois TOUJOURS répondre avec un format de sortie JSON valide.
         Assure-toi que l'article fait exactement 1000-1200 mots et est complet.`
       },
       {

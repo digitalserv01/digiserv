@@ -66,7 +66,7 @@ EXIGENCES TECHNIQUES :
 - Mots-clés intégrés naturellement
 - Exemples secteurs variés français
 
-RETOURNE UNIQUEMENT UN JSON VALIDE avec cette structure EXACTE :
+IMPORTANT : Tu dois retourner UNIQUEMENT un objet JSON valide avec la structure exacte suivante. Ne retourne rien d'autre.
 {
   "title": "Titre H1 optimisé SEO",
   "metaDescription": "Meta description 155 caractères max",
@@ -78,7 +78,7 @@ RETOURNE UNIQUEMENT UN JSON VALIDE avec cette structure EXACTE :
   "keywords": ["mot-clé1", "mot-clé2", "mot-clé3"]
 }
 
-IMPORTANT : L'article DOIT être complet (1000-1200 mots) et non tronqué.`;
+Vérifie que l'article est complet (1000-1200 mots) et non tronqué avant de retourner le JSON.`;
 }
 
 export async function generateSeoOptimizedBlogArticle(input: GenerateSeoOptimizedBlogArticleInput): Promise<GenerateSeoOptimizedBlogArticleOutput> {
