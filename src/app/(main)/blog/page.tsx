@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Sidebar from '@/components/layout/Sidebar';
 import { Separator } from '@/components/ui/separator';
 
-const ARTICLES_PER_PAGE = 9;
+const ARTICLES_PER_PAGE = 20;
 
 interface BlogPageProps {
   searchParams: {
