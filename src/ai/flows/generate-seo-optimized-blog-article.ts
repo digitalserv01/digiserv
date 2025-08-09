@@ -71,7 +71,7 @@ IMPORTANT : Tu dois retourner UNIQUEMENT un objet JSON valide avec la structure 
   "title": "Titre H1 optimisé SEO",
   "metaDescription": "Meta description 155 caractères max",
   "article": "Article complet en Markdown",
-  "wordCount": 1150,
+  "wordCount": "nombre_de_mots",
   "readingTime": "6 min",
   "ctaText": "Texte CTA spécifique avec prix",
   "ctaButton": "Texte bouton CTA",
