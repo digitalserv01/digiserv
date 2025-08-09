@@ -55,6 +55,7 @@ export default function UpdateImageDialog({ article, isOpen, setIsOpen, onUpdate
         </DialogHeader>
         <form ref={formRef} action={formAction} className="space-y-4">
           <input type="hidden" name="articleId" value={article.id} />
+          <input type="hidden" name="articleSlug" value={article.slug} />
           
           <div>
             <Label htmlFor="imageUrl">New Image URL</Label>
