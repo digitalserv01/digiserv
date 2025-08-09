@@ -8,12 +8,10 @@ import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import SEODashboard from '@/components/admin/SEODashboard';
-import { Separator } from '@/components/ui/separator';
 
 export default function TestCronPage() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
-  const [articleId, setArticleId] = useState<string | null>(null); // Kept for potential single article links if needed
   const [key, setKey] = useState(0); // Add key to force re-render of dashboard
   
   const { user, loading } = useAuth();
@@ -37,15 +35,14 @@ export default function TestCronPage() {
   const onGenerateAndSave = async () => {
     setState('loading');
     setMessage(null);
-    setArticleId(null);
 
     const result = await handleGenerateAndSaveArticle();
     
     setMessage(result.message);
     if (result.success) {
       setState('success');
-      // No single articleId to set, but we can refresh the dashboard
-       setKey(prevKey => prevKey + 1); // Increment key to re-render SEODashboard
+      // Refresh the dashboard by changing its key
+       setKey(prevKey => prevKey + 1);
     } else {
       setState('error');
     }
@@ -74,9 +71,9 @@ export default function TestCronPage() {
         <div className="lg:col-span-1">
           <Card>
             <CardHeader>
-              <CardTitle>Génération d'Articles en Masse</CardTitle>
+              <CardTitle>Test AI Flow</CardTitle>
               <CardDescription>
-                Déclenchez manuellement le processus de génération de tous les articles prévus pour la journée.
+                Trigger the AI flow to generate daily articles and see the results or errors.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -84,16 +81,16 @@ export default function TestCronPage() {
                 {state === 'loading' ? (
                   <><Loader2 className="animate-spin" /> En cours...</>
                 ) : (
-                  <><Wand /> Générer les Articles du Jour</>
+                  <><Wand /> Test AI Flow</>
                 )}
               </Button>
 
               {state === 'error' && message && (
-                  <div className="mt-4 w-full p-4 bg-destructive/10 border border-destructive/50 text-destructive rounded-md flex items-center gap-2">
-                    <AlertCircle className="h-5 w-5"/>
+                  <div className="mt-4 w-full p-4 bg-destructive/10 border border-destructive/50 text-destructive rounded-md flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 mt-1 flex-shrink-0"/>
                     <div>
-                      <h4 className="font-bold">Erreur</h4>
-                      <p className="text-sm">{message}</p>
+                      <h4 className="font-bold">Erreur de Génération</h4>
+                      <p className="text-sm break-words">{message}</p>
                     </div>
                   </div>
               )}
@@ -101,8 +98,8 @@ export default function TestCronPage() {
               {state === 'success' && message && (
                  <Card className="mt-4 border-emerald-500 bg-emerald-500/10">
                     <CardContent className="p-4">
-                        <div className="flex items-center gap-3 text-emerald-700">
-                            <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                        <div className="flex items-start gap-3 text-emerald-700">
+                            <CheckCircle className="h-5 w-5 mt-1 flex-shrink-0" />
                             <div>
                                 <h4 className="font-bold">Succès !</h4>
                                 <p className="text-sm">{message}</p>
