@@ -73,18 +73,14 @@ export const DAILY_BLOG_PROMPTS = {
   },
 };
 
-export function getDailyTopics() {
+export function getDailyTopic() {
     const now = new Date();
     // France is UTC+2 during summer and UTC+1 during winter.
     // To get the correct day in France, we adjust the UTC time.
-    const utcHours = now.getUTCHours();
-    const isSummer = now.getMonth() >= 3 && now.getMonth() <= 9; // Approximate DST
-    const frenchOffset = isSummer ? 2 : 1;
+    const frenchTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
     
-    // Create a new date object representing the time in France
-    const frenchTime = new Date(now.getTime() + (3600000 * frenchOffset));
-    
-    const dayOfWeek = frenchTime.getUTCDay(); // Use getUTCDay for consistency
+    const dayOfWeek = frenchTime.getDay(); // Sunday - 0, Monday - 1, etc.
+    const weekOfMonth = Math.floor((frenchTime.getDate() - 1) / 7);
 
     let promptInfo;
     switch (dayOfWeek) {
@@ -93,13 +89,17 @@ export function getDailyTopics() {
         case 3: promptInfo = DAILY_BLOG_PROMPTS.wednesday; break;
         case 4: promptInfo = DAILY_BLOG_PROMPTS.thursday; break;
         case 5: promptInfo = DAILY_BLOG_PROMPTS.friday; break;
-        default: return []; // No posts on weekends (Saturday: 6, Sunday: 0)
+        default: return null; // No posts on weekends (Saturday: 6, Sunday: 0)
     }
+    
+    // Cycle through subjects based on the week of the month
+    const subject = promptInfo.subjects[weekOfMonth % promptInfo.subjects.length];
+    
+    if (!subject) return null;
 
-    // Return all subjects for the given day
-    return promptInfo.subjects.map(subject => ({
+    return {
         subject,
         keywords: promptInfo.keywords.join(', '),
         category: promptInfo.category,
-    }));
+    };
 }

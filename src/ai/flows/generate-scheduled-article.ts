@@ -7,7 +7,7 @@
  */
 
 import { generateSeoOptimizedBlogArticle } from './generate-seo-optimized-blog-article';
-import { getDailyTopics } from '../daily-prompts';
+import { getDailyTopic } from '../daily-prompts';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { sendTelegramNotification } from '@/services/telegram';
@@ -74,72 +74,61 @@ function calculateSEOScore(article: GenerateSeoOptimizedBlogArticleOutput): numb
 export async function generateAndSaveScheduledArticle(): Promise<{ success: boolean; message: string; generatedArticles: number }> {
     console.log('Running scheduled article generation with DeepSeek...');
 
-    const dailyTopics = getDailyTopics();
+    const dailyTopic = getDailyTopic();
 
-    if (!dailyTopics || dailyTopics.length === 0) {
-      const message = 'No articles to generate today.';
+    if (!dailyTopic) {
+      const message = 'No article to generate today.';
       console.log(message);
       return { success: true, message, generatedArticles: 0 };
     }
 
-    console.log(`Found ${dailyTopics.length} topics to generate for today.`);
-    let generatedCount = 0;
-    let totalSeoScore = 0;
-    const allMessages: string[] = [];
+    console.log(`Generating article for topic: ${dailyTopic.subject}`);
+    
+    try {
+        const articleOutput = await generateSeoOptimizedBlogArticle({
+          subject: dailyTopic.subject,
+          keywords: dailyTopic.keywords,
+          category: dailyTopic.category,
+        });
 
-    for (const topic of dailyTopics) {
-        console.log(`Generating article for topic: ${topic.subject}`);
+        // Calculate SEO score
+        const seoScore = calculateSEOScore(articleOutput);
         
-        try {
-            const articleOutput = await generateSeoOptimizedBlogArticle({
-              subject: topic.subject,
-              keywords: topic.keywords,
-              category: topic.category,
-            });
+        console.log(`Article "${articleOutput.title}" generated with SEO score: ${seoScore}/100`);
 
-            // Calculate SEO score
-            const seoScore = calculateSEOScore(articleOutput);
-            totalSeoScore += seoScore;
-            
-            console.log(`Article "${articleOutput.title}" generated with SEO score: ${seoScore}/100`);
+        const docRef = await addDoc(collection(db, 'articles'), {
+            ...articleOutput,
+            seoScore,
+            createdAt: serverTimestamp(),
+        });
 
-            const docRef = await addDoc(collection(db, 'articles'), {
-                ...articleOutput,
-                seoScore,
-                createdAt: serverTimestamp(),
-            });
-
-            const successMessage = `Article "${articleOutput.title}" saved to Firestore with ID: ${docRef.id}. Score: ${seoScore}/100`;
-            console.log(successMessage);
-            
-            const notificationMessage = `✅ Nouvel article publié !
+        const successMessage = `Article "${articleOutput.title}" saved to Firestore with ID: ${docRef.id}. Score: ${seoScore}/100`;
+        console.log(successMessage);
+        
+        const notificationMessage = `✅ Nouvel article publié !
 📰 "${articleOutput.title}"
 📊 Score SEO: ${seoScore}/100
 📝 ${articleOutput.wordCount} mots`;
 
-            await sendTelegramNotification(notificationMessage);
-            generatedCount++;
-            allMessages.push(successMessage);
+        await sendTelegramNotification(notificationMessage);
 
-        } catch (error: any) {
-            console.error(`Error during article generation for topic "${topic.subject}":`, error);
-            const errorMessage = error.message || 'An unknown error occurred.';
-            const failureMessage = `Failed to generate article for "${topic.subject}": ${errorMessage}`;
-            allMessages.push(failureMessage);
-            
-            const failureNotification = `❌ Échec de la génération d'article.
-📰 Sujet: "${topic.subject}"
+        return { 
+          success: true, 
+          message: successMessage, 
+          generatedArticles: 1,
+        };
+
+    } catch (error: any) {
+        console.error(`Error during article generation for topic "${dailyTopic.subject}":`, error);
+        const errorMessage = error.message || 'An unknown error occurred.';
+        const failureMessage = `Failed to generate article for "${dailyTopic.subject}": ${errorMessage}`;
+        
+        const failureNotification = `❌ Échec de la génération d'article.
+📰 Sujet: "${dailyTopic.subject}"
 🐛 Erreur: ${errorMessage}`;
-            await sendTelegramNotification(failureNotification);
-        }
+        await sendTelegramNotification(failureNotification);
+        
+        // Re-throw the error to be caught by the action handler
+        throw new Error(failureMessage);
     }
-    
-    const finalMessage = allMessages.join('\n');
-    console.log(`Batch generation complete. ${generatedCount}/${dailyTopics.length} articles generated. Average SEO score: ${generatedCount > 0 ? Math.round(totalSeoScore / generatedCount) : 0}.`);
-    
-    if (generatedCount > 0) {
-        await sendTelegramNotification(`Fin de la tâche de génération. ${generatedCount}/${dailyTopics.length} articles créés.`);
-    }
-    
-    return { success: generatedCount > 0, message: finalMessage, generatedArticles: generatedCount };
 }
