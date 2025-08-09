@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 export default function TestCronPage() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
-  const [articleId, setArticleId] = useState<string | null>(null);
+  const [articleId, setArticleId] = useState<string | null>(null); // Kept for potential single article links if needed
   const [key, setKey] = useState(0); // Add key to force re-render of dashboard
   
   const { user, loading } = useAuth();
@@ -32,7 +32,7 @@ export default function TestCronPage() {
     if (!adminIdEnv || !user || user.uid !== adminIdEnv) {
       router.push('/login');
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, adminId]);
 
   const onGenerateAndSave = async () => {
     setState('loading');
@@ -44,9 +44,7 @@ export default function TestCronPage() {
     setMessage(result.message);
     if (result.success) {
       setState('success');
-      if (result.articleId) {
-        setArticleId(result.articleId);
-      }
+      // No single articleId to set, but we can refresh the dashboard
        setKey(prevKey => prevKey + 1); // Increment key to re-render SEODashboard
     } else {
       setState('error');
@@ -76,9 +74,9 @@ export default function TestCronPage() {
         <div className="lg:col-span-1">
           <Card>
             <CardHeader>
-              <CardTitle>Génération d'Article</CardTitle>
+              <CardTitle>Génération d'Articles en Masse</CardTitle>
               <CardDescription>
-                Déclenchez manuellement le processus de génération et de sauvegarde d'articles.
+                Déclenchez manuellement le processus de génération de tous les articles prévus pour la journée.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -86,7 +84,7 @@ export default function TestCronPage() {
                 {state === 'loading' ? (
                   <><Loader2 className="animate-spin" /> En cours...</>
                 ) : (
-                  <><Wand /> Générer & Sauvegarder</>
+                  <><Wand /> Générer les Articles du Jour</>
                 )}
               </Button>
 
@@ -95,7 +93,7 @@ export default function TestCronPage() {
                     <AlertCircle className="h-5 w-5"/>
                     <div>
                       <h4 className="font-bold">Erreur</h4>
-                      <p>{message}</p>
+                      <p className="text-sm">{message}</p>
                     </div>
                   </div>
               )}
@@ -108,13 +106,11 @@ export default function TestCronPage() {
                             <div>
                                 <h4 className="font-bold">Succès !</h4>
                                 <p className="text-sm">{message}</p>
-                                {articleId && (
-                                    <Button asChild variant="link" className="p-0 h-auto text-emerald-700">
-                                        <Link href={`/blog/${articleId}`} target="_blank">
-                                            Voir l'article sauvegardé <ExternalLink className="ml-2 h-4 w-4" />
-                                        </Link>
-                                    </Button>
-                                )}
+                                <Button asChild variant="link" className="p-0 h-auto text-emerald-700">
+                                    <Link href={`/blog`} target="_blank">
+                                        Voir les nouveaux articles <ExternalLink className="ml-2 h-4 w-4" />
+                                    </Link>
+                                </Button>
                             </div>
                         </div>
                     </CardContent>

@@ -16,12 +16,13 @@ export async function POST(req: Request) {
     console.log('Cron job started...');
     const result = await generateAndSaveScheduledArticle();
     
-    if (!result.success) {
+    if (!result.success && result.generatedArticles === 0) {
+        // Only throw an error if the process failed entirely and no articles were made
         throw new Error(result.message);
     }
 
-    console.log(`Cron job finished successfully: ${result.message}`);
-    return NextResponse.json({ success: true, message: result.message, articleId: result.articleId });
+    console.log(`Cron job finished: ${result.message}`);
+    return NextResponse.json({ success: true, message: result.message, generatedArticles: result.generatedArticles });
 
   } catch (error: any) {
     console.error('Error in cron job:', error);

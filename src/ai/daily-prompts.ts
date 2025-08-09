@@ -72,7 +72,7 @@ export const DAILY_BLOG_PROMPTS = {
   },
 };
 
-export function getDailyTopic() {
+export function getDailyTopics() {
     const now = new Date();
     // As "9 AM French time" is a requirement, we need to adjust for the timezone.
     // France is UTC+2 during summer (daylight saving) and UTC+1 during winter.
@@ -80,7 +80,6 @@ export function getDailyTopic() {
     const frenchTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
     
     const dayOfWeek = frenchTime.getDay(); // Sunday - 0, Monday - 1, etc.
-    const weekOfMonth = Math.floor((frenchTime.getDate() - 1) / 7); // 0-4, for 4 weeks in a month
 
     let promptInfo;
     switch (dayOfWeek) {
@@ -89,14 +88,13 @@ export function getDailyTopic() {
         case 3: promptInfo = DAILY_BLOG_PROMPTS.wednesday; break;
         case 4: promptInfo = DAILY_BLOG_PROMPTS.thursday; break;
         case 5: promptInfo = DAILY_BLOG_PROMPTS.friday; break;
-        default: return null; // No posts on weekends
+        default: return []; // No posts on weekends
     }
 
-    const subject = promptInfo.subjects[weekOfMonth % promptInfo.subjects.length];
-
-    return {
+    // Return all subjects for the given day
+    return promptInfo.subjects.map(subject => ({
         subject,
         keywords: promptInfo.keywords.join(', '),
         category: promptInfo.category,
-    };
+    }));
 }
