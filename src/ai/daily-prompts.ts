@@ -84,12 +84,28 @@ export function getDailyTopic() {
 
     let promptInfo;
     switch (dayOfWeek) {
-        case 1: promptInfo = DAILY_BLOG_PROMPTS.monday; break;
-        case 2: promptInfo = DAILY_BLOG_PROMPTS.tuesday; break;
-        case 3: promptInfo = DAILY_BLOG_PROMPTS.wednesday; break;
-        case 4: promptInfo = DAILY_BLOG_PROMPTS.thursday; break;
-        case 5: promptInfo = DAILY_BLOG_PROMPTS.friday; break;
-        default: return null; // No posts on weekends (Saturday: 6, Sunday: 0)
+        case 0: // Sunday -> Default to Monday
+        case 1: 
+            promptInfo = DAILY_BLOG_PROMPTS.monday; 
+            break;
+        case 2: 
+            promptInfo = DAILY_BLOG_PROMPTS.tuesday; 
+            break;
+        case 3: 
+            promptInfo = DAILY_BLOG_PROMPTS.wednesday; 
+            break;
+        case 4: 
+            promptInfo = DAILY_BLOG_PROMPTS.thursday; 
+            break;
+        case 5: 
+            promptInfo = DAILY_BLOG_PROMPTS.friday; 
+            break;
+        case 6: // Saturday -> Default to Monday
+            promptInfo = DAILY_BLOG_PROMPTS.monday;
+            break;
+        default: // Should not happen, but default to Monday as a fallback
+            promptInfo = DAILY_BLOG_PROMPTS.monday;
+            break;
     }
     
     // Cycle through subjects based on the week of the month
