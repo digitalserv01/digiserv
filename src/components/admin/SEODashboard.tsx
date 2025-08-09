@@ -41,19 +41,26 @@ export default function SEODashboard() {
     return <p>Impossible de charger les données du tableau de bord.</p>;
   }
   
-  const formatDate = (date: any) => {
+  const formatDate = (date: any): string => {
     if (!date) return 'Inconnue';
-    if (typeof date === 'string') {
-      return format(parseISO(date), "dd MMM yyyy", { locale: fr });
-    }
-    if (date.toDate) { // Firestore Timestamp
-      return format(date.toDate(), "dd MMM yyyy", { locale: fr });
-    }
-    if (date instanceof Date) {
+    try {
+      if (typeof date === 'string') {
+        return format(parseISO(date), "dd MMM yyyy", { locale: fr });
+      }
+      // Check for Firestore Timestamp-like object
+      if (typeof date === 'object' && date.seconds) {
+        return format(new Date(date.seconds * 1000), "dd MMM yyyy", { locale: fr });
+      }
+      if (date instanceof Date) {
         return format(date, "dd MMM yyyy", { locale: fr });
+      }
+    } catch (e) {
+      console.error("Error formatting date:", e);
+      return "Date invalide";
     }
-    return 'Date invalide';
+    return "Date invalide";
   };
+
 
   return (
     <div className="space-y-8">

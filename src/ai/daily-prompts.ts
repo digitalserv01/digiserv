@@ -1,3 +1,4 @@
+
 // SYSTÈME DE PROMPTS PAR JOUR DE LA SEMAINE
 
 export const DAILY_BLOG_PROMPTS = {
@@ -74,12 +75,16 @@ export const DAILY_BLOG_PROMPTS = {
 
 export function getDailyTopics() {
     const now = new Date();
-    // As "9 AM French time" is a requirement, we need to adjust for the timezone.
-    // France is UTC+2 during summer (daylight saving) and UTC+1 during winter.
-    // A robust solution would use a library like `date-fns-tz`, but for simplicity, we'll approximate.
-    const frenchTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
+    // France is UTC+2 during summer and UTC+1 during winter.
+    // To get the correct day in France, we adjust the UTC time.
+    const utcHours = now.getUTCHours();
+    const isSummer = now.getMonth() >= 3 && now.getMonth() <= 9; // Approximate DST
+    const frenchOffset = isSummer ? 2 : 1;
     
-    const dayOfWeek = frenchTime.getDay(); // Sunday - 0, Monday - 1, etc.
+    // Create a new date object representing the time in France
+    const frenchTime = new Date(now.getTime() + (3600000 * frenchOffset));
+    
+    const dayOfWeek = frenchTime.getUTCDay(); // Use getUTCDay for consistency
 
     let promptInfo;
     switch (dayOfWeek) {
@@ -88,7 +93,7 @@ export function getDailyTopics() {
         case 3: promptInfo = DAILY_BLOG_PROMPTS.wednesday; break;
         case 4: promptInfo = DAILY_BLOG_PROMPTS.thursday; break;
         case 5: promptInfo = DAILY_BLOG_PROMPTS.friday; break;
-        default: return []; // No posts on weekends
+        default: return []; // No posts on weekends (Saturday: 6, Sunday: 0)
     }
 
     // Return all subjects for the given day
