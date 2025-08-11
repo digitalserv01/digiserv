@@ -61,6 +61,7 @@ export default function HeroSection() {
                 width={500}
                 height={550}
                 className="w-full object-cover rounded-2xl shadow-2xl"
+                priority
               />
             </div>
             
