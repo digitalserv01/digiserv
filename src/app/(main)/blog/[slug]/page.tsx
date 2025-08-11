@@ -16,6 +16,7 @@ import remarkGfm from 'remark-gfm';
 import Image from 'next/image';
 import Link from 'next/link';
 import SocialShare from '@/components/blog/SocialShare';
+import type { Metadata } from 'next';
 
 interface ArticlePageProps {
   params: {
@@ -44,6 +45,46 @@ async function getArticle(slug: string): Promise<Article | null> {
       imageUrl: data.imageUrl || 'https://placehold.co/1200x600.png',
   };
 }
+
+export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+  const article = await getArticle(params.slug);
+
+  if (!article) {
+    return {};
+  }
+  
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.amadigiconseils.com';
+  const articleUrl = `${siteUrl}/blog/${article.slug}`;
+
+  return {
+    title: article.title,
+    description: article.metaDescription,
+    alternates: {
+      canonical: articleUrl,
+    },
+    openGraph: {
+      title: article.title,
+      description: article.metaDescription,
+      url: articleUrl,
+      type: 'article',
+      images: [
+        {
+          url: article.imageUrl,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.metaDescription,
+      images: [article.imageUrl],
+    },
+  };
+}
+
 
 export async function generateStaticParams() {
   try {
