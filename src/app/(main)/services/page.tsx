@@ -1,14 +1,14 @@
-'use client';
-import React, { useRef } from 'react';
-import Image from 'next/image';
+import React from 'react';
+import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { CheckCircle, ArrowRight, Lightbulb, Code, Briefcase, Megaphone, ShoppingCart, Bot } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
+import { Lightbulb, ArrowRight, Code, Briefcase, Megaphone, ShoppingCart, Bot } from 'lucide-react';
 import Link from 'next/link';
+import ServicesPageClient from './ServicesPageClient';
 
-// NOTE: This page does not use Next.js Metadata API as it is a Client Component.
-// Metadata for this page should be configured in a parent layout or through other means.
+export const metadata: Metadata = {
+  title: 'Nos Services Digitaux & IA | AmadiDigiConseils',
+  description: 'Découvrez nos services sur-mesure pour entrepreneurs : création de site vitrine et e-commerce, marketing digital (SEO), rédaction de CV, et intégration d’IA pour automatiser votre business.',
+};
 
 const services = [
   {
@@ -63,135 +63,63 @@ const services = [
   },
 ];
 
-function AnimatedSection({ children, x = 0 }: { children: React.ReactNode, x?: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="h-full"
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 export default function ServicesPage() {
   const whatsappUrl = "https://wa.me/212699020158?text=Bonjour%20!%20J'ai%20vu%20votre%20site%20et%20je%20suis%20int%C3%A9ress%C3%A9(e).";
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Nos Services Digitaux & IA | AmadiDigiConseils',
+    description: 'Découvrez nos services sur-mesure pour entrepreneurs : création de site vitrine et e-commerce, marketing digital (SEO), rédaction de CV, et intégration d’IA pour automatiser votre business.',
+    url: 'https://www.amadigiconseils.com/services',
+    mainEntity: services.map(service => ({
+        '@type': 'Service',
+        name: service.title,
+        description: service.description,
+        provider: {
+          '@type': 'Organization',
+          name: 'AmadiDigiConseils',
+        },
+        serviceType: service.title,
+        offers: {
+            '@type': 'Offer',
+            price: service.price.replace(/[^0-9.]/g, ''), // Extract number
+            priceCurrency: 'EUR'
+        }
+    })),
+  };
+
   return (
-    <div className="bg-background text-foreground">
-      {/* Hero/Philosophy Section */}
-      <div className="bg-secondary/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/10 rounded-full mb-6">
-                    <Lightbulb className="w-8 h-8 text-accent" />
-                </div>
-                <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary !leading-tight text-balance">
-                    On ne vend pas un service, on réalise une vision.
-                </h1>
-                <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Votre projet est unique. C'est pourquoi nous voulons d'abord entendre votre idée, comprendre vos ambitions et ensuite, seulement, construire la solution digitale qui vous mènera au succès. Le prix n'est qu'une conséquence de la valeur que nous créons ensemble.
-                </p>
-                <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90" asChild>
-                  <Link href={whatsappUrl} target="_blank">
-                    Racontez-nous votre idée
-                    <ArrowRight className="ml-2"/>
-                  </Link>
-                </Button>
-            </motion.div>
-        </div>
-      </div>
-
-      {/* Services Grid Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <AnimatedSection key={service.slug} x={index % 2 === 0 ? -50 : 50}>
-                <ServiceCard service={service} />
-              </AnimatedSection>
-            ))}
-         </div>
-      </div>
-
-      {/* Full-Screen Video Section */}
-      <div className="py-20 sm:py-32">
-        <AnimatedSection>
-          <div className="relative h-[60vh] lg:h-[80vh] bg-secondary flex items-center justify-center overflow-hidden">
-            <video
-              src="/assets/videos/creations.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute top-0 left-0 w-full h-full object-cover"
-            >
-              Votre navigateur ne supporte pas la balise vidéo.
-            </video>
-             <div className="relative text-center z-10 p-4 bg-black/50 rounded-lg">
-                <h2 className="mt-4 text-3xl sm:text-4xl font-bold font-headline text-white">Nos créations en mouvement : projet d'entraînement binova.it</h2>
-                <p className="mt-2 text-lg text-white/80">Donner vie aux idées.</p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="bg-background text-foreground">
+        {/* Hero/Philosophy Section */}
+        <div className="bg-secondary/50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/10 rounded-full mb-6">
+              <Lightbulb className="w-8 h-8 text-accent" />
             </div>
+            <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary !leading-tight text-balance">
+              On ne vend pas un service, on réalise une vision.
+            </h1>
+            <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Votre projet est unique. C'est pourquoi nous voulons d'abord entendre votre idée, comprendre vos ambitions et ensuite, seulement, construire la solution digitale qui vous mènera au succès. Le prix n'est qu'une conséquence de la valeur que nous créons ensemble.
+            </p>
+            <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90" asChild>
+              <Link href={whatsappUrl} target="_blank">
+                Racontez-nous votre idée
+                <ArrowRight className="ml-2" />
+              </Link>
+            </Button>
           </div>
-        </AnimatedSection>
-      </div>
-
-    </div>
-  );
-}
-
-const ServiceCard = ({ service }: { service: typeof services[0] }) => {
-  const whatsappUrl = `https://wa.me/212699020158?text=Bonjour%20!%20Je%20suis%20int%C3%A9ress%C3%A9(e)%20par%20votre%20service%20'${encodeURIComponent(service.title)}'.`;
-
-  return (
-     <Card className="flex flex-col h-full overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
-      <div className="relative aspect-video w-full overflow-hidden">
-        <Image
-          src={service.imageUrl}
-          alt={service.title}
-          fill
-          className="object-cover"
-          data-ai-hint={service.aiHint}
-        />
-      </div>
-      <CardHeader>
-        <div className="flex items-center gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-                {service.icon}
-            </div>
-            <div>
-                <CardTitle className="text-xl font-bold text-primary">{service.title}</CardTitle>
-                <CardDescription className="text-sm">{service.price}</CardDescription>
-            </div>
         </div>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="text-muted-foreground mb-4">{service.description}</p>
-        <ul className="space-y-2">
-          {service.features.map(feature => (
-            <li key={feature} className="flex items-start">
-              <CheckCircle className="w-5 h-5 text-emerald-500 mr-2 mt-0.5 flex-shrink-0" />
-              <span className="text-sm text-muted-foreground">{feature}</span>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full" asChild>
-          <Link href={whatsappUrl} target="_blank">
-            Discutons de votre projet <ArrowRight className="ml-2" />
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
-  )
+
+        {/* Services Grid and Video Section - Now handled by a client component */}
+        <ServicesPageClient services={services} />
+      </div>
+    </>
+  );
 }

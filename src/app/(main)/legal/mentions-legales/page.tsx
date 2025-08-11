@@ -1,11 +1,46 @@
 
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Mentions Légales | AmadiDigiConseils',
+  description: "Consultez les mentions légales de AmadiDigiConseils. Informations sur l'éditeur du site, l'hébergement, et la propriété intellectuelle.",
+};
+
 
 export default function MentionsLegalesPage() {
   const email = "nexusai.maroc@outlook.com";
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://www.amadigiconseils.com/legal/mentions-legales',
+    },
+    headline: metadata.title,
+    description: metadata.description,
+    author: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.amadigiconseils.com/logo.png',
+      },
+    },
+    datePublished: '2023-01-01T08:00:00+00:00',
+    dateModified: new Date().toISOString(),
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header>
         <h1>Mentions Légales</h1>
       </header>

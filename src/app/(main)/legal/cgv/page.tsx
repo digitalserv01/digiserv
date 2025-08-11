@@ -1,8 +1,45 @@
+import type { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'Conditions Générales de Vente | AmadiDigiConseils',
+  description: 'Consultez nos conditions générales de vente (CGV) pour nos services de création de site web, SEO, et autres prestations digitales. Apprenez-en plus sur nos modalités de collaboration.',
+};
 
 export default function CGVPage() {
+    const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://www.amadigiconseils.com/legal/cgv',
+    },
+    headline: metadata.title,
+    description: metadata.description,
+    author: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.amadigiconseils.com/logo.png',
+      },
+    },
+    datePublished: '2023-01-01T08:00:00+00:00',
+    dateModified: new Date().toISOString(),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <header>
+        <h1>Conditions Générales de Vente</h1>
+      </header>
       <section>
         <h2>Article 1 : Objet</h2>
         <p>

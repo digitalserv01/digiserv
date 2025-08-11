@@ -1,8 +1,42 @@
+import type { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'Politique de Confidentialité | AmadiDigiConseils',
+  description: 'Notre politique de confidentialité détaille comment nous collectons, utilisons et protégeons vos données personnelles, conformément au RGPD.',
+};
 
 export default function PolitiqueConfidentialitePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://www.amadigiconseils.com/legal/politique-de-confidentialite',
+    },
+    headline: metadata.title,
+    description: metadata.description,
+    author: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'AmadiDigiConseils',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.amadigiconseils.com/logo.png',
+      },
+    },
+    datePublished: '2023-01-01T08:00:00+00:00',
+    dateModified: new Date().toISOString(),
+  };
+  
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header>
           <h1 className="text-4xl sm:text-5xl font-bold font-headline text-primary">Politique de Confidentialité</h1>
       </header>
