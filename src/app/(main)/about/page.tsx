@@ -6,6 +6,12 @@ import Portfolio from '@/components/about/Portfolio';
 import Culture from '@/components/about/Culture';
 import Values from '@/components/about/Values';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'À Propos | Notre Vision et Partenariat - AmadiDigiConseils',
+  description: 'Découvrez notre histoire, notre culture et nos valeurs. Nous ne sommes pas juste une agence, mais votre partenaire de croissance digitale pour transformer vos idées en succès.',
+};
 
 
 export default function AboutPage() {

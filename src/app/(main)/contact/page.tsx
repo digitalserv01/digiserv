@@ -10,7 +10,11 @@ import { Loader2, Send, MessageCircle, Mail, Phone, MapPin } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { submitContactForm } from '@/app/actions/contact';
+import type { Metadata } from 'next';
 
+// This is a Client Component, so we can't use the Metadata API directly.
+// We can, however, define it in a parent Server Component layout.
+// For this case, we'll assume a parent layout handles the metadata.
 
 function SubmitButton() {
   const { pending } = useFormStatus();

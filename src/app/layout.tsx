@@ -4,8 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/hooks/useAuth';
 
 export const metadata: Metadata = {
-  title: 'AmadiDigiConseils | Services Digitaux & IA pour Entrepreneurs',
-  description: "Agence digitale spécialisée dans la création de sites web, le marketing digital (SEO, Google Ads), la rédaction de CV, l'e-commerce et l'automatisation par l'IA pour les entrepreneurs, TPE et PME en France.",
+  title: 'AmadiDigiConseils | Agence Digitale & IA pour Entrepreneurs',
+  description: "Agence digitale spécialisée dans la création de sites web, marketing digital (SEO, Google Ads), rédaction de CV et automatisation par l'IA pour TPE/PME en France. Boostez votre croissance.",
   icons: {
     icon: '/favicon.ico',
   }

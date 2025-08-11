@@ -3,6 +3,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button';
 import { Mail, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'FAQ | Questions Fréquentes - AmadiDigiConseils',
+  description: "Trouvez les réponses à vos questions sur nos services de création de site web, SEO, CV, e-commerce, et nos processus de collaboration. Contactez-nous pour plus d'infos.",
+};
 
 const faqData = {
  "general": [
@@ -16,7 +22,7 @@ const faqData = {
    },
    {
      "question": "Pourquoi faire appel à une agence digitale française plutôt qu'internationale ?",
-     "answer": "Travailler avec une agence française vous garantit une parfaite connaissance du marché local, la conformité RGPD, un support en français et des solutions adaptées aux spécificités des entreprises françaises. Nous comprenons vos enjeux business et réglementaires."
+     "answer": "Travailler avec une agence française vous garantit une perfecte connaissance du marché local, la conformité RGPD, un support en français et des solutions adaptées aux spécificités des entreprises françaises. Nous comprenons vos enjeux business et réglementaires."
    },
    {
      "question": "Quels sont vos principaux avantages concurrentiels ?",

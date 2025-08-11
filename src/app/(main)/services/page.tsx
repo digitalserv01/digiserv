@@ -7,6 +7,9 @@ import { CheckCircle, ArrowRight, Lightbulb, Code, Briefcase, Megaphone, Shoppin
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 
+// NOTE: This page does not use Next.js Metadata API as it is a Client Component.
+// Metadata for this page should be configured in a parent layout or through other means.
+
 const services = [
   {
     title: 'Création de Site Vitrine',
