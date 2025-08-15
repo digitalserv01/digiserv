@@ -3,7 +3,7 @@
 
 import { generateAndSaveScheduledArticle } from "@/ai/flows/generate-scheduled-article";
 import { db } from "@/lib/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -50,10 +50,47 @@ export async function updateArticleImage(prevState: any, formData: FormData) {
     // Revalidate the pages that display this article
     revalidatePath(`/blog/${articleSlug}`);
     revalidatePath('/blog');
+    revalidatePath('/');
     
     return { message: 'Image updated successfully!' };
   } catch (error) {
     console.error('Error updating article image:', error);
     return { error: 'Failed to update image. Please try again.' };
+  }
+}
+
+
+const deleteArticleSchema = z.object({
+  articleId: z.string().min(1, 'Article ID is required.'),
+  articleSlug: z.string().min(1, 'Article slug is required.'),
+});
+
+export async function deleteArticle(prevState: any, formData: FormData) {
+  const validatedFields = deleteArticleSchema.safeParse({
+    articleId: formData.get('articleId'),
+    articleSlug: formData.get('articleSlug'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      error: 'Invalid Article ID provided.',
+    };
+  }
+  
+  const { articleId, articleSlug } = validatedFields.data;
+
+  try {
+    await deleteDoc(doc(db, "articles", articleId));
+    
+    // Revalidate all relevant paths
+    revalidatePath(`/blog/${articleSlug}`);
+    revalidatePath('/blog');
+    revalidatePath('/');
+    revalidatePath('/sitemap.xml');
+
+    return { message: 'Article deleted successfully.' };
+  } catch (error) {
+    console.error('Error deleting article:', error);
+    return { error: 'Failed to delete the article. Please try again.' };
   }
 }

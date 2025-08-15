@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { SEOMonitoringService, SEOMetrics } from '@/services/seo-monitoring';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Loader2, TrendingUp, BarChart, FileText, Star, Trophy, Image as ImageIcon } from 'lucide-react';
+import { Loader2, TrendingUp, BarChart, FileText, Star, Trophy, Image as ImageIcon, Trash2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -11,14 +11,17 @@ import { Progress } from '@/components/ui/progress';
 import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import UpdateImageDialog from './UpdateImageDialog';
+import DeleteArticleDialog from './DeleteArticleDialog';
 import type { Article } from '@/types/article';
 import { Button } from '../ui/button';
 
 export default function SEODashboard() {
   const [metrics, setMetrics] = useState<SEOMetrics | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedArticleForImage, setSelectedArticleForImage] = useState<Article | null>(null);
+  const [selectedArticleForDelete, setSelectedArticleForDelete] = useState<Article | null>(null);
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   async function loadMetrics() {
     try {
@@ -37,15 +40,21 @@ export default function SEODashboard() {
   }, []);
 
   const handleUpdateImageClick = (article: Article) => {
-    setSelectedArticle(article);
-    setIsDialogOpen(true);
+    setSelectedArticleForImage(article);
+    setIsImageDialogOpen(true);
   };
   
-  const onUpdateSuccess = () => {
-    setIsDialogOpen(false);
-    setSelectedArticle(null);
-    // Refresh metrics to show new image if needed, or just close dialog
-    loadMetrics(); 
+  const handleDeleteClick = (article: Article) => {
+    setSelectedArticleForDelete(article);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const onActionSuccess = () => {
+    setIsImageDialogOpen(false);
+    setIsDeleteDialogOpen(false);
+    setSelectedArticleForImage(null);
+    setSelectedArticleForDelete(null);
+    loadMetrics(); // Refresh metrics to show changes
   }
 
   if (loading) {
@@ -140,9 +149,11 @@ export default function SEODashboard() {
                     </button>
                     <p className="text-sm text-muted-foreground">{article.category}</p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right flex items-center gap-4">
                     <div className="font-bold">{article.seoScore || 0}/100</div>
-                    <div className="text-xs text-muted-foreground">Score SEO</div>
+                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleDeleteClick(article)}>
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
                   </div>
                 </div>
               ))}
@@ -161,8 +172,9 @@ export default function SEODashboard() {
                 <TableRow>
                   <TableHead>Titre</TableHead>
                   <TableHead>Catégorie</TableHead>
-                  <TableHead className="text-right">Score SEO</TableHead>
-                  <TableHead className="text-right">Date</TableHead>
+                  <TableHead>Score SEO</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -176,9 +188,14 @@ export default function SEODashboard() {
                     <TableCell>
                       <Badge variant="outline">{article.category}</Badge>
                     </TableCell>
-                    <TableCell className="text-right font-medium">{article.seoScore || 'N/A'}</TableCell>
-                     <TableCell className="text-right text-muted-foreground text-xs">
+                    <TableCell className="font-medium">{article.seoScore || 'N/A'}</TableCell>
+                     <TableCell className="text-muted-foreground text-xs">
                        {formatDate(article.createdAt)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                       <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleDeleteClick(article)}>
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -188,12 +205,21 @@ export default function SEODashboard() {
         </Card>
       </div>
 
-      {selectedArticle && (
+      {selectedArticleForImage && (
         <UpdateImageDialog
-          article={selectedArticle}
-          isOpen={isDialogOpen}
-          setIsOpen={setIsDialogOpen}
-          onUpdateSuccess={onUpdateSuccess}
+          article={selectedArticleForImage}
+          isOpen={isImageDialogOpen}
+          setIsOpen={setIsImageDialogOpen}
+          onUpdateSuccess={onActionSuccess}
+        />
+      )}
+
+      {selectedArticleForDelete && (
+        <DeleteArticleDialog
+          article={selectedArticleForDelete}
+          isOpen={isDeleteDialogOpen}
+          setIsOpen={setIsDeleteDialogOpen}
+          onDeleteSuccess={onActionSuccess}
         />
       )}
     </>
