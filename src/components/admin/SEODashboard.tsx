@@ -161,10 +161,10 @@ export default function SEODashboard() {
           </CardContent>
         </Card>
 
-        {/* Recent Articles */}
+        {/* All Articles */}
         <Card>
           <CardHeader>
-            <CardTitle>Articles Récents</CardTitle>
+            <CardTitle>All Articles</CardTitle>
           </CardHeader>
           <CardContent>
              <Table>
@@ -178,7 +178,7 @@ export default function SEODashboard() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {metrics.recentArticles.map((article) => (
+                {metrics.allArticles.map((article) => (
                   <TableRow key={article.id}>
                     <TableCell className="font-medium">
                        <button onClick={() => handleUpdateImageClick(article)} className="hover:underline text-left">

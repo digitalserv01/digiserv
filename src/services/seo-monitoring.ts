@@ -9,7 +9,7 @@ export interface SEOMetrics {
   totalArticles: number;
   averageSeoScore: number;
   topPerformingArticles: Article[];
-  recentArticles: Article[];
+  allArticles: Article[];
 }
 
 export class SEOMonitoringService {
@@ -39,13 +39,11 @@ export class SEOMonitoringService {
         .sort((a, b) => (b.seoScore || 0) - (a.seoScore || 0))
         .slice(0, 5);
 
-      const recentArticles = allArticles.slice(0, 10);
-
       return {
         totalArticles,
         averageSeoScore,
         topPerformingArticles,
-        recentArticles,
+        allArticles,
       };
     } catch (error) {
       console.error('Error fetching dashboard metrics:', error);
