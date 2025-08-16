@@ -42,6 +42,25 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/blog/les-10-questions-dentretien-en-2025-et-comment-y-repondre',
+        destination: '/blog/les-10-questions-dentretien-dembauche-en-2025-et-comment-y-repondre',
+        permanent: true,
+      },
+      {
+        source: '/blog/10-taches-automatiser-ia-booster-pme',
+        destination: '/blog/10-taches-a-automatiser-avec-lia-pour-votre-pme',
+        permanent: true,
+      },
+      {
+        source: '/blog/google-ads-500-euros-pme',
+        destination: '/blog/google-ads-campagnes-rentables-500-euros-pme',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 export default nextConfig;

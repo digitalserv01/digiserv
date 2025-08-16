@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: siteUrl,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
@@ -23,12 +23,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${siteUrl}/services`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.9,
     },
      {
       url: `${siteUrl}/blog`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.9,
     },
     {
@@ -51,11 +51,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const articleRoutes: MetadataRoute.Sitemap = articlesSnapshot.docs.map(doc => {
      const data = doc.data() as ArticleDocument;
-     const createdAt = data.createdAt?.toDate() || new Date();
+     // Firestore Timestamps need to be converted to JS Date objects
+     const createdAt = data.createdAt ? data.createdAt.toDate() : new Date();
     return {
       url: `${siteUrl}/blog/${data.slug}`,
       lastModified: createdAt,
-      changeFrequency: 'never',
+      changeFrequency: 'weekly',
       priority: 0.8,
     };
   });
