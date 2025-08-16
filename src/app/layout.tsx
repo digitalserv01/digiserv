@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/hooks/useAuth';
 import Script from 'next/script';
+import CookieConsentBanner from '@/components/layout/CookieConsentBanner';
 
 const GTM_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -85,11 +86,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
-      </head>
-      <body className="font-body bg-background text-foreground antialiased">
-         {GTM_ID && (
+        
+        {/* Google Analytics & Consent Mode Script */}
+        {GTM_ID && (
           <>
             <Script
+              id="gtag-base"
               strategy="afterInteractive"
               src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
             />
@@ -100,17 +102,31 @@ export default function RootLayout({
                 __html: `
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
+                  
                   gtag('js', new Date());
-                  gtag('config', '${GTM_ID}');
+
+                  gtag('consent', 'default', {
+                    'analytics_storage': 'denied',
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied'
+                  });
+
+                  gtag('config', '${GTM_ID}', {
+                    page_path: window.location.pathname,
+                  });
                 `,
               }}
             />
           </>
         )}
+      </head>
+      <body className="font-body bg-background text-foreground antialiased">
         <AuthProvider>
           {children}
         </AuthProvider>
         <Toaster />
+        <CookieConsentBanner />
       </body>
     </html>
   );
