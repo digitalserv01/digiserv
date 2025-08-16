@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/hooks/useAuth';
+import Script from 'next/script';
+
+const GTM_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.amadigiconseils.com'),
@@ -58,9 +61,9 @@ export default function RootLayout({
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Oqba Avenue, Agdal',
-      addressLocality: 'Rabat',
-      addressCountry: 'MA'
+      'streetAddress': 'Oqba Avenue, Agdal',
+      'addressLocality': 'Rabat',
+      'addressCountry': 'MA'
     },
     potentialAction: {
       '@type': 'SearchAction',
@@ -84,6 +87,26 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body bg-background text-foreground antialiased">
+         {GTM_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
+            />
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GTM_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
         <AuthProvider>
           {children}
         </AuthProvider>
