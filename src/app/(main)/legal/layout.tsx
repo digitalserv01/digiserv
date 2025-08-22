@@ -5,7 +5,6 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Informations Légales - AmadiDigiConseils',
   description: 'Consultez nos mentions légales, notre politique de confidentialité et nos conditions générales de vente. La transparence est une de nos valeurs clés.',
-  robots: 'noindex, follow', // We don't want legal pages to be the main entry points from search
 };
 
 interface LegalLayoutProps {
