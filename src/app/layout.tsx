@@ -62,9 +62,9 @@ export default function RootLayout({
     },
     address: {
       '@type': 'PostalAddress',
-      'streetAddress': 'Oqba Avenue, Agdal',
-      'addressLocality': 'Rabat',
-      'addressCountry': 'MA'
+      streetAddress: 'Oqba Avenue, Agdal',
+      addressLocality: 'Rabat',
+      addressCountry: 'MA'
     },
     potentialAction: {
       '@type': 'SearchAction',
@@ -77,7 +77,7 @@ export default function RootLayout({
     ]
   };
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
