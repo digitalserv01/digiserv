@@ -881,7 +881,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`p-8 border rounded-2xl relative ${
+                className={`p-8 border rounded-2xl relative flex flex-col h-full ${
                   plan.featured
                     ? 'border-white bg-white/5'
                     : 'border-white/20'
@@ -895,37 +895,41 @@ export default function Home() {
                   </div>
                 )}
 
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-light mb-2">{plan.title}</h3>
-                    <div className="flex items-baseline">
-                      <span className="text-5xl font-extralight">{plan.price}</span>
-                      <span className="text-sm opacity-60 ml-1">{plan.period}</span>
+                <div className="flex flex-col h-full">
+                  <div className="space-y-6 flex-1">
+                    <div>
+                      <h3 className="text-xl font-light mb-2">{plan.title}</h3>
+                      <div className="flex items-baseline">
+                        <span className="text-5xl font-extralight">{plan.price}</span>
+                        <span className="text-sm opacity-60 ml-1">{plan.period}</span>
+                      </div>
+                      <p className="text-sm opacity-60 mt-4">{plan.description}</p>
                     </div>
-                    <p className="text-sm opacity-60 mt-4">{plan.description}</p>
+
+                    <ul className="space-y-3">
+                      {plan.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start gap-3 text-sm">
+                          <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span className="opacity-80">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start gap-3 text-sm">
-                        <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="opacity-80">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <motion.a
-                    href="/contact"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`w-full py-3 rounded-full transition-all text-sm font-medium ${
-                      plan.featured
-                        ? 'bg-white text-black hover:bg-gray-100'
-                        : 'border border-white/20 hover:bg-white hover:text-black'
-                    }`}
-                  >
-                    Commencer
-                  </motion.a>
+                  <div className="mt-8">
+                    <motion.a
+                      href="/contact"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`w-full py-3 rounded-full transition-all text-sm font-medium flex items-center justify-center ${
+                        plan.featured
+                          ? 'bg-white text-black hover:bg-gray-100'
+                          : 'border border-white/20 hover:bg-white hover:text-black'
+                      }`}
+                    >
+                      Commencer
+                    </motion.a>
+                  </div>
                 </div>
               </motion.div>
             ))}
