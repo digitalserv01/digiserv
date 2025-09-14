@@ -390,7 +390,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="mb-20"
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
               <span className="text-xs opacity-60">© NOS SERVICES サービス内容</span>
               <span className="text-xs opacity-60">EXECUTION DIGITAL</span>
             </div>
@@ -449,7 +449,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="mb-20"
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
               <span className="text-xs opacity-60">© TÉMOIGNAGES レビュー</span>
               <span className="text-xs opacity-60">AVIS RÉELS</span>
             </div>
@@ -558,7 +558,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="text-[10rem] md:text-[14rem] lg:text-[18rem] font-extralight leading-none text-white/[0.03] text-center select-none"
+              className="text-[6rem] xs:text-[8rem] sm:text-[10rem] md:text-[14rem] lg:text-[18rem] font-extralight leading-none text-white/[0.03] text-center select-none"
             >
               ©2025
             </motion.div>
