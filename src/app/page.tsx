@@ -1104,9 +1104,10 @@ export default function Home() {
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
             <div className="max-w-2xl">
-              <p className="text-sm opacity-60 leading-relaxed mb-8">
-                I build expressive, performance-driven websites by blending clean design and native development inside Framer to help creative teams and modern brands stand out with intention.
-              </p>
+            <p className="text-sm opacity-60 leading-relaxed mb-8">
+  Je conçois des sites web expressifs et performants en alliant design épuré et développement natif, afin d’aider les équipes créatives et les marques modernes à se démarquer avec intention.
+</p>
+
 
               <a href="#home" className="inline-flex items-center gap-2 border border-white/20 px-6 py-3 rounded-full text-xs hover:bg-white hover:text-black transition-all">
                 BACK TO TOP
