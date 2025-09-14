@@ -6,6 +6,7 @@ import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header';
 import Newsletter from '../components/Newsletter';
+import StructuredData, { organizationSchema, websiteSchema, faqSchema } from '../components/StructuredData';
 
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -66,6 +67,11 @@ export default function Home() {
 
   return (
     <div className="bg-black text-white min-h-screen overflow-x-hidden" ref={containerRef}>
+      {/* Structured Data */}
+      <StructuredData data={organizationSchema} />
+      <StructuredData data={websiteSchema} />
+      <StructuredData data={faqSchema} />
+      
       {/* Header */}
       <Header />
 
@@ -116,7 +122,7 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-[1.1] mb-12"
               >
-                Votre Agence Digitale au Maroc
+                Votre Agence Digitale Maroc
                 <br />
                 Des Schémas et Des Moments qui
                 <br />
@@ -714,7 +720,7 @@ export default function Home() {
                 </blockquote>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  <div className="w-full sm:w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                  <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
                   <img
                     src={testimonial.image}
                     alt={testimonial.author}

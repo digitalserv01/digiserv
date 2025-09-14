@@ -5,10 +5,21 @@ import { ArrowRight, Check, Handshake, Lightbulb, ShieldCheck, MessageCircle } f
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Newsletter from '../../components/Newsletter';
+import StructuredData, { organizationSchema, collectionPageSchema, breadcrumbSchema } from '../../components/StructuredData';
 
 export default function Works() {
+  const breadcrumbItems = [
+    { name: "Accueil", url: "https://amadigiconseils.com" },
+    { name: "Projets", url: "https://amadigiconseils.com/works" }
+  ];
+
   return (
     <div className="bg-black text-white min-h-screen overflow-x-hidden">
+      {/* Structured Data */}
+      <StructuredData data={organizationSchema} />
+      <StructuredData data={collectionPageSchema} />
+      <StructuredData data={breadcrumbSchema(breadcrumbItems)} />
+      
       {/* Header */}
       <Header />
 

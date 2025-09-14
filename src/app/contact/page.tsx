@@ -5,6 +5,7 @@ import { ArrowRight, Send } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from '../../components/Header';
+import StructuredData, { organizationSchema, localBusinessSchema, breadcrumbSchema } from '../../components/StructuredData';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,11 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const breadcrumbItems = [
+    { name: "Accueil", url: "https://amadigiconseils.com" },
+    { name: "Contact", url: "https://amadigiconseils.com/contact" }
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +72,11 @@ export default function Contact() {
 
   return (
     <div className="bg-black text-white min-h-screen overflow-x-hidden">
+      {/* Structured Data */}
+      <StructuredData data={organizationSchema} />
+      <StructuredData data={localBusinessSchema} />
+      <StructuredData data={breadcrumbSchema(breadcrumbItems)} />
+      
       {/* Header */}
       <Header />
 
@@ -476,7 +487,7 @@ export default function Contact() {
                 </blockquote>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  <div className="w-full sm:w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                  <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
                     <img
                       src={testimonial.image}
                       alt={testimonial.author}
