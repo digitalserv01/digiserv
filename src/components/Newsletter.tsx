@@ -125,7 +125,7 @@ export default function Newsletter() {
                   animate={{ opacity: 1, y: 0 }}
                   className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400 text-sm"
                 >
-                  ✅ Inscription réussie ! Vérifiez votre email pour confirmer.
+                  ✅ Inscription réussie ! Merci de nous faire confiance.
                 </motion.div>
               )}
 

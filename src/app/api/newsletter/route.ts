@@ -83,7 +83,13 @@ export async function POST(request: NextRequest) {
     };
 
     // Envoyer notification Telegram
-    await sendTelegramNotification(newsletterData);
+    try {
+      await sendTelegramNotification(newsletterData);
+      console.log('Newsletter Telegram notification sent successfully for:', normalizedEmail);
+    } catch (telegramError) {
+      console.error('Failed to send Telegram notification:', telegramError);
+      // Continue with success response even if Telegram fails
+    }
 
     return NextResponse.json(
       { 
