@@ -3,7 +3,9 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Plus, Check, ArrowUpRight } from 'lucide-react';
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 import Header from '../components/Header';
+import Newsletter from '../components/Newsletter';
 
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -13,28 +15,52 @@ export default function Home() {
 
   const faqItems = [
     {
-      question: "What services do you offer?",
-      answer: "I offer comprehensive digital design services including art direction, brand identity, motion direction, and custom Framer site development."
+      question: "Quels sont les services proposés par votre agence digitale au Maroc ?",
+      answer: "Notre agence digitale maroc offre une gamme complète de services : création de sites web, développement d'applications mobiles, stratégies marketing digital, référencement SEO/SEA, gestion des réseaux sociaux, et conception graphique."
     },
     {
-      question: "What is your typical turnaround time?",
-      answer: "Project timelines vary based on scope, but typically range from 2-8 weeks for most projects. Rush delivery is available for an additional fee."
+      question: "Combien coûte la création d'un site web au Maroc ?",
+      answer: "Les tarifs varient selon la complexité du projet. Un site vitrine commence à partir de 8 000 MAD, tandis qu'un site e-commerce démarre à 15 000 MAD. Nous proposons des devis personnalisés gratuits."
     },
     {
-      question: "Do you only work in Framer?",
-      answer: "While I specialize in Framer for its design-to-development capabilities, I also work with other modern frameworks when project requirements demand it."
+      question: "Dans quelles villes du Maroc intervenez-vous ?",
+      answer: "Notre agence digitale casablanca maroc dessert tout le territoire national. Nous avons des équipes à Casablanca, Rabat, Marrakech et proposons nos services dans toutes les régions du Maroc."
     },
     {
-      question: "Can you handle both design and build?",
-      answer: "Absolutely. I provide end-to-end services from initial concept and design through development and deployment."
+      question: "Quel est le délai de livraison d'un projet digital ?",
+      answer: "Les délais dépendent de la complexité : 2-3 semaines pour un site vitrine, 4-6 semaines pour un site e-commerce, et 6-12 semaines pour des applications sur mesure. Nous respectons toujours les délais convenus."
     },
     {
-      question: "Do you offer brand strategy too?",
-      answer: "Yes, brand strategy is an integral part of my process. I help define positioning, messaging, and visual identity systems."
+      question: "Proposez-vous un accompagnement après la livraison ?",
+      answer: "Oui, notre agence web digitale maroc assure un suivi post-livraison avec maintenance, mises à jour de sécurité, formation aux outils, et support technique pendant 3 mois minimum."
     },
     {
-      question: "What's your process like?",
-      answer: "My process is collaborative and iterative, starting with discovery, moving through design exploration, and ending with development and launch support."
+      question: "Comment optimisez-vous le référencement des sites web ?",
+      answer: "Nous appliquons les meilleures pratiques SEO : optimisation technique, contenu de qualité, netlinking local, référencement mobile-first, et stratégies adaptées au marché marocain."
+    },
+    {
+      question: "Travaillez-vous avec des entreprises de toutes tailles ?",
+      answer: "Absolument ! Notre agence communication digitale maroc accompagne aussi bien les TPE/PME que les grandes entreprises, en adaptant nos solutions à chaque budget et besoin spécifique."
+    },
+    {
+      question: "Quels sont vos tarifs pour le marketing digital ?",
+      answer: "Nos forfaits marketing digital démarrent à 3 500 MAD/mois pour la gestion des réseaux sociaux, et 5 000 MAD/mois pour des campagnes publicitaires complètes (Google Ads + Facebook Ads)."
+    },
+    {
+      question: "Créez-vous des applications mobiles ?",
+      answer: "Oui, notre équipe développe des applications iOS et Android natives ou hybrides. Nous maîtrisons React Native, Flutter, et les technologies natives Swift/Kotlin."
+    },
+    {
+      question: "Comment puis-je obtenir un devis pour mon projet ?",
+      answer: "Contactez notre agence digitale maroc via le formulaire en ligne, par téléphone ou email. Nous organisons un rendez-vous gratuit pour analyser vos besoins et vous proposer une solution sur mesure."
+    },
+    {
+      question: "Proposez-vous des formations digitales ?",
+      answer: "Oui, nous dispensons des formations sur les outils digitaux, le marketing en ligne, la gestion de sites web, et les réseaux sociaux, adaptées aux équipes marocaines."
+    },
+    {
+      question: "Gérez-vous l'hébergement et la maintenance des sites ?",
+      answer: "Notre agence marketing digitale maroc propose des solutions d'hébergement sécurisé au Maroc et à l'international, avec maintenance préventive et corrective incluse dans nos contrats."
     }
   ];
 
@@ -81,7 +107,7 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-sm mb-2 font-light"
               >
-                Art Direction • Branding • Strategy • Web Design
+                Agence Digitale Maroc • Marketing Digital • Branding • Stratégie Web au Maroc
               </motion.p>
 
               <motion.h1
@@ -90,24 +116,30 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-[1.1] mb-12"
               >
-                Pattern Dimensions
+                Votre Agence Digitale au Maroc
                 <br />
-                and Moments that
+                Des Schémas et Des Moments qui
                 <br />
-                Connect and Leave a
+                Se Connectent et Laissent 
                 <br />
-                Bold <span className="opacity-40 font-normal">イメージ</span>.
+              Une Image Forte, dont vous serez fier.<span className="opacity-40 font-normal"> イメージ</span>.
               </motion.h1>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="flex items-center gap-8 text-xs tracking-wide"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 lg:gap-8 text-xs tracking-wide"
               >
-                <span className="px-3 py-1 border border-white/20 rounded-full">Branding</span>
-                <span className="opacity-60">© CURATED INTERFACES ビジュアル</span>
-                <span className="ml-auto opacity-60">DIGITAL DESIGNER</span>
+                <div className="flex flex-wrap gap-2 sm:gap-3">
+                  <span className="px-3 py-1 border border-white/20 rounded-full whitespace-nowrap">RÉSULTATS</span>
+                  <span className="px-3 py-1 border border-white/20 rounded-full whitespace-nowrap">COLLABORATIVE</span>
+                  <span className="px-3 py-1 border border-white/20 rounded-full whitespace-nowrap">TRANSPARENCE</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+                  <span className="opacity-60 text-xs sm:text-xs">© Meilleure Agence Digitale au Maroc ビアュル</span>
+                  <span className="opacity-60 text-xs sm:text-xs sm:ml-auto">SUCCÈS DIGITAL</span>
+                </div>
               </motion.div>
             </div>
 
@@ -126,19 +158,194 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Large Akihiko Brand Text */}
+        </div>
+      </section>
+
+      {/* Brand Badge Section */}
+      <section className="py-8 px-8">
+        <div className="max-w-[1600px] mx-auto">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.8 }}
-            className="absolute bottom-10 left-0 right-0"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="flex items-center justify-center gap-4"
           >
-            <div className="flex items-center gap-4 mt-8">
               <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-xs">
-                🟢 Use for Free
+              🟢 Support 24/7
               </span>
-              <span className="text-xs opacity-40">Made in Framer</span>
+            <span className="text-xs opacity-40">Maroc</span>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Optimize Section */}
+      <section className="py-32 px-8">
+        <div className="max-w-[1600px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative min-h-[500px] flex items-center justify-center"
+          >
+            {/* Overlapping Circles Graphic */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+              whileInView={{ 
+                opacity: 1, 
+                scale: 1, 
+                rotate: 0,
+                transition: { duration: 1.2, ease: "easeOut" }
+              }}
+              viewport={{ once: true }}
+              className="absolute top-8 left-8 md:left-16 lg:left-24"
+            >
+              <div className="relative w-16 h-16">
+                {/* Circle 1 */}
+                <motion.div 
+                  className="absolute w-8 h-8 border border-white/30 rounded-full top-0 left-0"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ 
+                    scale: 1, 
+                    opacity: 1,
+                    transition: { duration: 0.8, delay: 0.2 }
+                  }}
+                  viewport={{ once: true }}
+                />
+                {/* Circle 2 - overlapping middle */}
+                <motion.div 
+                  className="absolute w-8 h-8 border border-white/30 rounded-full top-0 left-4"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ 
+                    scale: 1, 
+                    opacity: 1,
+                    transition: { duration: 0.8, delay: 0.4 }
+                  }}
+                  viewport={{ once: true }}
+                />
+                {/* Circle 3 - overlapping right */}
+                <motion.div 
+                  className="absolute w-8 h-8 border border-white/30 rounded-full top-0 left-8"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ 
+                    scale: 1, 
+                    opacity: 1,
+                    transition: { duration: 0.8, delay: 0.6 }
+                  }}
+                  viewport={{ once: true }}
+                />
             </div>
+            </motion.div>
+
+            {/* Text Elements */}
+            <div className="relative w-full h-full flex flex-col items-center justify-center space-y-12">
+              {/* Optimiser - Top Right */}
+              <motion.div
+                initial={{ opacity: 0, x: 100, scale: 0.8 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  x: 0, 
+                  scale: 1,
+                  transition: { 
+                    duration: 0.8, 
+                    delay: 0.3,
+                    ease: "easeOut"
+                  }
+                }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  opacity: 0.8,
+                  transition: { duration: 0.3 }
+                }}
+                className="text-4xl md:text-5xl lg:text-6xl font-extralight text-white/50 self-end mr-8 md:mr-16 lg:mr-24 tracking-wider cursor-pointer"
+              >
+                OPTIMISER
+              </motion.div>
+
+              {/* Captiver - Middle Left */}
+              <motion.div
+                initial={{ opacity: 0, x: -100, scale: 0.8 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  x: 0, 
+                  scale: 1,
+                  transition: { 
+                    duration: 0.8, 
+                    delay: 0.5,
+                    ease: "easeOut"
+                  }
+                }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  opacity: 0.9,
+                  transition: { duration: 0.3 }
+                }}
+                className="text-4xl md:text-5xl lg:text-6xl font-extralight text-white/75 self-start ml-8 md:ml-16 lg:ml-24 tracking-wider cursor-pointer"
+              >
+                CAPTIVER
+              </motion.div>
+
+              {/* Convertir - Bottom Center */}
+              <motion.div
+                initial={{ opacity: 0, y: 100, scale: 0.8 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                  transition: { 
+                    duration: 0.8, 
+                    delay: 0.7,
+                    ease: "easeOut"
+                  }
+                }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+                className="text-4xl md:text-5xl lg:text-6xl font-extralight self-center tracking-wider cursor-pointer"
+                style={{
+                  background: 'linear-gradient(135deg, #8B5CF6 0%, #ffffff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                CONVERTIR
+              </motion.div>
+            </div>
+
+            {/* Floating particles for extra visual appeal */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1 }}
+              viewport={{ once: true }}
+              className="absolute inset-0 pointer-events-none"
+            >
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white/20 rounded-full"
+                  style={{
+                    left: `${20 + i * 15}%`,
+                    top: `${30 + i * 10}%`,
+                  }}
+                  animate={{
+                    y: [0, -20, 0],
+                    opacity: [0.2, 0.8, 0.2],
+                  }}
+                  transition={{
+                    duration: 3 + i * 0.5,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                  }}
+                />
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -163,21 +370,21 @@ export default function Home() {
 
             <div className="space-y-8">
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-extralight leading-tight">
-                <span className="text-7xl lg:text-8xl">13+</span> years
-                <sup className="text-xs opacity-40">™</sup> of digital form, sharp interactions, and relentless creative discipline and effort.
+                <span className="text-7xl lg:text-8xl">13+</span> ans
+                <sup className="text-xs opacity-40">™</sup> d'expertise en agence digitale maroc : des interactions précises, une créativité sans relâche.
               </h3>
 
               <p className="text-sm md:text-base opacity-70 leading-relaxed mt-6 max-w-2xl">
-                Throughout my career, I've had the privilege of working with forward-thinking brands and innovative teams, crafting digital experiences that not only look exceptional but perform flawlessly. My approach combines strategic thinking with meticulous attention to detail, ensuring every project delivers both aesthetic excellence and functional brilliance.
-              </p>
+              Notre agence web digitale maroc a collaboré avec des marques visionnaires et des équipes innovantes pour créer des expériences digitales à la fois remarquables et performantes. Notre approche allie stratégie et précision, garantissant des projets qui conjuguent esthétique et impact.              </p>
 
-              <motion.button
+              <motion.a
+                href="/contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-2 bg-white text-black px-8 py-4 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors"
               >
-                CONTACT
-              </motion.button>
+                CONSTRUISONS VOS IDÉES
+              </motion.a>
             </div>
           </motion.div>
         </div>
@@ -194,68 +401,68 @@ export default function Home() {
             className="mb-20"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs opacity-60">© FEATURED PROJECTS プロジェクト</span>
-              <span className="text-xs opacity-60">CREATIVE DEVELOPMENT</span>
+              <span className="text-xs opacity-60">© PROJETS EN VEDETTE プロジェクト</span>
+              <span className="text-xs opacity-60">DESIGN & DÉVELOPPEMENT</span>
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight leading-tight max-w-5xl">
-              Every project is a chance to blend design and development, shaping bold interactive ideas into{' '}
-              <span className="opacity-40">sleek digital realities</span> — built with intent, speed, and visual clarity that attracts lot of peoples.
-            </h2>
+            Chaque projet est une opportunité de mêler design et développement, transformant des idées interactives audacieuses en <span className="opacity-40">réalités digitales élégantes</span> — conçues avec intention par notre agence digitale au maroc, rapidité et clarté visuelle pour séduire un large public. </h2>
 
-            <motion.button
+            <motion.a
+              href="/works"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 border border-white/20 px-6 py-3 rounded-full text-xs hover:bg-white hover:text-black transition-all mt-8"
             >
-              SEE WORKS
-            </motion.button>
+              VOIR LES PROJETS
+            </motion.a>
           </motion.div>
 
           {/* Overlapping Project Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0">
             {[
               {
-                title: "Sonder Goods",
+                title: "Mimid Sofa",
                 category: "Branding",
                 number: "(01)",
                 image: "/sonder-goods.png"
               },
               {
-                title: "Halo Wear",
-                category: "Web Design",
+                title: "La Ferme Nomade Agafay",
+                category: "Design Web",
                 number: "(02)",
                 image: "/halo-wear.jpeg",
                 offset: true
               },
               {
-                title: "Lucent Lab",
-                category: "Creative Direction",
+                title: "Annuaire Des Avocats",
+                category: "Developpement Full Stack",
                 number: "(03)",
                 image: "/profile.jpeg"
               },
               {
-                title: "Arc & Bloom",
-                category: "Identity Design",
+                title: "Le Bistrot d'Amaia",
+                category: "Image Digitale",
                 number: "(04)",
                 image: "/arc-bloom.png",
                 offset: true
               },
               {
-                title: "Atelier Nara",
-                category: "Portfolio Site",
+                title: "ESF Voyages",
+                category: "Social Media",
                 number: "(05)",
                 image: "/atelier-nara.png"
               }
             ].map((project, index) => (
-              <motion.div
+              <motion.a
                 key={index}
+                href="/works"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className={`relative group cursor-pointer ${project.offset ? 'md:-mt-20' : ''} mb-8`}
+                className={`relative group cursor-pointer block ${project.offset ? 'md:-mt-20' : ''} mb-8`}
               >
                 <div className="relative overflow-hidden rounded-lg">
                   <img
@@ -278,7 +485,7 @@ export default function Home() {
                     <span className="text-sm opacity-60">{project.number}</span>
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </div>
@@ -295,38 +502,39 @@ export default function Home() {
             className="mb-20"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs opacity-60">© CAPABILITIES サービス内容</span>
-              <span className="text-xs opacity-60">DIGITAL EXECUTION</span>
+              <span className="text-xs opacity-60">© NOS SERVICES サービス内容</span>
+              <span className="text-xs opacity-60">EXECUTION DIGITAL</span>
             </div>
 
             <h2 className="text-6xl md:text-7xl lg:text-8xl font-extralight mb-8">Services</h2>
 
             <div className="flex gap-12 text-sm">
-              <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">Structured</span>
-              <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">Focused</span>
-              <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">Visual</span>
+              <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">Structurés</span>
+              <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">Agiles</span>
+              <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">Scalables</span>
             </div>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
             {[
               {
-                title: "Art Direction",
-                description: "We guide every visual decision from start to finish, ensuring clarity, emotion, and impact across every touchpoint."
+    "title": "Création de Sites Web",
+    "description": "Notre agence communication digitale maroc conçoit des sites vitrines et sur-mesure (WordPress & Next.js), alliant design moderne et performance technique pour captiver vos visiteurs."
               },
               {
-                title: "Brand Identity",
-                description: "From strategy to execution, we shape consistent brand systems that speak clearly and feel uniquely ownable."
+    "title": "Audit & Optimisation",
+    "description": "Nous analysons votre site actuel pour identifier ses freins et optimiser son référencement, son UX et sa conversion afin de générer de vrais résultats."
               },
               {
-                title: "Motion Direction",
-                description: "We use motion as a design tool — adding clarity, rhythm, and energy to digital experiences with intention."
+    "title": "Marketing Digital & SEO",
+    "description": "De la stratégie de contenu au netlinking, en passant par le SEO local et international, notre agence marketing digitale maroc maximise votre visibilité et votre trafic qualifié."
               },
               {
-                title: "Framer Sites",
-                description: "Design meets execution with real-time, scalable websites — all crafted natively inside Framer for speed and precision."
+    "title": "Automatisation & Outils AI",
+    "description": "Nous intégrons des pipelines d'automatisation et des solutions AI pour optimiser vos campagnes, gérer vos leads et simplifier vos processus marketing."
               }
-            ].map((service, index) => (
+]
+.map((service, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
@@ -355,18 +563,22 @@ export default function Home() {
           >
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs opacity-60">© EXPERIENCE エクスペリエンス</span>
-              <span className="text-xs opacity-60">DIGITAL CRAFT</span>
+              <span className="text-xs opacity-60">Notre Art Digital</span>
             </div>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             <div>
-              <h3 className="text-2xl font-light mb-8">Creative Collabs</h3>
+              <h3 className="text-2xl font-light mb-8">Collaborations</h3>
               <div className="space-y-6">
                 {[
-                  { company: "Clavmen Studio", role: "Art Director & Designer", location: "Tokyo", years: "2022 - present" },
-                  { company: "Modular Eight", role: "Senior Developer", location: "Osaka", years: "2020 – 2022" },
-                  { company: "Haus of Signal", role: "Creative Technologist", location: "Berlin", years: "2018 – 2020" }
+
+  { "company": "AMADIGI", "role": "Stratège et Consultant Digital", "location": "Casablanca, Maroc", "years": "2013 – présent" },
+  { "company": "Projets Freelance", "role": "Développeur Web & Designer", "location": "Maroc / France", "years": "2015 – présent" },
+  { "company": "Startups Diverses", "role": "Spécialiste SEO & Marketing", "location": "Maroc / France", "years": "2016 – présent" },
+  { "company": "Projets AI & Automatisation", "role": "Consultant en Intégration AI et Automatisation", "location": "Remote", "years": "2020 – présent" }
+
+
                 ].map((job, index) => (
                   <motion.div
                     key={index}
@@ -392,11 +604,27 @@ export default function Home() {
             </div>
 
             <div>
-              <h3 className="text-2xl font-light mb-8">Studio</h3>
+              <h3 className="text-2xl font-light mb-8">PUBLICATIONS</h3>
               <div className="space-y-6">
                 {[
-                  { company: "Studio Orbit", role: "UI/UX Designer", location: "Dallas", years: "2016 – 2018" },
-                  { company: "Novaform Labs", role: "Junior Designer", location: "Kyoto", years: "2014 – 2016" }
+                  { 
+                    company: "Medium", 
+                    role: "Déconstruction de l'algorithme du plus court chemin : théorie vs implémentation", 
+                    location: "En ligne", 
+                    years: "14 août 2025" 
+                  },
+                  { 
+                    company: "Medium", 
+                    role: "Quoi de neuf dans Java 17 et Java 21 : exploiter la puissance du Java moderne", 
+                    location: "En ligne", 
+                    years: "1 janvier 2025" 
+                  },
+                  { 
+                    company: "Medium", 
+                    role: "Prompt Engineering 101", 
+                    location: "En ligne", 
+                    years: "14 septembre 2025" 
+                  }
                 ].map((job, index) => (
                   <motion.div
                     key={index}
@@ -435,41 +663,42 @@ export default function Home() {
             className="mb-20"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs opacity-60">© TESTIMONIALS レビュー</span>
-              <span className="text-xs opacity-60">REAL FEEDBACK</span>
+              <span className="text-xs opacity-60">© TÉMOIGNAGES レビュー</span>
+              <span className="text-xs opacity-60">AVIS RÉELS</span>
             </div>
 
-            <motion.button
+            <motion.a
+              href="/contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 border border-white/20 px-6 py-3 rounded-full text-xs hover:bg-white hover:text-black transition-all"
             >
-              GET IN TOUCH
-            </motion.button>
+              CONTACTEZ-NOUS
+            </motion.a>
           </motion.div>
 
           <div className="space-y-24">
             {[
               {
-                quote: "Akihiko elevated every layer of our brand's online presence. From motion details to structural layout, every piece felt crafted and intentional. The site not only looked beautiful but performed well too — and the entire collaboration process was smooth.",
-                author: "Lisa Kuroda",
-                role: "Founder, Studio Analog",
+                quote: "Nous avons collaboré avec cette agence digitale casablanca maroc sur plusieurs projets digitaux, et leur professionnalisme ainsi que leur créativité nous ont pleinement satisfaits. Une équipe réactive, à l'écoute et toujours force de proposition. Un partenaire fiable que nous recommandons sans hésitation.",
+                author: "La Ferme Nomade Agafay",
+                role: "CTO",
                 image: "/testimonial-1.jpeg",
-                company: "Calro"
+                company: "La Ferme Nomade Agafay"
               },
               {
-                quote: "Akihiko approaches every project with a deep sense of purpose. His work is never just about the surface — it's about how each element functions, connects, and flows. He brings logic, sharpness, and confidence to every decision, and his build quality.",
-                author: "Daniel Reyes",
-                role: "Director, Framehaus",
-                image: "/testimonial-2.png",
-                company: "Calro"
+                quote: "AMADIGI aborde chaque projet avec passion et détermination. Leur travail ne se limite pas à l'apparence : chaque élément est réfléchi, connecté et optimisé. Une équipe compétente, créative et fiable pour tous vos besoins digitaux au Maroc.",
+                author: "Babel Stone",
+                role: "CEO",
+                image: "/testimonial-pierre.jpg",
+                company: "Marbre et Pierre Naturelle"
               },
               {
-                quote: "His ability to merge storytelling with clean interaction design is unmatched. Akihiko understands not just how things should look, but why they should look that way — and that insight came through in every part of the work.",
-                author: "Mei Tanaka",
-                role: "UX Designer, Nuro",
-                image: "/testimonial-3.png",
-                company: "Calro"
+                quote: "Une équipe professionnelle qui traduit nos besoins et notre imagination en projets réels. Toujours à l'écoute et proactive, cette agence de communication digitale maroc a su concrétiser notre vision avec efficacité et créativité.",
+                author: "Boutique De Maison D'Amaia",
+                role: "Responsable Marketing",
+                image: "/Logo-bistrot.jpg",
+                company: "Boutique De Maison D'Amaia"
               }
             ].map((testimonial, index) => (
               <motion.div
@@ -484,12 +713,14 @@ export default function Home() {
                   "{testimonial.quote}"
                 </blockquote>
 
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <div className="w-full sm:w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
                   <img
                     src={testimonial.image}
                     alt={testimonial.author}
-                    className="w-12 h-12 rounded-full object-cover"
+                      className="w-full h-full object-cover"
                   />
+                  </div>
                   <div className="flex-1">
                     <h4 className="font-medium">{testimonial.author} 🔵</h4>
                     <p className="text-sm opacity-60">{testimonial.role}</p>
@@ -513,20 +744,19 @@ export default function Home() {
             className="mb-20"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs opacity-60">© AWARDS アワード</span>
-              <span className="text-xs opacity-60">SELECTED HONORS</span>
+              <span className="text-xs opacity-60">© RÉCOMPENSES アワード</span>
+              <span className="text-xs opacity-60">DISTINCTIONS SÉLECTIONNÉES</span>
             </div>
           </motion.div>
 
           <div className="space-y-16">
             <div>
-              <h3 className="text-xl font-light mb-8">27x Awwwards</h3>
+              <h3 className="text-xl font-light mb-8">Best Innovator</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  "/award-1.png",
-                  "/award-2.jpeg",
-                  "/award-3.png",
-                  "/award-4.png"
+                {["/award-4.png",
+                  "/fwa-2.png",
+                  "/fwa-3.jpeg",
+                  "/fwa-2.png",
                 ].map((img, i) => (
                   <img key={i} src={img} alt="Award" className="w-full h-48 object-cover rounded" />
                 ))}
@@ -534,13 +764,26 @@ export default function Home() {
             </div>
 
             <div>
-              <h3 className="text-xl font-light mb-8">14x FWA</h3>
+              <h3 className="text-xl font-light mb-8">74x sites web créés</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  "/fwa-2.png",
+                  "/fwa-4.png",
+                  "/fwa-2.png",
+                  "/testimonial-3.png",
+                ].map((img, i) => (
+                  <img key={i} src={img} alt="Award" className="w-full h-48 object-cover rounded" />
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xl font-light mb-8">14x Transformations digitales</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   "/fwa-1.png",
                   "/fwa-2.png",
-                  "/fwa-3.jpeg",
-                  "/fwa-4.png"
+                  "/award-8.png",
+                  "/fwa-2.png",
                 ].map((img, i) => (
                   <img key={i} src={img} alt="Award" className="w-full h-48 object-cover rounded" />
                 ))}
@@ -561,15 +804,15 @@ export default function Home() {
             className="mb-20"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs opacity-60">© PROJECT PRICING プラン</span>
-              <span className="text-xs opacity-60">CUSTOM QUOTES</span>
+              <span className="text-xs opacity-60">© TARIFS DES PROJETS プラン</span>
+              <span className="text-xs opacity-60">DEVIS PERSONNALISÉS</span>
             </div>
 
             <div className="flex items-baseline gap-8">
-              <h2 className="text-6xl md:text-7xl lg:text-8xl font-extralight">Pricing</h2>
+              <h2 className="text-6xl md:text-7xl lg:text-8xl font-extralight">TARIFS</h2>
               <div className="flex gap-8 text-sm">
-                <span>Transparent</span>
-                <span>Design Packages</span>
+                <span>Transparence</span>
+                <span>Forfaits Design, Développement & Marketing</span>
               </div>
             </div>
           </motion.div>
@@ -577,52 +820,52 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: "Starter Plan",
-                price: "$99",
-                period: "/Month",
-                description: "Perfect for small launches and personal sites that need a fast online presence.",
+                title: "Plan Découverte",
+                price: "2990 MAD",
+                period: "",
+                description: "Idéal pour lancer votre présence digitale rapidement avec une image professionnelle.",
                 features: [
-                  "One-page Framer site",
-                  "Custom layout & visuals",
-                  "Mobile-first responsive build",
-                  "Fast delivery (within 7 days)",
-                  "Design system setup",
-                  "SEO-ready structure",
-                  "Basic CMS integration",
-                  "Contact form setup"
+                  "Brief créatif et analyse des besoins",
+                  "Conception d'une page principale",
+                  "Design responsive mobile-first",
+                  "Maquette visuelle & interface UX",
+                  "Intégration d'un formulaire de contact",
+                  "Optimisation SEO de base",
+                  "Configuration CMS simplifiée",
+                  "Livraison rapide"
                 ]
               },
               {
-                title: "Growth Plan",
-                price: "$299",
-                period: "/Month",
-                description: "Designed for growing brands that need flexibility and CMS support.",
+                title: "Plan Croissance",
+                price: "4990 MAD",
+                period: "",
+                description: "Pour les marques qui souhaitent renforcer leur présence en ligne et automatiser certains flux.",
                 features: [
-                  "Up to 5 pages",
-                  "Framer CMS-powered sections",
-                  "Component-based structure",
-                  "Motion design & transitions",
-                  "Clean UX-focused layout",
-                  "Device-optimized responsiveness",
-                  "Style guide system",
-                  "Email capture / integrations"
+                  "Analyse approfondie et audit de site existant",
+                  "Jusqu'à 5 pages optimisées",
+                  "Sections CMS dynamiques",
+                  "Animations & transitions interactives",
+                  "UX/UI design avancé",
+                  "Optimisation multi-devices",
+                  "Guide de style & identité visuelle",
+                  "Intégration d'email marketing et CTA"
                 ],
                 featured: true
               },
               {
-                title: "Full Scope Plan",
-                price: "$899",
-                period: "/Month",
-                description: "Best for studios or teams needing structure and enterprise-level execution.",
+                title: "Plan Complet",
+                price: "8990 MAD",
+                period: "",
+                description: "Pour les entreprises et studios cherchant une image digitale complète et performante.",
                 features: [
-                  "10+ pages with CMS",
-                  "Advanced layout strategy",
-                  "Full brand system support",
-                  "Animation direction",
-                  "Custom-built components",
-                  "Framer CMS training",
-                  "Launch support + QA",
-                  "Performance optimization"
+                  "Audit complet et stratégie digitale",
+                  "10+ pages avec CMS avancé",
+                  "Système de marque complet",
+                  "Direction artistique & motion design",
+                  "Composants personnalisés et interactifs",
+                  "Formation CMS et gestion du contenu",
+                  "Support lancement + QA",
+                  "Optimisation des performances"
                 ]
               }
             ].map((plan, index) => (
@@ -665,7 +908,8 @@ export default function Home() {
                     ))}
                   </ul>
 
-                  <motion.button
+                  <motion.a
+                    href="/contact"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className={`w-full py-3 rounded-full transition-all text-sm font-medium ${
@@ -674,8 +918,8 @@ export default function Home() {
                         : 'border border-white/20 hover:bg-white hover:text-black'
                     }`}
                   >
-                    Get Started
-                  </motion.button>
+                    Commencer
+                  </motion.a>
                 </div>
               </motion.div>
             ))}
@@ -744,6 +988,95 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Recruitment Section */}
+      <section className="py-32 px-8 bg-zinc-950 relative overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{
+            backgroundImage: "url('https://s7g10.scene7.com/is/image/eng/HR_Join-Us_2?bfc=on&fmt=webp-alpha&dpr=on,3&network=on')"
+          }}
+        />
+        
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/60"></div>
+        
+        <div className="max-w-[1600px] mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+          >
+            {/* Left side - empty for spacing */}
+            <aside className="hidden lg:block"></aside>
+            
+            {/* Right side - content */}
+            <aside className="space-y-8">
+              <div className="space-y-6">
+                <motion.h1
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-tight"
+                >
+                  <span>Qui recherchons-nous ?</span>
+                </motion.h1>
+                
+                <motion.h2
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  className="text-lg md:text-xl font-light leading-relaxed text-white/80 max-w-2xl"
+                >
+                  <span className="font-light">
+                    Des personnes qui aspirent à une carrière professionnelle dans le monde de la technologie, 
+                    qui veulent faire la différence chaque jour, et qui aiment comparer, innover, et rendre 
+                    les entreprises de plus en plus pertinentes.
+                  </span>
+                </motion.h2>
+              </div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="https://wa.me/212699020158?text=Bonjour%20!%20Je%20souhaite%20rejoindre%20l'équipe%20AMADIGI."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-4 rounded-full text-sm font-medium hover:bg-gray-100 transition-all"
+                >
+                  Rejoignez-nous
+                  <ArrowRight className="w-4 h-4" />
+                </motion.a>
+                
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2 border border-white/20 text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-all"
+                >
+                  Vie chez AMADIGI
+                  <ArrowRight className="w-4 h-4" />
+                </motion.a>
+              </motion.div>
+            </aside>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <Newsletter />
+
       {/* Footer */}
       <footer className="py-32 px-8 border-t border-white/10">
         <div className="max-w-[1600px] mx-auto">
@@ -753,7 +1086,7 @@ export default function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="text-[10rem] md:text-[14rem] lg:text-[18rem] font-extralight leading-none text-white/[0.03] text-center select-none"
+              className="text-[10rem] md:text-[14rem] lg:text-[18rem] font-extralight leading-none text-white/[0.3] text-center select-none"
             >
               ©2025
             </motion.div>
@@ -765,9 +1098,9 @@ export default function Home() {
                 I build expressive, performance-driven websites by blending clean design and native development inside Framer to help creative teams and modern brands stand out with intention.
               </p>
 
-              <button className="inline-flex items-center gap-2 border border-white/20 px-6 py-3 rounded-full text-xs hover:bg-white hover:text-black transition-all">
+              <a href="#home" className="inline-flex items-center gap-2 border border-white/20 px-6 py-3 rounded-full text-xs hover:bg-white hover:text-black transition-all">
                 BACK TO TOP
-              </button>
+              </a>
             </div>
 
             <div className="space-y-4">
@@ -775,17 +1108,16 @@ export default function Home() {
                 <span className="font-medium">Quick Links</span>
               </div>
               <div className="flex gap-6 text-sm opacity-60">
-                <a href="#" className="hover:opacity-100 transition-opacity">Home,</a>
-                <a href="#" className="hover:opacity-100 transition-opacity">Gallery,</a>
-                <a href="#" className="hover:opacity-100 transition-opacity">Work,</a>
-                <a href="#" className="hover:opacity-100 transition-opacity">Contact</a>
+                <Link href="/" className="hover:opacity-100 transition-opacity">Accueil,</Link>
+                <Link href="/works" className="hover:opacity-100 transition-opacity">Projets,</Link>
+                <Link href="/contact" className="hover:opacity-100 transition-opacity">Contact,</Link>
+                <Link href="/#about" className="hover:opacity-100 transition-opacity">À propos</Link>
               </div>
 
               <div className="flex gap-6 text-sm opacity-60 pt-4">
-                <a href="#" className="hover:opacity-100 transition-opacity">Instagram,</a>
-                <a href="#" className="hover:opacity-100 transition-opacity">Dribbble,</a>
-                <a href="#" className="hover:opacity-100 transition-opacity">Framer,</a>
-                <a href="#" className="hover:opacity-100 transition-opacity">Twitter</a>
+                <a href="https://github.com/madaffrager" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">GitHub,</a>
+                <a href="https://www.annuairedesavocats.ma/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">Annuaire des Avocats,</a>
+                <a href="https://wa.me/212699020158" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">WhatsApp</a>
               </div>
             </div>
           </div>

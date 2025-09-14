@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,12 +28,14 @@ export default function Header() {
             transition={{ duration: 0.6 }}
             className="flex items-center gap-3"
           >
-            <img
-              src="/logo.webp"
-              alt="Logo"
-              className="h-20 w-auto"
-            />
-            <span className="text-white font-medium text-2xl">AMADIGI</span>
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <img
+                src="/logo.png"
+                alt="Logo"
+                className="h-12 w-auto"
+              />
+              <span className="text-white font-medium text-2xl">AMADIGI</span>
+            </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -42,10 +45,10 @@ export default function Header() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="hidden md:flex gap-10 text-sm font-light"
           >
-            <a href="#home" className="hover:opacity-60 transition-opacity">Home,</a>
-            <a href="#gallery" className="hover:opacity-60 transition-opacity">Gallery,</a>
-            <a href="#work" className="hover:opacity-60 transition-opacity">Work,</a>
-            <a href="#contact" className="hover:opacity-60 transition-opacity">Contact</a>
+            <Link href="/" className="hover:opacity-60 transition-opacity">Accueil,</Link>
+            <Link href="/works" className="hover:opacity-60 transition-opacity">Projets,</Link>
+            <Link href="/#about" className="hover:opacity-60 transition-opacity">À propos,</Link>
+            <Link href="/contact" className="hover:opacity-60 transition-opacity">Contact</Link>
           </motion.nav>
 
           {/* Mobile Menu Button */}
@@ -85,34 +88,34 @@ export default function Header() {
               className="fixed top-20 left-4 right-4 bg-black/80 backdrop-blur-xl border border-white/20 rounded-2xl z-50 md:hidden overflow-hidden"
             >
               <nav className="flex flex-col p-6 space-y-6">
-                <a
-                  href="#home"
+                <Link
+                  href="/"
                   onClick={closeMenu}
                   className="text-white text-lg font-light hover:opacity-60 transition-opacity py-2"
                 >
-                  Home
-                </a>
-                <a
-                  href="#gallery"
+                  Accueil
+                </Link>
+                <Link
+                  href="/works"
                   onClick={closeMenu}
                   className="text-white text-lg font-light hover:opacity-60 transition-opacity py-2"
                 >
-                  Gallery
-                </a>
-                <a
-                  href="#work"
+                  Projets
+                </Link>
+                <Link
+                  href="/#about"
                   onClick={closeMenu}
                   className="text-white text-lg font-light hover:opacity-60 transition-opacity py-2"
                 >
-                  Work
-                </a>
-                <a
-                  href="#contact"
+                  À propos
+                </Link>
+                <Link
+                  href="/contact"
                   onClick={closeMenu}
                   className="text-white text-lg font-light hover:opacity-60 transition-opacity py-2"
                 >
                   Contact
-                </a>
+                </Link>
               </nav>
             </motion.div>
           </>
