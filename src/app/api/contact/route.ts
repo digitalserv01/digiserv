@@ -1,26 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-// Configuration Firebase (sécurisée côté serveur)
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID
-};
+// Function to send Telegram notification
+async function sendTelegramNotification(contactData: {
+  name: string;
+  email: string;
+  company?: string;
+  project?: string;
+  message: string;
+  ip: string;
+}) {
+  try {
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+    
+    if (!botToken || !chatId) {
+      console.warn('Telegram credentials not configured');
+      return;
+    }
 
-// Initialiser Firebase (une seule fois)
-let app;
-if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
+    const message = `🔔 *Nouveau Contact AMADIGI*
+
+👤 *Nom:* ${contactData.name}
+📧 *Email:* ${contactData.email}
+🏢 *Entreprise:* ${contactData.company || 'Non spécifiée'}
+📋 *Projet:* ${contactData.project || 'Non spécifié'}
+
+💬 *Message:*
+${contactData.message}
+
+⏰ *Date:* ${new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Casablanca' })}
+🌐 *IP:* ${contactData.ip}`;
+
+    const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    
+    const response = await fetch(telegramUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'Markdown',
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('Failed to send Telegram notification:', await response.text());
+    } else {
+      console.log('Telegram notification sent successfully');
+    }
+  } catch (error) {
+    console.error('Error sending Telegram notification:', error);
+  }
 }
-
-const db = getFirestore(app);
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,35 +91,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Préparer les données pour Firebase
+    // Préparer les données pour Telegram
     const contactData = {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       company: company?.trim() || '',
       project: project || '',
       message: message.trim(),
-      timestamp: serverTimestamp(),
       ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
       userAgent: request.headers.get('user-agent') || 'unknown'
     };
 
-    // Sauvegarder dans Firebase
-    const docRef = await addDoc(collection(db, 'contacts'), contactData);
-
-    // Log de succès (optionnel, pour le monitoring)
-    console.log('Nouveau contact sauvegardé:', docRef.id);
+    // Envoyer notification Telegram
+    await sendTelegramNotification(contactData);
 
     return NextResponse.json(
       { 
         success: true, 
-        message: 'Message envoyé avec succès',
-        id: docRef.id 
+        message: 'Message envoyé avec succès'
       },
       { status: 200 }
     );
 
   } catch (error) {
-    console.error('Erreur lors de la sauvegarde du contact:', error);
+    console.error('Erreur lors de l\'envoi du message:', error);
     
     return NextResponse.json(
       { 

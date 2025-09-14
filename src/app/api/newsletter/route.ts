@@ -1,26 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 
-// Configuration Firebase (sécurisée côté serveur)
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID
-};
+// Function to send Telegram notification for newsletter subscription
+async function sendTelegramNotification(newsletterData: {
+  email: string;
+  ip: string;
+}) {
+  try {
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+    
+    if (!botToken || !chatId) {
+      console.warn('Telegram credentials not configured');
+      return;
+    }
 
-// Initialiser Firebase (une seule fois)
-let app;
-if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
+    const message = `📧 *Nouvelle Inscription Newsletter AMADIGI*
+
+📬 *Email:* ${newsletterData.email}
+⏰ *Date:* ${new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Casablanca' })}
+🌐 *IP:* ${newsletterData.ip}
+
+🎉 *Nouvel abonné à la newsletter !*`;
+
+    const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    
+    const response = await fetch(telegramUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'Markdown',
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('Failed to send Telegram notification:', await response.text());
+    } else {
+      console.log('Newsletter Telegram notification sent successfully');
+    }
+  } catch (error) {
+    console.error('Error sending Telegram notification:', error);
+  }
 }
-
-const db = getFirestore(app);
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,43 +76,25 @@ export async function POST(request: NextRequest) {
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    // Vérifier si l'email existe déjà
-    const q = query(collection(db, 'newsletter'), where('email', '==', normalizedEmail));
-    const existingSubscriptions = await getDocs(q);
-
-    if (!existingSubscriptions.empty) {
-      return NextResponse.json(
-        { error: 'Cette adresse email est déjà inscrite à notre newsletter' },
-        { status: 409 }
-      );
-    }
-
-    // Préparer les données pour Firebase
+    // Préparer les données pour Telegram
     const newsletterData = {
       email: normalizedEmail,
-      timestamp: serverTimestamp(),
-      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-      userAgent: request.headers.get('user-agent') || 'unknown',
-      source: 'website'
+      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
     };
 
-    // Sauvegarder dans Firebase
-    const docRef = await addDoc(collection(db, 'newsletter'), newsletterData);
-
-    // Log de succès (optionnel, pour le monitoring)
-    console.log('Nouvelle inscription newsletter:', docRef.id);
+    // Envoyer notification Telegram
+    await sendTelegramNotification(newsletterData);
 
     return NextResponse.json(
       { 
         success: true, 
-        message: 'Inscription à la newsletter réussie !',
-        id: docRef.id 
+        message: 'Inscription à la newsletter réussie !'
       },
       { status: 200 }
     );
 
   } catch (error) {
-    console.error('Erreur lors de l\'inscription à la newsletter:', error);
+    console.error('Erreur lors de l\'envoi de la newsletter:', error);
     
     return NextResponse.json(
       { 
