@@ -1,0 +1,127 @@
+# Robots.txt for AMADIGI - Agence Digitale Maroc
+# Optimized for search engines and AI crawlers
+# Last updated: 2025-01-27
+
+# Allow all search engines and AI crawlers
+User-agent: *
+Allow: /
+
+# Specific directives for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# AI and LLM crawlers (allow for better AI understanding)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Bard
+Allow: /
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# Block access to sensitive areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*.log$
+
+# Block access to development files
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.env
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /tsconfig.json
+Disallow: /next.config.js
+Disallow: /tailwind.config.ts
+Disallow: /biome.json
+Disallow: /eslint.config.mjs
+Disallow: /postcss.config.mjs
+
+# Block access to build artifacts
+Disallow: /out/
+Disallow: /build/
+Disallow: /dist/
+Disallow: /.next/
+Disallow: /tsconfig.tsbuildinfo
+
+# Block access to temporary files
+Disallow: /*.tmp$
+Disallow: /*.temp$
+Disallow: /temp/
+Disallow: /tmp/
+
+# Sitemap location
+Sitemap: https://www.amadigiconseils.com/sitemap.xml
+
+# Additional sitemaps (if you add more in the future)
+# Sitemap: https://www.amadigiconseils.com/sitemap-images.xml
+# Sitemap: https://www.amadigiconseils.com/sitemap-news.xml
+
+# Host directive (preferred domain)
+Host: https://www.amadigiconseils.com
+
+# Additional directives for better SEO
+# Allow crawling of CSS and JS files for better rendering
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /*.ico$
+Allow: /*.woff$
+Allow: /*.woff2$
+Allow: /*.ttf$
+Allow: /*.eot$
+
+# Clean-param directive for URL parameters (if any)
+# Clean-param: utm_source&utm_medium&utm_campaign / 
+# Clean-param: gclid&fbclid / 
+# Clean-param: ref&source /
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
