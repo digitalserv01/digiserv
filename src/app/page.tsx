@@ -20,8 +20,8 @@ export default function Home() {
       answer: "Notre agence digitale maroc offre une gamme complète de services : création de sites web, développement d'applications mobiles, stratégies marketing digital, référencement SEO/SEA, gestion des réseaux sociaux, et conception graphique."
     },
     {
-      question: "Combien coûte la création d'un site web au Maroc ?",
-      answer: "Les tarifs varient selon la complexité du projet. Un site vitrine commence à partir de 8 000 MAD, tandis qu'un site e-commerce démarre à 15 000 MAD. Nous proposons des devis personnalisés gratuits."
+      question: "Comment fonctionnent vos devis personnalisés ?",
+      answer: "Nous adaptons nos solutions à votre budget et à vos objectifs. Chaque projet est unique : nous analysons vos besoins, évaluons votre budget disponible, et proposons la meilleure solution dans votre fourchette de prix. Devis gratuit et sans engagement."
     },
     {
       question: "Dans quelles villes du Maroc intervenez-vous ?",
@@ -44,16 +44,16 @@ export default function Home() {
       answer: "Absolument ! Notre agence communication digitale maroc accompagne aussi bien les TPE/PME que les grandes entreprises, en adaptant nos solutions à chaque budget et besoin spécifique."
     },
     {
-      question: "Quels sont vos tarifs pour le marketing digital ?",
-      answer: "Nos forfaits marketing digital démarrent à 3 500 MAD/mois pour la gestion des réseaux sociaux, et 5 000 MAD/mois pour des campagnes publicitaires complètes (Google Ads + Facebook Ads)."
+      question: "Proposez-vous des solutions de paiement flexibles ?",
+      answer: "Oui ! Nous comprenons les contraintes budgétaires des entreprises marocaines. Nous proposons des paiements échelonnés, un développement par phases, et des solutions allégées selon vos priorités. Chaque projet est adapté à votre situation financière."
     },
     {
       question: "Créez-vous des applications mobiles ?",
       answer: "Oui, notre équipe développe des applications iOS et Android natives ou hybrides. Nous maîtrisons React Native, Flutter, et les technologies natives Swift/Kotlin."
     },
     {
-      question: "Comment puis-je obtenir un devis pour mon projet ?",
-      answer: "Contactez notre agence digitale maroc via le formulaire en ligne, par téléphone ou email. Nous organisons un rendez-vous gratuit pour analyser vos besoins et vous proposer une solution sur mesure."
+      question: "Comment puis-je obtenir un devis personnalisé ?",
+      answer: "C'est très simple ! Utilisez notre formulaire de demande de devis en ligne, contactez-nous par WhatsApp au +212 6 99 02 01 58, ou envoyez-nous un email. Nous analysons votre budget, vos besoins et vous proposons une solution adaptée. Réponse garantie sous 24h."
     },
     {
       question: "Proposez-vous des formations digitales ?",
@@ -799,7 +799,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Devis Personnalisé Section */}
       <section className="py-32 px-8 bg-zinc-950">
         <div className="max-w-[1600px] mx-auto">
           <motion.div
@@ -810,129 +810,158 @@ export default function Home() {
             className="mb-20"
           >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
-              <span className="text-xs opacity-60">© TARIFS DES PROJETS プラン</span>
-              <span className="text-xs opacity-60">DEVIS PERSONNALISÉS</span>
+              <span className="text-xs opacity-60">© DEVIS PERSONNALISÉ 見積もり</span>
+              <span className="text-xs opacity-60">ADAPTÉ À VOTRE BUDGET</span>
             </div>
 
             <div className="flex items-baseline gap-8">
-              <h2 className="text-6xl md:text-7xl lg:text-8xl font-extralight">TARIFS</h2>
+              <h2 className="text-6xl md:text-7xl lg:text-8xl font-extralight">DEVIS</h2>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8 text-sm">
                 <span>Transparence</span>
-                <span>Forfaits Design, Développement & Marketing</span>
+                <span>Solutions adaptées à votre budget</span>
               </div>
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Plan Découverte",
-                price: "2990 MAD",
-                period: "",
-                description: "Idéal pour lancer votre présence digitale rapidement avec une image professionnelle.",
-                features: [
-                  "Brief créatif et analyse des besoins",
-                  "Conception d'une page principale",
-                  "Design responsive mobile-first",
-                  "Maquette visuelle & interface UX",
-                  "Intégration d'un formulaire de contact",
-                  "Optimisation SEO de base",
-                  "Configuration CMS simplifiée",
-                  "Livraison rapide"
-                ]
-              },
-              {
-                title: "Plan Croissance",
-                price: "4990 MAD",
-                period: "",
-                description: "Pour les marques qui souhaitent renforcer leur présence en ligne et automatiser certains flux.",
-                features: [
-                  "Analyse approfondie et audit de site existant",
-                  "Jusqu'à 5 pages optimisées",
-                  "Sections CMS dynamiques",
-                  "Animations & transitions interactives",
-                  "UX/UI design avancé",
-                  "Optimisation multi-devices",
-                  "Guide de style & identité visuelle",
-                  "Intégration d'email marketing et CTA"
-                ],
-                featured: true
-              },
-              {
-                title: "Plan Complet",
-                price: "8990 MAD",
-                period: "",
-                description: "Pour les entreprises et studios cherchant une image digitale complète et performante.",
-                features: [
-                  "Audit complet et stratégie digitale",
-                  "10+ pages avec CMS avancé",
-                  "Système de marque complet",
-                  "Direction artistique & motion design",
-                  "Composants personnalisés et interactifs",
-                  "Formation CMS et gestion du contenu",
-                  "Support lancement + QA",
-                  "Optimisation des performances"
-                ]
-              }
-            ].map((plan, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className={`p-8 border rounded-2xl relative flex flex-col h-full ${
-                  plan.featured
-                    ? 'border-white bg-white/5'
-                    : 'border-white/20'
-                }`}
-              >
-                {plan.featured && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-white text-black px-3 py-1 rounded-full text-xs font-medium">
-                      Most Popular
-                    </span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Contenu principal */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <div>
+                <h3 className="text-3xl md:text-4xl font-extralight mb-6">
+                  Chaque projet est unique
+                </h3>
+                <p className="text-lg opacity-70 leading-relaxed mb-8">
+                  Nous croyons que chaque entreprise marocaine mérite une solution digitale 
+                  adaptée à son budget et à ses objectifs. C'est pourquoi nous proposons 
+                  des devis personnalisés qui s'ajustent à vos moyens financiers.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <Check className="w-4 h-4 text-green-500" />
                   </div>
-                )}
-
-                <div className="flex flex-col h-full">
-                  <div className="space-y-6 flex-1">
-                    <div>
-                      <h3 className="text-xl font-light mb-2">{plan.title}</h3>
-                      <div className="flex items-baseline">
-                        <span className="text-5xl font-extralight">{plan.price}</span>
-                        <span className="text-sm opacity-60 ml-1">{plan.period}</span>
-                      </div>
-                      <p className="text-sm opacity-60 mt-4">{plan.description}</p>
-                    </div>
-
-                    <ul className="space-y-3">
-                      {plan.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start gap-3 text-sm">
-                          <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                          <span className="opacity-80">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-8">
-                    <motion.a
-                      href="/contact"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={`w-full py-3 rounded-full transition-all text-sm font-medium flex items-center justify-center ${
-                        plan.featured
-                          ? 'bg-white text-black hover:bg-gray-100'
-                          : 'border border-white/20 hover:bg-white hover:text-black'
-                      }`}
-                    >
-                      Commencer
-                    </motion.a>
+                  <div>
+                    <h4 className="font-medium mb-2">Analyse de votre budget</h4>
+                    <p className="text-sm opacity-60">
+                      Nous évaluons vos besoins et proposons la meilleure solution 
+                      dans votre fourchette de prix.
+                    </p>
                   </div>
                 </div>
-              </motion.div>
-            ))}
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <Check className="w-4 h-4 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">Solutions flexibles</h4>
+                    <p className="text-sm opacity-60">
+                      Développement par phases, paiements échelonnés, 
+                      ou solutions allégées selon vos priorités.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <Check className="w-4 h-4 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">Transparence totale</h4>
+                    <p className="text-sm opacity-60">
+                      Aucun coût caché. Vous savez exactement ce que vous payez 
+                      et ce que vous obtenez en retour.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Formulaire de demande de devis */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8"
+            >
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-2xl font-light mb-2">
+                    Demandez votre devis gratuit
+                  </h3>
+                  <p className="text-sm opacity-60">
+                    Décrivez votre projet et nous vous proposerons une solution 
+                    adaptée à votre budget.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Budget approximatif
+                    </label>
+                    <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition-colors">
+                      <option value="">Sélectionnez votre budget</option>
+                      <option value="5000-10000">5 000 - 10 000 MAD</option>
+                      <option value="10000-20000">10 000 - 20 000 MAD</option>
+                      <option value="20000-50000">20 000 - 50 000 MAD</option>
+                      <option value="50000+">50 000+ MAD</option>
+                      <option value="discussion">À discuter</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Type de projet
+                    </label>
+                    <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition-colors">
+                      <option value="">Sélectionnez le type</option>
+                      <option value="site-vitrine">Site vitrine</option>
+                      <option value="ecommerce">E-commerce</option>
+                      <option value="application">Application mobile</option>
+                      <option value="branding">Branding & Design</option>
+                      <option value="marketing">Marketing digital</option>
+                      <option value="autre">Autre</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Délai souhaité
+                    </label>
+                    <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition-colors">
+                      <option value="">Sélectionnez le délai</option>
+                      <option value="urgent">Urgent (1-2 semaines)</option>
+                      <option value="normal">Normal (1-2 mois)</option>
+                      <option value="flexible">Flexible (3+ mois)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <motion.a
+                  href="/contact"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-4 bg-white text-black rounded-full text-sm font-medium hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+                >
+                  Obtenir mon devis gratuit
+                  <ArrowRight className="w-4 h-4" />
+                </motion.a>
+
+                <p className="text-xs opacity-40 text-center">
+                  Réponse sous 24h • Devis gratuit • Sans engagement
+                </p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
