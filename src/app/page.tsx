@@ -909,14 +909,7 @@ export default function Home() {
                     <label className="block text-sm font-medium mb-2">
                       Budget approximatif
                     </label>
-                    <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition-colors">
-                      <option value="">Sélectionnez votre budget</option>
-                      <option value="5000-10000">5 000 - 10 000 MAD</option>
-                      <option value="10000-20000">10 000 - 20 000 MAD</option>
-                      <option value="20000-50000">20 000 - 50 000 MAD</option>
-                      <option value="50000+">50 000+ MAD</option>
-                      <option value="discussion">À discuter</option>
-                    </select>
+                    <input type="text" className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition-colors" />
                   </div>
 
                   <div>
