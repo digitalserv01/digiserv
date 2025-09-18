@@ -789,7 +789,7 @@ export default function Home() {
                   "/fwa-1.png",
                   "/codex.webp",
                   "/old.webp",
-                  "/maze3.png",
+                  "/maze3.webp",
                 ].map((img, i) => (
                   <img key={i} src={img} alt="Award" className="w-full h-48 object-cover rounded" />
                 ))}
