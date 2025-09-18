@@ -760,9 +760,9 @@ export default function Home() {
               <h3 className="text-xl font-light mb-8">Best Innovator</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {["/award-4.png",
-                  "/fwa-2.png",
+                  "/maze3.webp",
                   "/fwa-3.jpeg",
-                  "/fwa-2.png",
+                  "/maze4.webp",
                 ].map((img, i) => (
                   <img key={i} src={img} alt="Award" className="w-full h-48 object-cover rounded" />
                 ))}
@@ -773,9 +773,9 @@ export default function Home() {
               <h3 className="text-xl font-light mb-8">74x sites web créés</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  "/fwa-2.png",
+                  "/maze2.webp",
                   "/fwa-4.png",
-                  "/fwa-2.png",
+                  "/maze.webp",
                   "/testimonial-3.png",
                 ].map((img, i) => (
                   <img key={i} src={img} alt="Award" className="w-full h-48 object-cover rounded" />
@@ -787,9 +787,9 @@ export default function Home() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   "/fwa-1.png",
-                  "/fwa-2.png",
+                  "/codex.webp",
                   "/award-8.png",
-                  "/fwa-2.png",
+                  "/old.webp",
                 ].map((img, i) => (
                   <img key={i} src={img} alt="Award" className="w-full h-48 object-cover rounded" />
                 ))}
