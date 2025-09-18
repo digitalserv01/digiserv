@@ -444,7 +444,7 @@ export default function Home() {
                 title: "Annuaire Des Avocats",
                 category: "Developpement Full Stack",
                 number: "(03)",
-                image: "/profile.jpeg"
+                image: "/award-8.png"
               },
               {
                 title: "Le Bistrot d'Amaia",
